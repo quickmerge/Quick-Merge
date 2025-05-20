@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Merge - PDF Tools | Merge, Convert, Compress PDFs</title>
+    <meta name="description" content="Free online PDF tools to merge, convert, and compress PDF files. Quick Merge offers fast, secure PDF processing entirely in your browser.">
+    <meta name="keywords" content="PDF merger, PDF converter, PDF compressor, image to PDF, merge PDF, compress PDF, free PDF tools">
+    <meta name="author" content="Quick Merge">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --light-color: #fff;
+            --dark-color: #1a1a1a;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--light-color);
+            box-shadow: var(--shadow);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a i {
+            font-size: 1.1rem;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(74, 107, 255, 0.1) 0%, rgba(74, 107, 255, 0.05) 100%);
+            border-radius: var(--border-radius);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--text-color);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .tool-card {
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .tool-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .tool-card p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .tool-card .btn {
+            align-self: center;
+        }
+
+        .tool-container {
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .tool-container.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tool-header h2 {
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-right: 1rem;
+        }
+
+        .tool-header h2 i {
+            font-size: 1.5rem;
+        }
+
+        .drop-area {
+            border: 2px dashed #ccc;
+            border-radius: var(--border-radius);
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .drop-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(74, 107, 255, 0.05);
+        }
+
+        .drop-area.active {
+            border-color: var(--primary-color);
+            background-color: rgba(74, 107, 255, 0.1);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: #3a5ae8;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(74, 107, 255, 0.1);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: var(--dark-color);
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .preview-item {
+            position: relative;
+            width: 120px;
+            height: 160px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-item .remove-btn {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            background-color: rgba(255, 0, 0, 0.7);
+            color: white;
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+
+        .file-info {
+            background-color: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .file-info p {
+            margin: 0.25rem 0;
+            color: #555;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #f1f1f1;
+            border-radius: 4px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .compression-options {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group {
+            margin-bottom: 1rem;
+        }
+
+        .option-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .option-group select, .option-group input[type="range"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .qr-code-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .qr-code-container {
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-code-container img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .qr-input-group {
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .qr-input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .qr-input-group input, .qr-input-group textarea, .qr-input-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .qr-input-group textarea {
+            min-height: 100px;
+        }
+
+        footer {
+            background-color: var(--light-color);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Home button styles */
+        .home-button {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .home-button.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .home-button:hover {
+            background-color: #3a5ae8;
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Mobile menu styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--light-color);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                transition: var(--transition);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                z-index: 99;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .home-button {
+                width: 45px;
+                height: 45px;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .tool-header .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo" onclick="goToHome()">
+                <i class="fas fa-file-pdf"></i>
+                <span>Quick Merge</span>
+            </a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" onclick="showAboutPage()"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="#" onclick="showContactPage()"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="#" onclick="showPrivacyPage()"><i class="fas fa-shield-alt"></i> Privacy</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Floating Home Button -->
+    <button class="home-button" id="homeButton" onclick="goToHome()">
+        <i class="fas fa-home"></i>
+    </button>
+
+    <main>
+        <!-- Home Page -->
+        <div id="homePage" class="page active">
+            <section class="hero">
+                <h1>Professional PDF Tools</h1>
+                <p>Merge, convert, compress PDFs and generate QR codes with our all-in-one solution. Fast, secure, and completely free!</p>
+            </section>
+
+            <div class="tools-grid">
+                <!-- PDF Merger Tool -->
+                <div class="tool-card" onclick="showTool('pdfMerger')">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>PDF Merger</h3>
+                    <p>Combine multiple PDF files into one document in seconds.</p>
+                    <button class="btn btn-outline">Use Tool</button>
+                </div>
+
+                <!-- Image to PDF Tool -->
+                <div class="tool-card" onclick="showTool('imageToPdf')">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <h3>Image to PDF</h3>
+                    <p>Convert multiple images into a single PDF document.</p>
+                    <button class="btn btn-outline">Use Tool</button>
+                </div>
+
+                <!-- PDF Compressor Tool -->
+                <div class="tool-card" onclick="showTool('pdfCompressor')">
+                    <div class="tool-icon">
+                        <i class="fas fa-compress-alt"></i>
+                    </div>
+                    <h3>PDF Compressor</h3>
+                    <p>Reduce PDF file size without losing quality.</p>
+                    <button class="btn btn-outline">Use Tool</button>
+                </div>
+
+                <!-- QR Generator Tool -->
+                <div class="tool-card" onclick="showTool('qrGenerator')">
+                    <div class="tool-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3>QR Generator</h3>
+                    <p>Create customizable QR codes for URLs, text, and more.</p>
+                    <button class="btn btn-outline">Use Tool</button>
+                </div>
+            </div>
+
+            <!-- PDF Merger Tool Container -->
+            <div id="pdfMerger" class="tool-container">
+                <div class="tool-header">
+                    <h2><i class="fas fa-file-pdf"></i> PDF Merger</h2>
+                    <button class="btn btn-outline" onclick="hideTool()"><i class="fas fa-arrow-left"></i> Back to Tools</button>
+                </div>
+
+                <div id="pdfMergeDropArea" class="drop-area">
+                    <p>Drag & drop your PDF files here or click to browse</p>
+                    <input type="file" id="pdfMergeInput" class="file-input" accept=".pdf" multiple>
+                    <button class="btn" onclick="document.getElementById('pdfMergeInput').click()">
+                        <i class="fas fa-file-upload"></i> Select PDFs
+                    </button>
+                </div>
+
+                <div id="pdfMergePreview" class="preview-container"></div>
+
+                <div class="progress-container" id="pdfMergeProgress">
+                    <div class="progress-bar" id="pdfMergeProgressBar"></div>
+                </div>
+
+                <div class="actions">
+                    <button id="pdfMergeClearBtn" class="btn btn-outline" onclick="clearPdfMergeFiles()">
+                        <i class="fas fa-trash-alt"></i> Clear All
+                    </button>
+                    <button id="pdfMergeBtn" class="btn" onclick="mergePdfs()">
+                        <i class="fas fa-file-pdf"></i> Merge PDFs
+                    </button>
+                </div>
+            </div>
+
+            <!-- Image to PDF Tool Container -->
+            <div id="imageToPdf" class="tool-container">
+                <div class="tool-header">
+                    <h2><i class="fas fa-file-image"></i> Image to PDF Converter</h2>
+                    <button class="btn btn-outline" onclick="hideTool()"><i class="fas fa-arrow-left"></i> Back to Tools</button>
+                </div>
+
+                <div id="imageToPdfDropArea" class="drop-area">
+                    <p>Drag & drop your images here or click to browse</p>
+                    <input type="file" id="imageToPdfInput" class="file-input" accept="image/*" multiple>
+                    <button class="btn" onclick="document.getElementById('imageToPdfInput').click()">
+                        <i class="fas fa-images"></i> Select Images
+                    </button>
+                </div>
+
+                <div id="imageToPdfPreview" class="preview-container"></div>
+
+                <div class="compression-options">
+                    <div class="option-group">
+                        <label for="imageQuality">Image Quality:</label>
+                        <select id="imageQuality" class="btn-outline">
+                            <option value="1.0">High (Best Quality)</option>
+                            <option value="0.8" selected>Medium (Balanced)</option>
+                            <option value="0.6">Low (Smaller File)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="pageSize">Page Size:</label>
+                        <select id="pageSize" class="btn-outline">
+                            <option value="a4">A4 (210 × 297 mm)</option>
+                            <option value="letter" selected>Letter (216 × 279 mm)</option>
+                            <option value="a5">A5 (148 × 210 mm)</option>
+                            <option value="auto">Auto (Fit to image)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="pageOrientation">Orientation:</label>
+                        <select id="pageOrientation" class="btn-outline">
+                            <option value="portrait">Portrait</option>
+                            <option value="landscape">Landscape</option>
+                            <option value="auto" selected>Auto (Based on image)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="progress-container" id="imageToPdfProgress">
+                    <div class="progress-bar" id="imageToPdfProgressBar"></div>
+                </div>
+
+                <div class="actions">
+                    <button id="imageToPdfClearBtn" class="btn btn-outline" onclick="clearImageToPdfFiles()">
+                        <i class="fas fa-trash-alt"></i> Clear All
+                    </button>
+                    <button id="imageToPdfBtn" class="btn" onclick="convertImagesToPdf()">
+                        <i class="fas fa-file-export"></i> Convert to PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- PDF Compressor Tool Container -->
+            <div id="pdfCompressor" class="tool-container">
+                <div class="tool-header">
+                    <h2><i class="fas fa-compress-alt"></i> PDF Compressor</h2>
+                    <button class="btn btn-outline" onclick="hideTool()"><i class="fas fa-arrow-left"></i> Back to Tools</button>
+                </div>
+
+                <div id="pdfCompressDropArea" class="drop-area">
+                    <p>Drag & drop your PDF file here or click to browse</p>
+                    <input type="file" id="pdfCompressInput" class="file-input" accept=".pdf">
+                    <button class="btn" onclick="document.getElementById('pdfCompressInput').click()">
+                        <i class="fas fa-file-upload"></i> Select PDF
+                    </button>
+                </div>
+
+                <div id="pdfCompressPreview" class="preview-container" style="display: none;">
+                    <div id="pdfCompressInfo" style="width: 100%; padding: 1rem; background-color: #f8f9fa; border-radius: var(--border-radius);">
+                        <p><strong>File:</strong> <span id="pdfCompressFileName"></span></p>
+                        <p><strong>Original Size:</strong> <span id="pdfCompressOriginalSize"></span></p>
+                    </div>
+                </div>
+
+                <div class="compression-options">
+                    <div class="option-group">
+                        <label for="compressionLevel">Compression Level:</label>
+                        <select id="compressionLevel" class="btn-outline">
+                            <option value="low">Low (Minimum Compression)</option>
+                            <option value="medium" selected>Medium (Recommended)</option>
+                            <option value="high">High (Maximum Compression)</option>
+                            <option value="extreme">Extreme (Smallest Size)</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="imageCompression">Image Quality: <span id="imageQualityValue">70%</span></label>
+                        <input type="range" id="imageCompression" min="10" max="90" value="70" step="5">
+                    </div>
+                    <div class="option-group">
+                        <label for="removeMetadata">
+                            <input type="checkbox" id="removeMetadata" checked> Remove metadata (author, creator, etc.)
+                        </label>
+                    </div>
+                    <div class="option-group">
+                        <label for="removeAnnotations">
+                            <input type="checkbox" id="removeAnnotations"> Remove annotations and comments
+                        </label>
+                    </div>
+                    <div class="option-group">
+                        <label for="optimizeFonts">
+                            <input type="checkbox" id="optimizeFonts" checked> Optimize fonts
+                        </label>
+                    </div>
+                </div>
+
+                <div class="progress-container" id="pdfCompressProgress">
+                    <div class="progress-bar" id="pdfCompressProgressBar"></div>
+                </div>
+
+                <div class="actions">
+                    <button id="pdfCompressClearBtn" class="btn btn-outline" onclick="clearPdfCompressFile()" disabled>
+                        <i class="fas fa-trash-alt"></i> Clear
+                    </button>
+                    <button id="pdfCompressBtn" class="btn" onclick="compressPdf()" disabled>
+                        <i class="fas fa-compress-alt"></i> Compress PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- QR Generator Tool Container -->
+            <div id="qrGenerator" class="tool-container">
+                <div class="tool-header">
+                    <h2><i class="fas fa-qrcode"></i> QR Code Generator</h2>
+                    <button class="btn btn-outline" onclick="hideTool()"><i class="fas fa-arrow-left"></i> Back to Tools</button>
+                </div>
+
+                <div class="qr-input-group">
+                    <label for="qrContent">Content to encode:</label>
+                    <textarea id="qrContent" placeholder="Enter URL, text, or other content..."></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div class="qr-input-group">
+                        <label for="qrSize">QR Code Size:</label>
+                        <select id="qrSize" class="btn-outline">
+                            <option value="100">100x100</option>
+                            <option value="200" selected>200x200</option>
+                            <option value="300">300x300</option>
+                            <option value="400">400x400</option>
+                            <option value="500">500x500</option>
+                        </select>
+                    </div>
+                    <div class="qr-input-group">
+                        <label for="qrColor">QR Code Color:</label>
+                        <input type="color" id="qrColor" value="#000000" style="width: 100%; height: 40px;">
+                    </div>
+                </div>
+
+                <div class="qr-input-group">
+                    <label for="qrBgColor">Background Color:</label>
+                    <input type="color" id="qrBgColor" value="#ffffff" style="width: 100%; height: 40px;">
+                </div>
+
+                <button class="btn" onclick="generateQRCode()" style="width: 100%; margin-bottom: 1.5rem;">
+                    <i class="fas fa-qrcode"></i> Generate QR Code
+                </button>
+
+                <div class="qr-code-display">
+                    <div class="qr-code-container" id="qrCodeContainer">
+                        <p style="color: #666; text-align: center;">QR Code will appear here</p>
+                    </div>
+                    <button id="downloadQrBtn" class="btn" onclick="downloadQRCode()" disabled style="width: 100%;">
+                        <i class="fas fa-download"></i> Download QR Code
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="aboutPage" class="page" style="display: none;">
+            <section class="hero">
+                <h1>About Quick Merge</h1>
+                <p>Learn more about our mission to provide free, high-quality PDF tools to everyone.</p>
+            </section>
+
+            <div class="tool-container">
+                <h2>Our Story</h2>
+                <p>Quick Merge was founded in 2025 with the goal of making PDF manipulation tools accessible to everyone, regardless of technical skill or financial resources.</p>
+                
+                <h2>Our Mission</h2>
+                <p>We believe that everyone should have access to powerful tools without compromising their privacy or security. That's why all our tools work directly in your browser - your files never leave your computer.</p>
+                
+                <h2>Features</h2>
+                <ul>
+                    <li>100% free with no hidden costs</li>
+                    <li>No file uploads - process files locally in your browser</li>
+                    <li>No registration required</li>
+                    <li>No watermarks on your documents</li>
+                    <li>Works on all modern browsers</li>
+                </ul>
+                
+                <button class="btn" onclick="goToHome()" style="margin-top: 2rem;">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contactPage" class="page" style="display: none;">
+            <section class="hero">
+                <h1>Contact Us</h1>
+                <p>Have questions or feedback? We'd love to hear from you!</p>
+            </section>
+
+            <div class="tool-container">
+                <h2>Get in Touch</h2>
+                <p>For any inquiries, please email us at: <strong>contact@quickmerge.com</strong></p>
+                
+                <h2>Feedback</h2>
+                <p>We're constantly improving our tools. Let us know what features you'd like to see!</p>
+                
+                <div class="qr-input-group">
+                    <label for="contactMessage">Your Message:</label>
+                    <textarea id="contactMessage" placeholder="Enter your message here..." style="min-height: 150px;"></textarea>
+                </div>
+                
+                <button class="btn" onclick="sendContactMessage()" style="margin-top: 1rem;">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+                
+                <button class="btn btn-outline" onclick="goToHome()" style="margin-top: 1rem;">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+        </div>
+
+        <!-- Privacy Page -->
+        <div id="privacyPage" class="page" style="display: none;">
+            <section class="hero">
+                <h1>Privacy Policy</h1>
+                <p>Your privacy is important to us. Learn how we protect your data.</p>
+            </section>
+
+            <div class="tool-container">
+                <h2>Privacy Commitment</h2>
+                <p>At Quick Merge, we take your privacy seriously. Here's how we handle your data:</p>
+                
+                <h3>Data Collection</h3>
+                <p>We do not collect or store any of the files you process using our tools. All processing happens locally in your browser.</p>
+                
+                <h3>Analytics</h3>
+                <p>We use basic analytics to understand how our tools are being used and to improve our service. This includes:</p>
+                <ul>
+                    <li>Page views</li>
+                    <li>Tool usage statistics</li>
+                    <li>Browser and device information</li>
+                </ul>
+                <p>This data is anonymized and cannot be traced back to individual users.</p>
+                
+                <h3>Cookies</h3>
+                <p>We use minimal cookies to enhance your experience, such as remembering your preferences.</p>
+                
+                <h3>Changes to This Policy</h3>
+                <p>We may update this privacy policy from time to time. Any changes will be posted on this page.</p>
+                
+                <button class="btn" onclick="goToHome()" style="margin-top: 2rem;">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Quick Merge. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const homeButton = document.getElementById('homeButton');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Page navigation functions
+        function goToHome() {
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById('homePage').style.display = 'block';
+            hideTool();
+            homeButton.classList.remove('visible');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showAboutPage() {
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById('aboutPage').style.display = 'block';
+            homeButton.classList.add('visible');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showContactPage() {
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById('contactPage').style.display = 'block';
+            homeButton.classList.add('visible');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showPrivacyPage() {
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById('privacyPage').style.display = 'block';
+            homeButton.classList.add('visible');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide tools
+        function showTool(toolId) {
+            document.querySelectorAll('.tool-container').forEach(tool => {
+                tool.classList.remove('active');
+            });
+            document.getElementById(toolId).classList.add('active');
+            homeButton.classList.add('visible');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function hideTool() {
+            document.querySelectorAll('.tool-container').forEach(tool => {
+                tool.classList.remove('active');
+            });
+            if (!document.querySelector('.page:not(#homePage)').style.display === 'block') {
+                homeButton.classList.remove('visible');
+            }
+        }
+
+        // File upload functionality for PDF Merger
+        const pdfMergeDropArea = document.getElementById('pdfMergeDropArea');
+        const pdfMergeInput = document.getElementById('pdfMergeInput');
+        const pdfMergePreview = document.getElementById('pdfMergePreview');
+        const pdfMergeBtn = document.getElementById('pdfMergeBtn');
+
+        // Handle drag and drop events
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            pdfMergeDropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            pdfMergeDropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            pdfMergeDropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            pdfMergeDropArea.classList.add('active');
+        }
+
+        function unhighlight() {
+            pdfMergeDropArea.classList.remove('active');
+        }
+
+        // Handle dropped files
+        pdfMergeDropArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files, 'pdfMerge');
+        }
+
+        // Handle selected files
+        pdfMergeInput.addEventListener('change', function() {
+            handleFiles(this.files, 'pdfMerge');
+        });
+
+        // Set up drag and drop for image to PDF tool
+        const imageToPdfDropArea = document.getElementById('imageToPdfDropArea');
+        const imageToPdfInput = document.getElementById('imageToPdfInput');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            imageToPdfDropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            imageToPdfDropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            imageToPdfDropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        imageToPdfDropArea.addEventListener('drop', function(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files, 'imageToPdf');
+        });
+
+        imageToPdfInput.addEventListener('change', function() {
+            handleFiles(this.files, 'imageToPdf');
+        });
+
+        // Set up drag and drop for PDF compressor tool
+        const pdfCompressDropArea = document.getElementById('pdfCompressDropArea');
+        const pdfCompressInput = document.getElementById('pdfCompressInput');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            pdfCompressDropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            pdfCompressDropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            pdfCompressDropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        pdfCompressDropArea.addEventListener('drop', function(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files, 'pdfCompress');
+        });
+
+        pdfCompressInput.addEventListener('change', function() {
+            handleFiles(this.files, 'pdfCompress');
+        });
+
+        // Handle files for all tools
+        function handleFiles(files, toolType) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // Validate file types
+                if (toolType === 'pdfMerge' && file.type !== 'application/pdf') {
+                    alert('Please upload only PDF files for merging.');
+                    continue;
+                }
+                if (toolType === 'imageToPdf' && !file.type.startsWith('image/')) {
+                    alert('Please upload only image files for conversion to PDF.');
+                    continue;
+                }
+                if (toolType === 'pdfCompress' && file.type !== 'application/pdf') {
+                    alert('Please upload only PDF files for compression.');
+                    continue;
+                }
+                
+                previewFile(file, toolType);
+            }
+        }
+
+        // Preview files
+        function previewFile(file, toolType) {
+            const previewContainer = document.getElementById(`${toolType}Preview`);
+            
+            if (file.type === 'application/pdf') {
+                const previewItem = document.createElement('div');
+                previewItem.className = 'preview-item';
+                
+                // Create PDF thumbnail (this is a simplified version)
+                const pdfThumbnail = document.createElement('div');
+                pdfThumbnail.style.width = '100%';
+                pdfThumbnail.style.height = '100%';
+                pdfThumbnail.style.display = 'flex';
+                pdfThumbnail.style.flexDirection = 'column';
+                pdfThumbnail.style.alignItems = 'center';
+                pdfThumbnail.style.justifyContent = 'center';
+                pdfThumbnail.style.backgroundColor = '#f5f5f5';
+                
+                const pdfIcon = document.createElement('i');
+                pdfIcon.className = 'fas fa-file-pdf';
+                pdfIcon.style.fontSize = '3rem';
+                pdfIcon.style.color = '#ff0000';
+                
+                const fileName = document.createElement('p');
+                fileName.textContent = file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name;
+                fileName.style.marginTop = '0.5rem';
+                fileName.style.fontSize = '0.8rem';
+                fileName.style.textAlign = 'center';
+                
+                pdfThumbnail.appendChild(pdfIcon);
+                pdfThumbnail.appendChild(fileName);
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.onclick = function(e) {
+                    e.stopPropagation();
+                    previewItem.remove();
+                    if (toolType === 'pdfMerge') updateMergeButtonState();
+                    if (toolType === 'pdfCompress') updateCompressButtonState();
+                };
+                
+                previewItem.appendChild(pdfThumbnail);
+                previewItem.appendChild(removeBtn);
+                
+                // File info
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'file-info';
+                
+                const fileSize = document.createElement('p');
+                fileSize.textContent = `Size: ${formatFileSize(file.size)}`;
+                
+                fileInfo.appendChild(fileSize);
+                previewItem.appendChild(fileInfo);
+                
+                previewContainer.appendChild(previewItem);
+                
+                // For PDF compressor, show additional info
+                if (toolType === 'pdfCompress') {
+                    document.getElementById('pdfCompressPreview').style.display = 'flex';
+                    document.getElementById('pdfCompressFileName').textContent = file.name;
+                    document.getElementById('pdfCompressOriginalSize').textContent = formatFileSize(file.size);
+                }
+            } else if (file.type.startsWith('image/')) {
+                const previewItem = document.createElement('div');
+                previewItem.className = 'preview-item';
+                
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.onclick = function(e) {
+                    e.stopPropagation();
+                    previewItem.remove();
+                    updateImageToPdfButtonState();
+                };
+                
+                previewItem.appendChild(img);
+                previewItem.appendChild(removeBtn);
+                
+                // File info
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'file-info';
+                
+                const fileName = document.createElement('p');
+                fileName.textContent = file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name;
+                
+                const fileSize = document.createElement('p');
+                fileSize.textContent = `Size: ${formatFileSize(file.size)}`;
+                
+                fileInfo.appendChild(fileName);
+                fileInfo.appendChild(fileSize);
+                previewItem.appendChild(fileInfo);
+                
+                previewContainer.appendChild(previewItem);
+            }
+            
+            // Update button states
+            if (toolType === 'pdfMerge') {
+                updateMergeButtonState();
+            } else if (toolType === 'imageToPdf') {
+                updateImageToPdfButtonState();
+            } else if (toolType === 'pdfCompress') {
+                updateCompressButtonState();
+            }
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
+        }
+
+        // Update merge button state
+        function updateMergeButtonState() {
+            const previewItems = document.querySelectorAll('#pdfMergePreview .preview-item');
+            pdfMergeBtn.disabled = previewItems.length < 2;
+            document.getElementById('pdfMergeClearBtn').disabled = previewItems.length === 0;
+        }
+
+        // Update image to PDF button state
+        function updateImageToPdfButtonState() {
+            const previewItems = document.querySelectorAll('#imageToPdfPreview .preview-item');
+            document.getElementById('imageToPdfBtn').disabled = previewItems.length === 0;
+            document.getElementById('imageToPdfClearBtn').disabled = previewItems.length === 0;
+        }
+
+        // Update compress button state
+        function updateCompressButtonState() {
+            const previewItems = document.querySelectorAll('#pdfCompressPreview .preview-item');
+            document.getElementById('pdfCompressBtn').disabled = previewItems.length === 0;
+            document.getElementById('pdfCompressClearBtn').disabled = previewItems.length === 0;
+        }
+
+        // Clear PDF merge files
+        function clearPdfMergeFiles() {
+            pdfMergePreview.innerHTML = '';
+            pdfMergeInput.value = '';
+            updateMergeButtonState();
+        }
+
+        // Clear image to PDF files
+        function clearImageToPdfFiles() {
+            document.getElementById('imageToPdfPreview').innerHTML = '';
+            document.getElementById('imageToPdfInput').value = '';
+            updateImageToPdfButtonState();
+        }
+
+        // Clear PDF compress file
+        function clearPdfCompressFile() {
+            document.getElementById('pdfCompressPreview').innerHTML = '';
+            document.getElementById('pdfCompressPreview').style.display = 'none';
+            document.getElementById('pdfCompressInput').value = '';
+            updateCompressButtonState();
+        }
+
+        // Merge PDFs function (simulated)
+        function mergePdfs() {
+            const previewItems = document.querySelectorAll('#pdfMergePreview .preview-item');
+            if (previewItems.length < 2) {
+                alert('Please add at least 2 PDF files to merge');
+                return;
+            }
+            
+            const progressBar = document.getElementById('pdfMergeProgressBar');
+            const progressContainer = document.getElementById('pdfMergeProgress');
+            
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+            
+            // Simulate processing
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        alert('PDFs merged successfully! (This is a demo. In a real app, the merged PDF would download.)');
+                        progressContainer.style.display = 'none';
+                    }, 500);
+                }
+            }, 100);
+        }
+
+        // Convert images to PDF function (simulated)
+        function convertImagesToPdf() {
+            const previewItems = document.querySelectorAll('#imageToPdfPreview .preview-item');
+            if (previewItems.length === 0) {
+                alert('Please add at least 1 image to convert');
+                return;
+            }
+            
+            const progressBar = document.getElementById('imageToPdfProgressBar');
+            const progressContainer = document.getElementById('imageToPdfProgress');
+            
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+            
+            // Simulate processing
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        alert('Images converted to PDF successfully! (This is a demo. In a real app, the PDF would download.)');
+                        progressContainer.style.display = 'none';
+                    }, 500);
+                }
+            }, 100);
+        }
+
+        // Compress PDF function (simulated)
+        function compressPdf() {
+            const previewItems = document.querySelectorAll('#pdfCompressPreview .preview-item');
+            if (previewItems.length === 0) {
+                alert('Please add a PDF file to compress');
+                return;
+            }
+            
+            const progressBar = document.getElementById('pdfCompressProgressBar');
+            const progressContainer = document.getElementById('pdfCompressProgress');
+            
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+            
+            // Simulate processing
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        const originalSize = document.getElementById('pdfCompressOriginalSize').textContent;
+                        const compressedSize = formatFileSize(Math.random() * 0.7 * parseFloat(originalSize));
+                        alert(`PDF compressed successfully!\nOriginal size: ${originalSize}\nCompressed size: ${compressedSize}\n(This is a demo. In a real app, the compressed PDF would download.)`);
+                        progressContainer.style.display = 'none';
+                    }, 500);
+                }
+            }, 100);
+        }
+
+        // QR Code Generator
+        function generateQRCode() {
+            const content = document.getElementById('qrContent').value;
+            if (!content) {
+                alert('Please enter content to generate QR code');
+                return;
+            }
+            
+            const size = document.getElementById('qrSize').value;
+            const color = document.getElementById('qrColor').value.substring(1); // Remove #
+            const bgColor = document.getElementById('qrBgColor').value.substring(1); // Remove #
+            
+            // In a real app, you would generate a QR code here
+            // For demo purposes, we'll just show a placeholder
+            const qrCodeContainer = document.getElementById('qrCodeContainer');
+            qrCodeContainer.innerHTML = `
+                <div style="text-align: center;">
+                    <div style="width: ${size}px; height: ${size}px; background-color: #${bgColor}; display: inline-block; position: relative;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #${color}; font-size: 1.5rem;">
+                            QR Code<br>${size}x${size}
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem; color: #666;">Demo QR Code (would show real QR in production)</p>
+                </div>
+            `;
+            
+            document.getElementById('downloadQrBtn').disabled = false;
+        }
+
+        function downloadQRCode() {
+            alert('In a real app, this would download the QR code as an image file.');
+        }
+
+        // Contact form
+        function sendContactMessage() {
+            const message = document.getElementById('contactMessage').value;
+            if (!message) {
+                alert('Please enter a message');
+                return;
+            }
+            
+            alert('Thank you for your message! (This is a demo. In a real app, this would send your message to our team.)');
+            document.getElementById('contactMessage').value = '';
+        }
+
+        // Initialize image compression slider
+        document.getElementById('imageCompression').addEventListener('input', function() {
+            document.getElementById('imageQualityValue').textContent = this.value + '%';
+        });
+    </script>
+</body>
+</html>
