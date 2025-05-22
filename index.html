@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quick Merge – Merge, Compress & Convert Files Instantly</title>
-  <meta name="description" content="Quick Merge offers fast, secure file processing tools including PDF merging, splitting, compression, image conversion, and QR code generation - all processed locally in your browser.">
-  <meta name="keywords" content="PDF merge, PDF split, compress PDF, image to PDF, QR code generator, file converter, online tools, privacy-focused tools">
+  <title>Quick Merge – Merge, Compress & Convert Files Instantly | Free Online Tools</title>
+  <meta name="description" content="Quick Merge offers fast, secure file processing tools including PDF merging, splitting, compression, image conversion, and QR code generation. All tools work offline in your browser with no file uploads.">
+  <meta name="keywords" content="PDF merge, PDF split, compress PDF, image to PDF, JPG to PDF, PNG to PDF, QR code generator, file converter, online PDF tools, privacy-focused tools, free PDF tools, merge PDF online, split PDF online">
   <meta name="author" content="Quick Merge">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Quick Merge - File Processing Tools">
-  <meta property="og:description" content="Merge, compress and convert files instantly with our privacy-focused browser tools">
+  <meta property="og:title" content="Quick Merge - Free Online File Processing Tools">
+  <meta property="og:description" content="Merge, compress and convert files instantly with our privacy-focused browser tools. Works offline with no uploads.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://quickmerge.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Quick Merge - Free Online File Processing Tools">
+  <meta name="twitter:description" content="Merge, compress and convert files instantly with our privacy-focused browser tools. Works offline with no uploads.">
   <!-- Required Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -463,30 +467,6 @@
       font-size: 0.95rem;
     }
 
-    .privacy-notice {
-      text-align: center;
-      margin: 3rem 0;
-      padding: 2rem;
-      background: rgba(108, 93, 211, 0.1);
-      border-radius: 14px;
-      border: 1px solid rgba(108, 93, 211, 0.2);
-    }
-
-    .privacy-notice h2 {
-      font-size: 2rem;
-      background: linear-gradient(90deg, #00f6ff, #6c5dd3);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      border: none;
-      margin-bottom: 1rem;
-    }
-
-    .privacy-notice p {
-      font-size: 1.1rem;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
     /* Footer */
     footer {
       margin-top: auto;
@@ -777,12 +757,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Privacy Notice -->
-    <div class="privacy-notice container">
-      <h2>Your Privacy, Respected</h2>
-      <p>All files are processed directly in your browser. Nothing is ever uploaded — secure, offline, and private.</p>
-    </div>
   </section>
 
   <!-- About Section -->
@@ -840,13 +814,13 @@
         
         <div class="contact-method">
           <h3>Technical Support</h3>
-          <p>Email: <a href="mailto:support@quickmerge.com">support@quickmerge.com</a></p>
+          <p>Email: <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a></p>
           <p>For assistance with tool functionality, troubleshooting, or feature requests.</p>
         </div>
         
         <div class="contact-method">
           <h3>Privacy Questions</h3>
-          <p>Email: <a href="mailto:privacy@quickmerge.com">privacy@quickmerge.com</a></p>
+          <p>Email: <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a></p>
           <p>For any concerns regarding our privacy policy or data handling practices.</p>
         </div>
       </div>
@@ -870,7 +844,7 @@
       
       <h2 class="fade-in">Business Partnerships</h2>
       <p class="fade-in">Interested in integrating Quick Merge technology into your platform?</p>
-      <p class="fade-in">Contact our business development team at <a href="mailto:partnerships@quickmerge.com">partnerships@quickmerge.com</a> to discuss collaboration opportunities.</p>
+      <p class="fade-in">Contact our business development team at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a> to discuss collaboration opportunities.</p>
     </div>
   </section>
 
@@ -928,7 +902,7 @@
       
       <div class="policy-section fade-in">
         <h2>Contact Us</h2>
-        <p>For any questions about this Privacy Policy or our practices, please contact our Privacy Officer at <a href="mailto:privacy@quickmerge.com">privacy@quickmerge.com</a>.</p>
+        <p>For any questions about this Privacy Policy or our practices, please contact our Privacy Officer at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>.</p>
       </div>
     </div>
   </section>
@@ -1448,14 +1422,12 @@
           // Read the image file
           const arrayBuffer = await file.arrayBuffer();
           let image;
-          let imageType = 'png';
           
           try {
             if (file.type === 'image/png') {
               image = await pdfDoc.embedPng(arrayBuffer);
             } else if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
               image = await pdfDoc.embedJpg(arrayBuffer);
-              imageType = 'jpg';
             } else {
               // Convert other image types to PNG first
               const imgBlob = await convertImageToPNG(file);
@@ -1470,19 +1442,14 @@
           
           // Add a new page for each image
           let page;
+          let width, height;
           
           if (pageSize === 'Fit') {
             // Fit to image dimensions
-            page = pdfDoc.addPage([image.width, image.height]);
-            page.drawImage(image, {
-              x: 0,
-              y: 0,
-              width: image.width,
-              height: image.height,
-            });
+            width = image.width;
+            height = image.height;
           } else {
             // Standard page sizes
-            let width, height;
             if (pageSize === 'A4') {
               width = 595.28; // A4 width in points (210mm)
               height = 841.89; // A4 height in points (297mm)
@@ -1496,33 +1463,31 @@
                 (orientation === 'auto' && image.width > image.height)) {
               [width, height] = [height, width];
             }
-            
-            // Add page with margins
-            const marginPoints = margin * 2.83465; // Convert mm to points
-            page = pdfDoc.addPage([width, height]);
-            
-            // Calculate image dimensions with margins
-            const maxWidth = width - (marginPoints * 2);
-            const maxHeight = height - (marginPoints * 2);
-            
-            // Maintain aspect ratio
-            let imgWidth = image.width;
-            let imgHeight = image.height;
-            const ratio = Math.min(maxWidth / imgWidth, maxHeight / imgHeight);
-            imgWidth *= ratio;
-            imgHeight *= ratio;
-            
-            // Center the image
-            const x = (width - imgWidth) / 2;
-            const y = (height - imgHeight) / 2;
-            
-            page.drawImage(image, {
-              x,
-              y,
-              width: imgWidth,
-              height: imgHeight,
-            });
           }
+          
+          // Add page
+          page = pdfDoc.addPage([width, height]);
+          
+          // Calculate image dimensions with margins
+          const marginPoints = margin * 2.83465; // Convert mm to points
+          let drawWidth = width - (marginPoints * 2);
+          let drawHeight = height - (marginPoints * 2);
+          
+          // Maintain aspect ratio
+          const ratio = Math.min(drawWidth / image.width, drawHeight / image.height);
+          drawWidth = image.width * ratio;
+          drawHeight = image.height * ratio;
+          
+          // Center the image
+          const x = (width - drawWidth) / 2;
+          const y = (height - drawHeight) / 2;
+          
+          page.drawImage(image, {
+            x,
+            y,
+            width: drawWidth,
+            height: drawHeight,
+          });
         }
         
         // Check if any pages were added
