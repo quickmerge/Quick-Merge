@@ -680,51 +680,6 @@
             <div class="status-message" id="compress-image-status"></div>
           </div>
         </div>
-
-        <!-- Image to PDF -->
-        <div class="tool-card fade-in" id="image-to-pdf-card">
-          <h3>Image to PDF</h3>
-          <p>Convert one or more images into a high-quality PDF document.</p>
-          <button class="tool-btn" onclick="toggleTool('image-to-pdf')">Use Tool</button>
-          <div class="tool-content" id="image-to-pdf">
-            <div class="file-input">
-              <label>Select image(s) to convert:</label>
-              <div class="drag-drop-area" id="image-to-pdf-drop-area">
-                <p>Drag & drop images here</p>
-                <p class="small">or click to browse</p>
-              </div>
-              <input type="file" id="image-to-pdf-files" accept="image/*" multiple>
-              <div class="file-list" id="image-to-pdf-file-list"></div>
-            </div>
-            <div class="options">
-              <div class="option-group">
-                <label for="pdf-page-size">Page size:</label>
-                <select id="pdf-page-size">
-                  <option value="A4">A4 (210 × 297 mm)</option>
-                  <option value="Letter">Letter (8.5 × 11 in)</option>
-                  <option value="Fit">Fit to image size</option>
-                </select>
-              </div>
-              <div class="option-group">
-                <label for="pdf-orientation">Orientation:</label>
-                <select id="pdf-orientation">
-                  <option value="portrait">Portrait</option>
-                  <option value="landscape">Landscape</option>
-                  <option value="auto">Auto (based on image)</option>
-                </select>
-              </div>
-              <div class="option-group">
-                <label for="pdf-margin">Margin (mm):</label>
-                <input type="number" id="pdf-margin" min="0" max="50" value="10">
-              </div>
-            </div>
-            <button class="tool-btn" id="image-to-pdf-btn" onclick="convertImagesToPDF()">Convert to PDF</button>
-            <div class="preview-container" id="image-to-pdf-preview"></div>
-            <div class="spinner" id="image-to-pdf-spinner"></div>
-            <div class="status-message" id="image-to-pdf-status"></div>
-          </div>
-        </div>
-
         <!-- QR Code Generator -->
         <div class="tool-card fade-in" id="qr-code-card">
           <h3>QR Code Generator</h3>
