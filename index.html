@@ -3,23 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quick Merge – Merge, Compress & Convert Files Instantly | Free Online Tools</title>
-  <meta name="description" content="Quick Merge offers fast, secure file processing tools including PDF merging, splitting, compression, image conversion, and QR code generation. All tools work offline in your browser with no file uploads.">
-  <meta name="keywords" content="PDF merge, PDF split, compress PDF, image to PDF, JPG to PDF, PNG to PDF, QR code generator, file converter, online PDF tools, privacy-focused tools, free PDF tools, merge PDF online, split PDF online">
+  <title>Quick Merge – Merge, Compress & Convert Files Instantly</title>
+  <meta name="description" content="Quick Merge offers fast, secure file processing tools including PDF merging, splitting, compression, image conversion, and QR code generation - all processed locally in your browser.">
+  <meta name="keywords" content="PDF merge, PDF split, compress PDF, image to PDF, QR code generator, file converter, online tools, privacy-focused tools">
   <meta name="author" content="Quick Merge">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Quick Merge - Free Online File Processing Tools">
-  <meta property="og:description" content="Merge, compress and convert files instantly with our privacy-focused browser tools. Works offline with no uploads.">
+  <meta property="og:title" content="Quick Merge - File Processing Tools">
+  <meta property="og:description" content="Merge, compress and convert files instantly with our privacy-focused browser tools">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://quickmerge.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Quick Merge - Free Online File Processing Tools">
-  <meta name="twitter:description" content="Merge, compress and convert files instantly with our privacy-focused browser tools. Works offline with no uploads.">
   <!-- Required Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -312,7 +309,8 @@
 
     .option-group input[type="text"],
     .option-group input[type="number"],
-    .option-group select {
+    .option-group select,
+    .option-group textarea {
       width: 100%;
       padding: 0.5rem;
       background: rgba(255,255,255,0.1);
@@ -465,6 +463,30 @@
       display: block;
       text-align: center;
       font-size: 0.95rem;
+    }
+
+    .privacy-notice {
+      text-align: center;
+      margin: 3rem 0;
+      padding: 2rem;
+      background: rgba(108, 93, 211, 0.1);
+      border-radius: 14px;
+      border: 1px solid rgba(108, 93, 211, 0.2);
+    }
+
+    .privacy-notice h2 {
+      font-size: 2rem;
+      background: linear-gradient(90deg, #00f6ff, #6c5dd3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      border: none;
+      margin-bottom: 1rem;
+    }
+
+    .privacy-notice p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
     }
 
     /* Footer */
@@ -643,12 +665,42 @@
                   <option value="low">Low (better quality)</option>
                   <option value="medium" selected>Medium (balanced)</option>
                   <option value="high">High (smaller file)</option>
+                  <option value="extreme">Extreme (maximum compression)</option>
                 </select>
               </div>
             </div>
             <button class="tool-btn" id="compress-pdf-btn" onclick="compressPDF()">Compress PDF</button>
             <div class="spinner" id="compress-pdf-spinner"></div>
             <div class="status-message" id="compress-pdf-status"></div>
+          </div>
+        </div>
+
+        <!-- Text to Word/PDF -->
+        <div class="tool-card fade-in" id="text-converter-card">
+          <h3>Text to Word/PDF</h3>
+          <p>Convert plain text to professional Word or PDF documents.</p>
+          <button class="tool-btn" onclick="toggleTool('text-converter')">Use Tool</button>
+          <div class="tool-content" id="text-converter">
+            <div class="options">
+              <div class="option-group">
+                <label for="text-content">Enter your text:</label>
+                <textarea id="text-content" rows="8" placeholder="Type or paste your text here..."></textarea>
+              </div>
+              <div class="option-group">
+                <label for="text-filename">File name (without extension):</label>
+                <input type="text" id="text-filename" placeholder="document">
+              </div>
+              <div class="option-group">
+                <label for="text-format">Output format:</label>
+                <select id="text-format">
+                  <option value="docx">Word Document (.docx)</option>
+                  <option value="pdf">PDF Document (.pdf)</option>
+                </select>
+              </div>
+            </div>
+            <button class="tool-btn" id="text-convert-btn" onclick="convertTextToDocument()">Convert Text</button>
+            <div class="spinner" id="text-converter-spinner"></div>
+            <div class="status-message" id="text-converter-status"></div>
           </div>
         </div>
 
@@ -673,6 +725,10 @@
                 <input type="range" id="image-quality" min="0" max="100" value="80">
                 <span id="quality-value">80%</span>
               </div>
+              <div class="option-group">
+                <label for="image-resize">Resize to max width (px):</label>
+                <input type="number" id="image-resize" min="100" max="5000" placeholder="Leave empty for no resizing">
+              </div>
             </div>
             <button class="tool-btn" id="compress-image-btn" onclick="compressImages()">Compress Images</button>
             <div class="preview-container" id="image-preview"></div>
@@ -680,6 +736,7 @@
             <div class="status-message" id="compress-image-status"></div>
           </div>
         </div>
+
         <!-- QR Code Generator -->
         <div class="tool-card fade-in" id="qr-code-card">
           <h3>QR Code Generator</h3>
@@ -864,7 +921,7 @@
 
   <!-- Footer -->
   <footer>
-    © 2025 Quick Merge – All rights reserved. Built with care and privacy in mind.
+    © 2025 Quick Merge – All rights reserved.
   </footer>
 
   <script>
@@ -1093,6 +1150,11 @@
       if (toolId === 'qr-code') {
         document.getElementById('download-qr-btn').style.display = 'none';
       }
+      
+      // For text converter, clear textarea
+      if (toolId === 'text-converter') {
+        document.getElementById('text-content').value = '';
+      }
     }
 
     // PDF Processing Functions
@@ -1239,6 +1301,19 @@
           // Add more compression options as needed
         };
         
+        // Enhanced compression options based on selected level
+        if (compressionLevel === 'high') {
+          options.useObjectStreams = true;
+          options.throwOnInvalidImage = false; // Skip invalid images
+          options.ignoreInvalidAnnotations = true; // Skip invalid annotations
+        } else if (compressionLevel === 'extreme') {
+          options.useObjectStreams = true;
+          options.throwOnInvalidImage = false;
+          options.ignoreInvalidAnnotations = true;
+          options.forceJPEGCompression = true; // Force JPEG compression for all images
+          options.quality = 0.7; // Lower quality for images
+        }
+        
         // Save compressed PDF
         const compressedPdfBytes = await pdfDoc.save(options);
         const blob = new Blob([compressedPdfBytes], { type: 'application/pdf' });
@@ -1257,9 +1332,87 @@
       }
     }
 
+    async function convertTextToDocument() {
+      const textContent = document.getElementById('text-content').value;
+      const filename = document.getElementById('text-filename').value || 'document';
+      const format = document.getElementById('text-format').value;
+      
+      if (!textContent.trim()) {
+        showStatus('text-converter', 'Please enter some text to convert', 'error');
+        return;
+      }
+
+      showStatus('text-converter', 'Converting text...', 'processing');
+      
+      try {
+        if (format === 'docx') {
+          await generateWordDocument(textContent, filename);
+        } else {
+          await generatePDFFromText(textContent, filename);
+        }
+        
+        showStatus('text-converter', 'Document created successfully!', 'success');
+        setTimeout(() => resetTool('text-converter'), 2000);
+      } catch (error) {
+        console.error('Error converting text:', error);
+        showStatus('text-converter', 'Error: ' + error.message, 'error');
+      } finally {
+        hideSpinner('text-converter');
+      }
+    }
+
+    async function generateWordDocument(text, filename) {
+      const { Document, Paragraph, TextRun, Packer } = docx;
+      
+      const doc = new Document({
+        sections: [{
+          properties: {},
+          children: [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: text,
+                  size: 24, // 12pt
+                }),
+              ],
+            }),
+          ],
+        }],
+      });
+      
+      const mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      const blob = await Packer.toBlob(doc);
+      saveAs(blob, `${filename}.docx`);
+    }
+
+    async function generatePDFFromText(text, filename) {
+      const { PDFDocument, rgb } = PDFLib;
+      
+      const pdfDoc = await PDFDocument.create();
+      const page = pdfDoc.addPage([595.28, 841.89]); // A4 size in points
+      
+      const { width, height } = page.getSize();
+      const fontSize = 12;
+      const margin = 50;
+      
+      page.drawText(text, {
+        x: margin,
+        y: height - margin - fontSize,
+        size: fontSize,
+        color: rgb(0, 0, 0),
+        lineHeight: fontSize * 1.2,
+        maxWidth: width - margin * 2,
+      });
+      
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      saveAs(blob, `${filename}.pdf`);
+    }
+
     async function compressImages() {
       const fileInput = document.getElementById('compress-image-file');
       const quality = document.getElementById('image-quality').value / 100;
+      const maxWidth = document.getElementById('image-resize').value;
       
       if (!fileInput.files || fileInput.files.length === 0) {
         showStatus('compress-image', 'Please select at least one image to compress', 'error');
@@ -1282,8 +1435,8 @@
           const file = fileInput.files[i];
           if (!file.type.match('image.*')) continue;
 
-          // Improved compression using canvas
-          const compressedBlob = await compressImageFile(file, quality);
+          // Improved compression using canvas with optional resizing
+          const compressedBlob = await compressImageFile(file, quality, maxWidth);
           
           if (compressedBlob) {
             zip.file(`compressed_${file.name}`, compressedBlob);
@@ -1315,8 +1468,8 @@
       }
     }
 
-    // Helper function for better image compression
-    async function compressImageFile(file, quality) {
+    // Helper function for better image compression with optional resizing
+    async function compressImageFile(file, quality, maxWidth) {
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = function(event) {
@@ -1325,10 +1478,20 @@
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
-            // Maintain original dimensions or resize if needed
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
+            // Calculate dimensions
+            let width = img.width;
+            let height = img.height;
+            
+            // Resize if maxWidth is specified and image is larger
+            if (maxWidth && width > maxWidth) {
+              const ratio = maxWidth / width;
+              width = maxWidth;
+              height = height * ratio;
+            }
+            
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
             
             // Convert to Blob with quality control
             canvas.toBlob((blob) => {
@@ -1377,12 +1540,14 @@
           // Read the image file
           const arrayBuffer = await file.arrayBuffer();
           let image;
+          let imageType = 'png';
           
           try {
             if (file.type === 'image/png') {
               image = await pdfDoc.embedPng(arrayBuffer);
             } else if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
               image = await pdfDoc.embedJpg(arrayBuffer);
+              imageType = 'jpg';
             } else {
               // Convert other image types to PNG first
               const imgBlob = await convertImageToPNG(file);
@@ -1397,14 +1562,19 @@
           
           // Add a new page for each image
           let page;
-          let width, height;
           
           if (pageSize === 'Fit') {
             // Fit to image dimensions
-            width = image.width;
-            height = image.height;
+            page = pdfDoc.addPage([image.width, image.height]);
+            page.drawImage(image, {
+              x: 0,
+              y: 0,
+              width: image.width,
+              height: image.height,
+            });
           } else {
             // Standard page sizes
+            let width, height;
             if (pageSize === 'A4') {
               width = 595.28; // A4 width in points (210mm)
               height = 841.89; // A4 height in points (297mm)
@@ -1418,31 +1588,33 @@
                 (orientation === 'auto' && image.width > image.height)) {
               [width, height] = [height, width];
             }
+            
+            // Add page with margins
+            const marginPoints = margin * 2.83465; // Convert mm to points
+            page = pdfDoc.addPage([width, height]);
+            
+            // Calculate image dimensions with margins
+            const maxWidth = width - (marginPoints * 2);
+            const maxHeight = height - (marginPoints * 2);
+            
+            // Maintain aspect ratio
+            let imgWidth = image.width;
+            let imgHeight = image.height;
+            const ratio = Math.min(maxWidth / imgWidth, maxHeight / imgHeight);
+            imgWidth *= ratio;
+            imgHeight *= ratio;
+            
+            // Center the image
+            const x = (width - imgWidth) / 2;
+            const y = (height - imgHeight) / 2;
+            
+            page.drawImage(image, {
+              x,
+              y,
+              width: imgWidth,
+              height: imgHeight,
+            });
           }
-          
-          // Add page
-          page = pdfDoc.addPage([width, height]);
-          
-          // Calculate image dimensions with margins
-          const marginPoints = margin * 2.83465; // Convert mm to points
-          let drawWidth = width - (marginPoints * 2);
-          let drawHeight = height - (marginPoints * 2);
-          
-          // Maintain aspect ratio
-          const ratio = Math.min(drawWidth / image.width, drawHeight / image.height);
-          drawWidth = image.width * ratio;
-          drawHeight = image.height * ratio;
-          
-          // Center the image
-          const x = (width - drawWidth) / 2;
-          const y = (height - drawHeight) / 2;
-          
-          page.drawImage(image, {
-            x,
-            y,
-            width: drawWidth,
-            height: drawHeight,
-          });
         }
         
         // Check if any pages were added
