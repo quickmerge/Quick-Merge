@@ -675,6 +675,41 @@
           </div>
         </div>
 
+        <!-- Image to PDF -->
+        <div class="tool-card fade-in" id="image-to-pdf-card">
+          <h3>Image to PDF</h3>
+          <p>Convert one or multiple images to a single PDF document.</p>
+          <button class="tool-btn" onclick="toggleTool('image-to-pdf')">Use Tool</button>
+          <div class="tool-content" id="image-to-pdf">
+            <div class="file-input">
+              <label>Select image(s) to convert:</label>
+              <div class="drag-drop-area" id="image-to-pdf-drop-area">
+                <p>Drag & drop images here</p>
+                <p class="small">or click to browse</p>
+              </div>
+              <input type="file" id="image-to-pdf-files" accept="image/*" multiple>
+              <div class="file-list" id="image-to-pdf-file-list"></div>
+            </div>
+            <div class="options">
+              <div class="option-group">
+                <label for="pdf-layout">Page Layout:</label>
+                <select id="pdf-layout">
+                  <option value="portrait">Portrait</option>
+                  <option value="landscape">Landscape</option>
+                  <option value="auto">Auto (match image orientation)</option>
+                </select>
+              </div>
+              <div class="option-group">
+                <label for="pdf-margin">Margin (mm):</label>
+                <input type="number" id="pdf-margin" min="0" max="50" value="5">
+              </div>
+            </div>
+            <button class="tool-btn" id="image-to-pdf-btn" onclick="convertImagesToPDF()">Convert to PDF</button>
+            <div class="spinner" id="image-to-pdf-spinner"></div>
+            <div class="status-message" id="image-to-pdf-status"></div>
+          </div>
+        </div>
+
         <!-- Text to Word/PDF -->
         <div class="tool-card fade-in" id="text-converter-card">
           <h3>Text to Word/PDF</h3>
@@ -716,7 +751,7 @@
                 <p>Drag & drop images here</p>
                 <p class="small">or click to browse</p>
               </div>
-              <input type="file" id="compress-image-file" accept="image/*" multiple>
+              <input type="file" id="compress-image-files" accept="image/*" multiple>
               <div class="file-list" id="compress-image-file-list"></div>
             </div>
             <div class="options">
@@ -734,6 +769,58 @@
             <div class="preview-container" id="image-preview"></div>
             <div class="spinner" id="compress-image-spinner"></div>
             <div class="status-message" id="compress-image-status"></div>
+          </div>
+        </div>
+
+        <!-- Background Color Changer -->
+        <div class="tool-card fade-in" id="bg-changer-card">
+          <h3>Background Color Changer</h3>
+          <p>Change or remove background color from images.</p>
+          <button class="tool-btn" onclick="toggleTool('bg-changer')">Use Tool</button>
+          <div class="tool-content" id="bg-changer">
+            <div class="file-input">
+              <label>Select image to modify:</label>
+              <div class="drag-drop-area" id="bg-changer-drop-area">
+                <p>Drag & drop an image here</p>
+                <p class="small">or click to browse</p>
+              </div>
+              <input type="file" id="bg-changer-file" accept="image/*">
+              <div class="file-list" id="bg-changer-file-list"></div>
+            </div>
+            <div class="options">
+              <div class="option-group">
+                <label for="bg-action">Action:</label>
+                <select id="bg-action">
+                  <option value="change">Change Background Color</option>
+                  <option value="remove">Remove Background</option>
+                </select>
+              </div>
+              <div class="option-group" id="bg-color-group">
+                <label for="bg-color">New Background Color:</label>
+                <input type="color" id="bg-color" value="#ffffff">
+              </div>
+              <div class="option-group">
+                <label for="bg-tolerance">Color Tolerance (for removal):</label>
+                <input type="range" id="bg-tolerance" min="0" max="100" value="10">
+                <span id="tolerance-value">10%</span>
+              </div>
+            </div>
+            <button class="tool-btn" id="bg-change-btn" onclick="processBackground()">Process Image</button>
+            <div class="preview-container">
+              <div style="display: flex; justify-content: space-around; width: 100%;">
+                <div>
+                  <p>Original</p>
+                  <img id="original-image-preview" style="max-height: 150px;">
+                </div>
+                <div>
+                  <p>Result</p>
+                  <img id="processed-image-preview" style="max-height: 150px;">
+                </div>
+              </div>
+            </div>
+            <div id="download-processed-container" style="margin-top: 1rem;"></div>
+            <div class="spinner" id="bg-changer-spinner"></div>
+            <div class="status-message" id="bg-changer-status"></div>
           </div>
         </div>
 
@@ -952,6 +1039,8 @@
       setupDragAndDrop('split-pdf', false);
       setupDragAndDrop('compress-pdf', false);
       setupDragAndDrop('compress-image', true);
+      setupDragAndDrop('image-to-pdf', true);
+      setupDragAndDrop('bg-changer', false);
      
       // Set up fade-in animations
       setupAnimations();
@@ -964,11 +1053,29 @@
           qualityValue.textContent = this.value + '%';
         });
       }
+      
+      // Setup tolerance slider
+      const toleranceSlider = document.getElementById('bg-tolerance');
+      const toleranceValue = document.getElementById('tolerance-value');
+      if (toleranceSlider && toleranceValue) {
+        toleranceSlider.addEventListener('input', function() {
+          toleranceValue.textContent = this.value + '%';
+        });
+      }
+      
+      // Toggle background color input based on action
+      const bgAction = document.getElementById('bg-action');
+      const bgColorGroup = document.getElementById('bg-color-group');
+      if (bgAction && bgColorGroup) {
+        bgAction.addEventListener('change', function() {
+          bgColorGroup.style.display = this.value === 'change' ? 'block' : 'none';
+        });
+      }
     });
 
     function setupDragAndDrop(toolId, allowMultiple) {
       const dropArea = document.getElementById(`${toolId}-drop-area`);
-      const fileInput = document.getElementById(`${toolId}-${toolId.includes('image') ? 'file' : toolId.includes('merge') ? 'files' : 'file'}`);
+      const fileInput = document.getElementById(`${toolId}-${allowMultiple ? 'files' : 'file'}`);
       const fileList = document.getElementById(`${toolId}-file-list`);
       const actionBtn = document.getElementById(`${toolId}-btn`);
 
@@ -1007,6 +1114,16 @@
       // Handle file selection via input
       fileInput.addEventListener('change', function(e) {
         handleFiles(e.target.files, fileList, actionBtn);
+        
+        // For background changer, show preview
+        if (toolId === 'bg-changer' && e.target.files.length > 0) {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            document.getElementById('original-image-preview').src = event.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
       });
 
       function preventDefaults(e) {
@@ -1031,8 +1148,18 @@
         // Update the file input with the dropped files
         fileInput.files = files;
         handleFiles(files, fileList, actionBtn);
+        
+        // For background changer, show preview
+        if (fileInput.id === 'bg-changer-file' && files.length > 0) {
+          const file = files[0];
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            document.getElementById('original-image-preview').src = event.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
       } else {
-        alert('Please select only one file for this tool.');
+        showStatus('bg-changer', 'Please select only one file for this tool.', 'error');
       }
     }
 
@@ -1124,7 +1251,7 @@
 
     function resetTool(toolId) {
       // Clear file inputs and lists
-      const fileInput = document.getElementById(`${toolId}-${toolId.includes('image') ? 'file' : toolId.includes('merge') ? 'files' : 'file'}`);
+      const fileInput = document.getElementById(`${toolId}-${toolId.includes('merge') || toolId.includes('image-to-pdf') || toolId.includes('compress-image') ? 'files' : 'file'}`);
       const fileList = document.getElementById(`${toolId}-file-list`);
       
       if (fileInput) fileInput.value = '';
@@ -1148,11 +1275,19 @@
       // For QR code tool, hide download button
       if (toolId === 'qr-code') {
         document.getElementById('download-qr-btn').style.display = 'none';
+        document.getElementById('qr-code-container').innerHTML = '';
       }
       
       // For text converter, clear textarea
       if (toolId === 'text-converter') {
         document.getElementById('text-content').value = '';
+      }
+      
+      // For background changer, clear previews and download button
+      if (toolId === 'bg-changer') {
+        document.getElementById('original-image-preview').src = '';
+        document.getElementById('processed-image-preview').src = '';
+        document.getElementById('download-processed-container').innerHTML = '';
       }
     }
 
@@ -1165,6 +1300,7 @@
       }
 
       showStatus('merge-pdf', 'Merging PDFs...', 'processing');
+      showSpinner('merge-pdf');
       
       try {
         const { PDFDocument } = PDFLib;
@@ -1214,6 +1350,7 @@
       }
 
       showStatus('split-pdf', 'Splitting PDF...', 'processing');
+      showSpinner('split-pdf');
       
       try {
         const { PDFDocument } = PDFLib;
@@ -1287,6 +1424,7 @@
       }
 
       showStatus('compress-pdf', 'Compressing PDF...', 'processing');
+      showSpinner('compress-pdf');
       
       try {
         const { PDFDocument } = PDFLib;
@@ -1294,32 +1432,43 @@
         const fileBuffer = await file.arrayBuffer();
         const pdfDoc = await PDFDocument.load(fileBuffer);
         
-        // Set compression based on level
+        // Set compression options based on level
         const options = {
           useObjectStreams: true,
-          // Add more compression options as needed
+          // Default options for medium compression
+          throwOnInvalidImage: true,
+          ignoreInvalidAnnotations: false,
+          forceJPEGCompression: false,
+          quality: 0.9
         };
         
-        // Enhanced compression options based on selected level
-        if (compressionLevel === 'high') {
-          options.useObjectStreams = true;
-          options.throwOnInvalidImage = false; // Skip invalid images
-          options.ignoreInvalidAnnotations = true; // Skip invalid annotations
-        } else if (compressionLevel === 'extreme') {
-          options.useObjectStreams = true;
+        // Adjust options based on compression level
+        if (compressionLevel === 'low') {
+          options.quality = 1.0;
+          options.useObjectStreams = false;
+        } else if (compressionLevel === 'high') {
+          options.quality = 0.7;
           options.throwOnInvalidImage = false;
           options.ignoreInvalidAnnotations = true;
-          options.forceJPEGCompression = true; // Force JPEG compression for all images
-          options.quality = 0.7; // Lower quality for images
+        } else if (compressionLevel === 'extreme') {
+          options.quality = 0.5;
+          options.throwOnInvalidImage = false;
+          options.ignoreInvalidAnnotations = true;
+          options.forceJPEGCompression = true;
         }
         
         // Save compressed PDF
         const compressedPdfBytes = await pdfDoc.save(options);
         const blob = new Blob([compressedPdfBytes], { type: 'application/pdf' });
         
+        // Calculate compression ratio
+        const originalSize = file.size;
+        const compressedSize = blob.size;
+        const ratio = ((originalSize - compressedSize) / originalSize * 100).toFixed(2);
+        
         // Download the file
         saveAs(blob, 'compressed-document.pdf');
-        showStatus('compress-pdf', 'PDF compressed successfully!', 'success');
+        showStatus('compress-pdf', `PDF compressed successfully! Size reduced by ${ratio}%`, 'success');
         
         // Reset tool after download
         setTimeout(() => resetTool('compress-pdf'), 2000);
@@ -1329,6 +1478,142 @@
       } finally {
         hideSpinner('compress-pdf');
       }
+    }
+
+    async function convertImagesToPDF() {
+      const fileInput = document.getElementById('image-to-pdf-files');
+      const layout = document.getElementById('pdf-layout').value;
+      const margin = parseInt(document.getElementById('pdf-margin').value);
+      
+      if (!fileInput.files || fileInput.files.length === 0) {
+        showStatus('image-to-pdf', 'Please select at least one image to convert', 'error');
+        return;
+      }
+
+      showStatus('image-to-pdf', 'Converting images to PDF...', 'processing');
+      showSpinner('image-to-pdf');
+      
+      try {
+        const { PDFDocument, rgb } = PDFLib;
+        const pdfDoc = await PDFDocument.create();
+        
+        // Process each image
+        for (let i = 0; i < fileInput.files.length; i++) {
+          const file = fileInput.files[i];
+          if (!file.type.match('image.*')) continue;
+          
+          // Convert image to data URL
+          const imageBytes = await file.arrayBuffer();
+          let image;
+          
+          try {
+            if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
+              image = await pdfDoc.embedJpg(imageBytes);
+            } else if (file.type === 'image/png') {
+              image = await pdfDoc.embedPng(imageBytes);
+            } else {
+              // For other image types, convert to JPEG first
+              const convertedImage = await convertImageToJpeg(file);
+              image = await pdfDoc.embedJpg(await convertedImage.arrayBuffer());
+            }
+            
+            // Determine page size based on layout and image dimensions
+            let pageWidth, pageHeight;
+            const marginPoints = margin * 2.83465; // Convert mm to points (1mm = 2.83465pt)
+            
+            if (layout === 'auto') {
+              // Match image orientation
+              pageWidth = image.width + (marginPoints * 2);
+              pageHeight = image.height + (marginPoints * 2);
+            } else if (layout === 'landscape') {
+              // Landscape (width > height)
+              const ratio = image.width / image.height;
+              if (ratio > 1) {
+                pageWidth = image.width + (marginPoints * 2);
+                pageHeight = image.height + (marginPoints * 2);
+              } else {
+                pageWidth = image.height + (marginPoints * 2);
+                pageHeight = image.width + (marginPoints * 2);
+              }
+            } else {
+              // Portrait (height > width)
+              const ratio = image.width / image.height;
+              if (ratio < 1) {
+                pageWidth = image.width + (marginPoints * 2);
+                pageHeight = image.height + (marginPoints * 2);
+              } else {
+                pageWidth = image.height + (marginPoints * 2);
+                pageHeight = image.width + (marginPoints * 2);
+              }
+            }
+            
+            // Add a new page with the calculated dimensions
+            const page = pdfDoc.addPage([pageWidth, pageHeight]);
+            
+            // Draw the image centered on the page with margins
+            const scale = Math.min(
+              (pageWidth - marginPoints * 2) / image.width,
+              (pageHeight - marginPoints * 2) / image.height
+            );
+            
+            const scaledWidth = image.width * scale;
+            const scaledHeight = image.height * scale;
+            
+            page.drawImage(image, {
+              x: (pageWidth - scaledWidth) / 2,
+              y: (pageHeight - scaledHeight) / 2,
+              width: scaledWidth,
+              height: scaledHeight,
+            });
+          } catch (error) {
+            console.error(`Error processing image ${file.name}:`, error);
+            continue;
+          }
+        }
+        
+        if (pdfDoc.getPageCount() === 0) {
+          showStatus('image-to-pdf', 'No valid images were processed', 'error');
+          return;
+        }
+        
+        // Save the PDF
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        
+        // Download the file
+        saveAs(blob, 'converted-images.pdf');
+        showStatus('image-to-pdf', 'Images converted to PDF successfully!', 'success');
+        
+        // Reset tool after download
+        setTimeout(() => resetTool('image-to-pdf'), 2000);
+      } catch (error) {
+        console.error('Error converting images to PDF:', error);
+        showStatus('image-to-pdf', 'Error: ' + error.message, 'error');
+      } finally {
+        hideSpinner('image-to-pdf');
+      }
+    }
+
+    async function convertImageToJpeg(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            
+            canvas.toBlob((blob) => {
+              resolve(new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), { type: 'image/jpeg' }));
+            }, 'image/jpeg', 0.9);
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
     }
 
     async function convertTextToDocument() {
@@ -1342,6 +1627,7 @@
       }
 
       showStatus('text-converter', 'Converting text...', 'processing');
+      showSpinner('text-converter');
       
       try {
         if (format === 'docx') {
@@ -1409,7 +1695,7 @@
     }
 
     async function compressImages() {
-      const fileInput = document.getElementById('compress-image-file');
+      const fileInput = document.getElementById('compress-image-files');
       const quality = document.getElementById('image-quality').value / 100;
       const maxWidth = document.getElementById('image-resize').value;
       
@@ -1419,6 +1705,7 @@
       }
 
       showStatus('compress-image', 'Compressing images...', 'processing');
+      showSpinner('compress-image');
       
       try {
         // Load JSZip dynamically if not available
@@ -1503,20 +1790,118 @@
       });
     }
 
-    // Dynamically load JS if missing
-    function loadScript(src) {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
+    async function processBackground() {
+      const fileInput = document.getElementById('bg-changer-file');
+      const action = document.getElementById('bg-action').value;
+      const bgColor = document.getElementById('bg-color').value;
+      const tolerance = parseInt(document.getElementById('bg-tolerance').value) / 100;
+      
+      if (!fileInput.files || fileInput.files.length === 0) {
+        showStatus('bg-changer', 'Please select an image to process', 'error');
+        return;
+      }
+
+      showStatus('bg-changer', 'Processing image...', 'processing');
+      showSpinner('bg-changer');
+      
+      try {
+        const file = fileInput.files[0];
+        const resultBlob = await processImageBackground(file, action, bgColor, tolerance);
+        
+        if (!resultBlob) {
+          showStatus('bg-changer', 'Error processing image', 'error');
+          return;
+        }
+        
+        // Show result preview
+        const resultUrl = URL.createObjectURL(resultBlob);
+        document.getElementById('processed-image-preview').src = resultUrl;
+        
+        // Create download button
+        const downloadContainer = document.getElementById('download-processed-container');
+        downloadContainer.innerHTML = '';
+        
+        const downloadBtn = document.createElement('a');
+        downloadBtn.className = 'tool-btn';
+        downloadBtn.textContent = 'Download Processed Image';
+        downloadBtn.href = resultUrl;
+        downloadBtn.download = `processed_${file.name}`;
+        downloadContainer.appendChild(downloadBtn);
+        
+        showStatus('bg-changer', 'Image processed successfully!', 'success');
+      } catch (error) {
+        console.error('Error processing image background:', error);
+        showStatus('bg-changer', 'Error: ' + error.message, 'error');
+      } finally {
+        hideSpinner('bg-changer');
+      }
     }
 
-
-
-
+    async function processImageBackground(file, action, bgColor, tolerance) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            
+            // Draw the original image
+            ctx.drawImage(img, 0, 0);
+            
+            if (action === 'remove') {
+              // Get image data
+              const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+              const data = imageData.data;
+              
+              // Get the color of the top-left pixel as the background color to remove
+              const r = data[0];
+              const g = data[1];
+              const b = data[2];
+              
+              // Process all pixels
+              for (let i = 0; i < data.length; i += 4) {
+                const pixelR = data[i];
+                const pixelG = data[i + 1];
+                const pixelB = data[i + 2];
+                
+                // Calculate color distance
+                const distance = Math.sqrt(
+                  Math.pow(pixelR - r, 2) +
+                  Math.pow(pixelG - g, 2) +
+                  Math.pow(pixelB - b, 2)
+                ) / 441.6729559300637; // Normalize to 0-1 (441.67 is max possible distance)
+                
+                // If pixel is within tolerance of the background color, make it transparent
+                if (distance <= tolerance) {
+                  data[i + 3] = 0; // Set alpha to 0 (transparent)
+                }
+              }
+              
+              // Put the modified image data back
+              ctx.putImageData(imageData, 0, 0);
+            } else {
+              // Change background color
+              // First create a new canvas with the background color
+              ctx.fillStyle = bgColor;
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              
+              // Then draw the original image on top
+              ctx.drawImage(img, 0, 0);
+            }
+            
+            // Convert to Blob
+            canvas.toBlob((blob) => {
+              resolve(blob);
+            }, file.type);
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
 
     function generateQRCode() {
       const container = document.getElementById('qr-code-container');
@@ -1554,27 +1939,47 @@
       
       // Reset tool after download
       setTimeout(() => {
-        resetTool('qr-code');
-        container.innerHTML = '';
+        document.getElementById('qr-code-container').innerHTML = '';
+        document.getElementById('download-qr-btn').style.display = 'none';
+        document.getElementById('qr-content').value = '';
+        showStatus('qr-code', '', '');
       }, 2000);
     }
 
     // Helper functions
     function showStatus(toolId, message, type) {
       const statusElement = document.getElementById(`${toolId}-status`);
+      if (!statusElement) return;
+      
       statusElement.textContent = message;
       statusElement.className = 'status-message';
       
       if (type === 'processing') {
-        document.getElementById(`${toolId}-spinner`).style.display = 'block';
-      } else {
-        document.getElementById(`${toolId}-spinner`).style.display = 'none';
+        statusElement.classList.remove('success', 'error');
+      } else if (type) {
         statusElement.classList.add(type);
       }
     }
 
+    function showSpinner(toolId) {
+      const spinner = document.getElementById(`${toolId}-spinner`);
+      if (spinner) spinner.style.display = 'block';
+    }
+
     function hideSpinner(toolId) {
-      document.getElementById(`${toolId}-spinner`).style.display = 'none';
+      const spinner = document.getElementById(`${toolId}-spinner`);
+      if (spinner) spinner.style.display = 'none';
+    }
+
+    // Dynamically load JS if missing
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
     }
   </script>
 </body>
