@@ -11,15 +11,21 @@
   <meta property="og:title" content="Quick Merge - File Processing Tools">
   <meta property="og:description" content="Merge, compress and convert files instantly with our privacy-focused browser tools">
   <meta property="og:type" content="website">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <!-- Required Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.min.js"></script>
+  
   <!-- Enhanced Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/index.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+  
   <style>
     * {
       margin: 0;
@@ -380,10 +386,13 @@
       color: #e74c3c;
     }
 
+    .status-message.processing {
+      background: rgba(52, 152, 219, 0.2);
+      color: #3498db;
+    }
+
     /* About, Contact, Privacy pages styles */
     .content-page {
-      background: linear-gradient(to right, #0f0f10, #111215);
-      color: #f0f0f0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -557,6 +566,13 @@
       display: block;
     }
 
+    /* Accessibility improvements */
+    button:focus, input:focus, select:focus, textarea:focus {
+      outline: 2px solid #6c5dd3;
+      outline-offset: 2px;
+    }
+
+    /* Responsive adjustments */
     @media (max-width: 768px) {
       .hero h2 {
         font-size: 2rem;
@@ -582,6 +598,10 @@
 
       .content-container, .container {
         padding: 1.5rem;
+      }
+      
+      .tools {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -623,15 +643,15 @@
           <button class="tool-btn" onclick="toggleTool('merge-pdf')">Use Tool</button>
           <div class="tool-content" id="merge-pdf">
             <div class="file-input">
-              <label>Select PDF files to merge:</label>
-              <div class="drag-drop-area" id="merge-pdf-drop-area">
+              <label for="merge-pdf-files">Select PDF files to merge:</label>
+              <div class="drag-drop-area" id="merge-pdf-drop-area" tabindex="0" role="button" aria-label="Drag and drop area for PDF files">
                 <p>Drag & drop PDF files here</p>
                 <p class="small">or click to browse</p>
               </div>
               <input type="file" id="merge-pdf-files" accept=".pdf" multiple>
               <div class="file-list" id="merge-pdf-file-list"></div>
             </div>
-            <button class="tool-btn" id="merge-pdf-btn" onclick="mergePDFs()">Merge PDFs</button>
+            <button class="tool-btn" id="merge-pdf-btn" onclick="mergePDFs()" disabled>Merge PDFs</button>
             <div class="spinner" id="merge-pdf-spinner"></div>
             <div class="status-message" id="merge-pdf-status"></div>
           </div>
@@ -644,8 +664,8 @@
           <button class="tool-btn" onclick="toggleTool('split-pdf')">Use Tool</button>
           <div class="tool-content" id="split-pdf">
             <div class="file-input">
-              <label>Select PDF file to split:</label>
-              <div class="drag-drop-area" id="split-pdf-drop-area">
+              <label for="split-pdf-file">Select PDF file to split:</label>
+              <div class="drag-drop-area" id="split-pdf-drop-area" tabindex="0" role="button" aria-label="Drag and drop area for PDF files">
                 <p>Drag & drop a PDF file here</p>
                 <p class="small">or click to browse</p>
               </div>
@@ -658,7 +678,7 @@
                 <input type="text" id="split-pages" placeholder="1-3,5,7-9">
               </div>
             </div>
-            <button class="tool-btn" id="split-pdf-btn" onclick="splitPDF()">Split PDF</button>
+            <button class="tool-btn" id="split-pdf-btn" onclick="splitPDF()" disabled>Split PDF</button>
             <div class="spinner" id="split-pdf-spinner"></div>
             <div class="status-message" id="split-pdf-status"></div>
           </div>
@@ -671,8 +691,8 @@
           <button class="tool-btn" onclick="toggleTool('compress-pdf')">Use Tool</button>
           <div class="tool-content" id="compress-pdf">
             <div class="file-input">
-              <label>Select PDF file to compress:</label>
-              <div class="drag-drop-area" id="compress-pdf-drop-area">
+              <label for="compress-pdf-file">Select PDF file to compress:</label>
+              <div class="drag-drop-area" id="compress-pdf-drop-area" tabindex="0" role="button" aria-label="Drag and drop area for PDF files">
                 <p>Drag & drop a PDF file here</p>
                 <p class="small">or click to browse</p>
               </div>
@@ -690,7 +710,7 @@
                 </select>
               </div>
             </div>
-            <button class="tool-btn" id="compress-pdf-btn" onclick="compressPDF()">Compress PDF</button>
+            <button class="tool-btn" id="compress-pdf-btn" onclick="compressPDF()" disabled>Compress PDF</button>
             <div class="spinner" id="compress-pdf-spinner"></div>
             <div class="status-message" id="compress-pdf-status"></div>
           </div>
@@ -703,8 +723,8 @@
           <button class="tool-btn" onclick="toggleTool('image-to-pdf')">Use Tool</button>
           <div class="tool-content" id="image-to-pdf">
             <div class="file-input">
-              <label>Select image(s) to convert:</label>
-              <div class="drag-drop-area" id="image-to-pdf-drop-area">
+              <label for="image-to-pdf-files">Select image(s) to convert:</label>
+              <div class="drag-drop-area" id="image-to-pdf-drop-area" tabindex="0" role="button" aria-label="Drag and drop area for image files">
                 <p>Drag & drop images here</p>
                 <p class="small">or click to browse</p>
               </div>
@@ -725,7 +745,7 @@
                 <input type="number" id="pdf-margin" min="0" max="50" value="5">
               </div>
             </div>
-            <button class="tool-btn" id="image-to-pdf-btn" onclick="convertImagesToPDF()">Convert to PDF</button>
+            <button class="tool-btn" id="image-to-pdf-btn" onclick="convertImagesToPDF()" disabled>Convert to PDF</button>
             <div class="spinner" id="image-to-pdf-spinner"></div>
             <div class="status-message" id="image-to-pdf-status"></div>
           </div>
@@ -767,8 +787,8 @@
           <button class="tool-btn" onclick="toggleTool('compress-image')">Use Tool</button>
           <div class="tool-content" id="compress-image">
             <div class="file-input">
-              <label>Select image(s) to compress:</label>
-              <div class="drag-drop-area" id="compress-image-drop-area">
+              <label for="compress-image-files">Select image(s) to compress:</label>
+              <div class="drag-drop-area" id="compress-image-drop-area" tabindex="0" role="button" aria-label="Drag and drop area for image files">
                 <p>Drag & drop images here</p>
                 <p class="small">or click to browse</p>
               </div>
@@ -795,60 +815,12 @@
                 </select>
               </div>
             </div>
-            <button class="tool-btn" id="compress-image-btn" onclick="compressImages()">Compress Images</button>
+            <button class="tool-btn" id="compress-image-btn" onclick="compressImages()" disabled>Compress Images</button>
             <div class="preview-container" id="image-preview"></div>
             <div class="spinner" id="compress-image-spinner"></div>
             <div class="status-message" id="compress-image-status"></div>
           </div>
         </div>
-
-        <!-- Background Color Changer -->
-        <div class="tool-card fade-in" id="bg-changer-card">
-          <h3>AI Background Remover</h3>
-          <p>Remove or change image backgrounds using advanced AI technology.</p>
-          <button class="tool-btn" onclick="toggleTool('bg-changer')">Use Tool</button>
-          <div class="tool-content" id="bg-changer">
-            <div class="file-input">
-              <label>Select image to modify:</label>
-              <div class="drag-drop-area" id="bg-changer-drop-area">
-                <p>Drag & drop an image here</p>
-                <p class="small">or click to browse</p>
-              </div>
-              <input type="file" id="bg-changer-file" accept="image/*">
-              <div class="file-list" id="bg-changer-file-list"></div>
-            </div>
-            <div class="options">
-              <div class="option-group">
-                <label for="bg-action">Action:</label>
-                <select id="bg-action">
-                  <option value="remove">Remove Background (AI)</option>
-                  <option value="change">Change Background Color</option>
-                </select>
-              </div>
-              <div class="option-group" id="bg-color-group" style="display: none;">
-                <label for="bg-color">New Background Color:</label>
-                <input type="color" id="bg-color" value="#ffffff">
-              </div>
-            </div>
-            <button class="tool-btn" id="bg-change-btn" onclick="processBackground()">Process Image</button>
-            <div class="preview-container">
-              <div style="display: flex; justify-content: space-around; width: 100%;">
-                <div>
-                  <p>Original</p>
-                  <img id="original-image-preview" style="max-height: 150px;">
-                </div>
-                <div>
-                  <p>Result</p>
-                  <img id="processed-image-preview" style="max-height: 150px;">
-                </div>
-              </div>
-            </div>
-            <div id="download-processed-container" style="margin-top: 1rem;"></div>
-            <div class="spinner" id="bg-changer-spinner"></div>
-            <div class="status-message" id="bg-changer-status"></div>
-          </div>
-        </div>
-
         <!-- QR Code Generator -->
         <div class="tool-card fade-in" id="qr-code-card">
           <h3>Advanced QR Code Generator</h3>
@@ -1220,7 +1192,7 @@
         
         const fileNameSpan = document.createElement('span');
         fileNameSpan.className = 'file-item-name';
-        fileNameSpan.textContent = file.name;
+        fileNameSpan.textContent = sanitizeFilename(file.name);
         
         const fileSizeSpan = document.createElement('span');
         fileSizeSpan.className = 'file-item-size';
@@ -1249,6 +1221,10 @@
       if (actionBtn) {
         actionBtn.disabled = false;
       }
+    }
+
+    function sanitizeFilename(filename) {
+      return filename.replace(/[^\w\.\-]/g, '_');
     }
 
     function formatFileSize(bytes) {
@@ -1783,7 +1759,7 @@
           }
 
           try {
-            const compressedFile = await imageCompression(file, options);
+            const compressedFile = await browserImageCompression(file, options);
             totalCompressedSize += compressedFile.size;
             
             // Generate filename with appropriate extension
@@ -1831,7 +1807,30 @@
       }
     }
 
-    // Enhanced background processing using @imgly/background-removal
+    // Background removal using @imgly/background-removal
+    async function removeBackground(file) {
+      try {
+        // Initialize the background removal module
+        const backgroundRemoval = window.backgroundRemoval;
+        
+        // Process the image
+        const imageBlob = await backgroundRemoval.removeBackground(file, {
+          publicPath: 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/',
+          debug: false,
+          progress: (key, current, total) => {
+            const percentage = Math.round((current / total) * 100);
+            showStatus('bg-changer', `Processing: ${percentage}% complete`, 'processing');
+          }
+        });
+        
+        return imageBlob;
+      } catch (error) {
+        console.error('Error removing background:', error);
+        throw error;
+      }
+    }
+
+    // Enhanced background processing
     async function processBackground() {
       const fileInput = document.getElementById('bg-changer-file');
       const action = document.getElementById('bg-action').value;
@@ -2006,7 +2005,7 @@
       statusElement.className = 'status-message';
       
       if (type === 'processing') {
-        statusElement.classList.remove('success', 'error');
+        statusElement.classList.add('processing');
       } else if (type) {
         statusElement.classList.add(type);
       }
@@ -2048,4 +2047,3 @@
   </script>
 </body>
 </html>
-
