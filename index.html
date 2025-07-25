@@ -291,10 +291,6 @@
       margin-top: 0.5rem;
     }
 
-    .tool-btn.secondary:hover {
-      background: rgba(108, 93, 211, 0.1);
-    }
-
     .tool-btn:disabled {
       background: #555;
       cursor: not-allowed;
@@ -459,7 +455,6 @@
 
     .feature-item {
       margin-bottom: 1rem;
-      color: #ddd;
       padding-left: 1rem;
       border-left: 3px solid #6c5dd3;
     }
@@ -1695,19 +1690,78 @@
       const { width, height } = page.getSize();
       const fontSize = 12;
       const margin = 50;
+      const lineHeight = fontSize * 1.5;
       
-      page.drawText(text, {
-        x: margin,
-        y: height - margin - fontSize,
-        size: fontSize,
-        color: rgb(0, 0, 0),
-        lineHeight: fontSize * 1.2,
-        maxWidth: width - margin * 2,
-      });
+      // Split text into paragraphs
+      const paragraphs = text.split('\n\n');
+      let currentY = height - margin - fontSize;
+      
+      for (const paragraph of paragraphs) {
+        // Split paragraph into lines that fit within the page width
+        const words = paragraph.split(/\s+/);
+        let currentLine = '';
+        
+        for (const word of words) {
+          const testLine = currentLine ? `${currentLine} ${word}` : word;
+          const testWidth = getTextWidth(testLine, fontSize);
+          
+          if (testWidth <= (width - margin * 2)) {
+            currentLine = testLine;
+          } else {
+            // Draw the current line
+            if (currentLine) {
+              page.drawText(currentLine, {
+                x: margin,
+                y: currentY,
+                size: fontSize,
+                color: rgb(0, 0, 0),
+              });
+              currentY -= lineHeight;
+            }
+            
+            // Start new line with the current word
+            currentLine = word;
+            
+            // Check if we need to add a new page
+            if (currentY < margin) {
+              currentY = height - margin - fontSize;
+              page = pdfDoc.addPage([595.28, 841.89]);
+            }
+          }
+        }
+        
+        // Draw the last line of the paragraph
+        if (currentLine) {
+          page.drawText(currentLine, {
+            x: margin,
+            y: currentY,
+            size: fontSize,
+            color: rgb(0, 0, 0),
+          });
+          currentY -= lineHeight;
+        }
+        
+        // Add paragraph spacing
+        currentY -= lineHeight * 0.5;
+        
+        // Check if we need to add a new page before next paragraph
+        if (currentY < margin) {
+          currentY = height - margin - fontSize;
+          page = pdfDoc.addPage([595.28, 841.89]);
+        }
+      }
       
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       saveAs(blob, `${filename}.pdf`);
+    }
+
+    // Helper function to estimate text width
+    function getTextWidth(text, fontSize) {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      context.font = `${fontSize}px 'Poppins', sans-serif`;
+      return context.measureText(text).width;
     }
 
     // Enhanced image compression using browser-image-compression
