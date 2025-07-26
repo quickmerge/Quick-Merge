@@ -14,6 +14,8 @@
   
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for hamburger icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Required Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
@@ -88,6 +90,44 @@
 
     .nav .nav-links a:hover {
       color: #fff;
+    }
+
+    /* Mobile menu styles */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background: rgba(15, 15, 16, 0.98);
+      padding: 1rem;
+      z-index: 999;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .mobile-menu.active {
+      display: block;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 0.8rem 1rem;
+      color: #ccc;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .mobile-menu a:hover {
+      color: #fff;
+      background: rgba(108, 93, 211, 0.1);
     }
 
     .container {
@@ -581,14 +621,12 @@
         font-size: 1.5rem;
       }
 
-      .nav {
-        flex-direction: column;
-        align-items: flex-start;
+      .nav .nav-links {
+        display: none;
       }
 
-      .nav .nav-links {
-        margin-top: 0.5rem;
-        flex-wrap: wrap;
+      .mobile-menu-btn {
+        display: block;
       }
 
       .content-container, .container {
@@ -597,6 +635,12 @@
       
       .tools {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-menu {
+        display: none !important;
       }
     }
   </style>
@@ -612,6 +656,15 @@
         <a href="#" onclick="showSection('contact')">Contact</a>
         <a href="#" onclick="showSection('privacy')">Privacy</a>
       </div>
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#" onclick="showSection('home'); toggleMobileMenu()">Home</a>
+      <a href="#" onclick="showSection('about'); toggleMobileMenu()">About</a>
+      <a href="#" onclick="showSection('contact'); toggleMobileMenu()">Contact</a>
+      <a href="#" onclick="showSection('privacy'); toggleMobileMenu()">Privacy</a>
     </div>
   </header>
 
@@ -768,6 +821,17 @@
                   <option value="pdf">PDF Document (.pdf)</option>
                 </select>
               </div>
+              <div class="option-group" id="formatting-options" style="display: none;">
+                <label>Formatting Options:</label>
+                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                  <button type="button" class="format-btn" onclick="formatText('bold')"><i class="fas fa-bold"></i></button>
+                  <button type="button" class="format-btn" onclick="formatText('italic')"><i class="fas fa-italic"></i></button>
+                  <button type="button" class="format-btn" onclick="formatText('underline')"><i class="fas fa-underline"></i></button>
+                  <button type="button" class="format-btn" onclick="formatText('heading1')">H1</button>
+                  <button type="button" class="format-btn" onclick="formatText('heading2')">H2</button>
+                  <button type="button" class="format-btn" onclick="formatText('list')"><i class="fas fa-list-ul"></i></button>
+                </div>
+              </div>
             </div>
             <button class="tool-btn" id="text-convert-btn" onclick="convertTextToDocument()">Convert Text</button>
             <div class="spinner" id="text-converter-spinner"></div>
@@ -807,6 +871,14 @@
                   <option value="jpeg">JPEG</option>
                   <option value="png">PNG</option>
                   <option value="webp">WebP (best compression)</option>
+                </select>
+              </div>
+              <div class="option-group">
+                <label for="advanced-compression">Advanced Compression:</label>
+                <select id="advanced-compression">
+                  <option value="balanced">Balanced (recommended)</option>
+                  <option value="aggressive">Aggressive (smaller files)</option>
+                  <option value="conservative">Conservative (better quality)</option>
                 </select>
               </div>
             </div>
@@ -1044,6 +1116,22 @@
       }
     }
 
+    // Toggle mobile menu
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileMenu.classList.toggle('active');
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const mobileMenu = document.getElementById('mobileMenu');
+      const menuBtn = document.querySelector('.mobile-menu-btn');
+      
+      if (!mobileMenu.contains(event.target) && event.target !== menuBtn && !menuBtn.contains(event.target)) {
+        mobileMenu.classList.remove('active');
+      }
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
       // Initialize all tool sections
       setupDragAndDrop('merge-pdf', true);
@@ -1071,6 +1159,18 @@
         if (element) {
           element.addEventListener('input', debounce(generateQRCodePreview, 500));
           element.addEventListener('change', debounce(generateQRCodePreview, 500));
+        }
+      });
+
+      // Show formatting options when text converter is opened
+      document.getElementById('text-converter-card').addEventListener('click', function(e) {
+        if (e.target.classList.contains('tool-btn') && !e.target.id) {
+          setTimeout(() => {
+            const content = document.getElementById('text-content');
+            if (content) {
+              document.getElementById('formatting-options').style.display = 'block';
+            }
+          }, 100);
         }
       });
     });
@@ -1207,6 +1307,9 @@
       if (toolCard.classList.contains('active')) {
         toolCard.classList.remove('active');
         toolContent.style.display = 'none';
+        if (toolId === 'text-converter') {
+          document.getElementById('formatting-options').style.display = 'none';
+        }
       } else {
         // Close all other tools first
         document.querySelectorAll('.tool-card.active').forEach(card => {
@@ -1216,6 +1319,10 @@
         
         toolCard.classList.add('active');
         toolContent.style.display = 'block';
+        
+        if (toolId === 'text-converter') {
+          document.getElementById('formatting-options').style.display = 'block';
+        }
       }
     }
 
@@ -1429,6 +1536,9 @@
           options.useObjectStreams = true;
           options.objectsPerTick = 200;
           options.updateFieldAppearances = false;
+          // Additional extreme compression settings
+          options.ignoreEncryption = true;
+          options.throwOnInvalidObject = false;
         }
         
         // Save compressed PDF
@@ -1590,6 +1700,45 @@
       });
     }
 
+    // Text formatting functions
+    function formatText(formatType) {
+      const textarea = document.getElementById('text-content');
+      const startPos = textarea.selectionStart;
+      const endPos = textarea.selectionEnd;
+      const selectedText = textarea.value.substring(startPos, endPos);
+      let formattedText = '';
+      
+      switch(formatType) {
+        case 'bold':
+          formattedText = `**${selectedText}**`;
+          break;
+        case 'italic':
+          formattedText = `*${selectedText}*`;
+          break;
+        case 'underline':
+          formattedText = `_${selectedText}_`;
+          break;
+        case 'heading1':
+          formattedText = `# ${selectedText}`;
+          break;
+        case 'heading2':
+          formattedText = `## ${selectedText}`;
+          break;
+        case 'list':
+          formattedText = selectedText.split('\n').map(line => `- ${line}`).join('\n');
+          break;
+        default:
+          formattedText = selectedText;
+      }
+      
+      // Replace the selected text with formatted text
+      textarea.value = textarea.value.substring(0, startPos) + formattedText + textarea.value.substring(endPos);
+      
+      // Restore cursor position
+      textarea.focus();
+      textarea.setSelectionRange(startPos, startPos + formattedText.length);
+    }
+
     async function convertTextToDocument() {
       const textContent = document.getElementById('text-content').value;
       const filename = document.getElementById('text-filename').value || 'document';
@@ -1621,21 +1770,101 @@
     }
 
     async function generateWordDocument(text, filename) {
-      const { Document, Paragraph, TextRun, Packer } = docx;
+      const { Document, Paragraph, TextRun, HeadingLevel, Packer } = docx;
+      
+      // Parse markdown-like formatting
+      const paragraphs = [];
+      const lines = text.split('\n');
+      
+      for (const line of lines) {
+        if (line.startsWith('# ')) {
+          // Heading 1
+          paragraphs.push(new Paragraph({
+            text: line.substring(2),
+            heading: HeadingLevel.HEADING_1,
+            spacing: { after: 200 }
+          }));
+        } else if (line.startsWith('## ')) {
+          // Heading 2
+          paragraphs.push(new Paragraph({
+            text: line.substring(3),
+            heading: HeadingLevel.HEADING_2,
+            spacing: { after: 150 }
+          }));
+        } else if (line.startsWith('**') && line.endsWith('**') && line.length > 4) {
+          // Bold text
+          paragraphs.push(new Paragraph({
+            children: [
+              new TextRun({
+                text: line.substring(2, line.length - 2),
+                bold: true
+              })
+            ],
+            spacing: { after: 100 }
+          }));
+        } else if (line.startsWith('*') && line.endsWith('*') && line.length > 2) {
+          // Italic text
+          paragraphs.push(new Paragraph({
+            children: [
+              new TextRun({
+                text: line.substring(1, line.length - 1),
+                italics: true
+              })
+            ],
+            spacing: { after: 100 }
+          }));
+        } else if (line.startsWith('_') && line.endsWith('_') && line.length > 2) {
+          // Underlined text
+          paragraphs.push(new Paragraph({
+            children: [
+              new TextRun({
+                text: line.substring(1, line.length - 1),
+                underline: {}
+              })
+            ],
+            spacing: { after: 100 }
+          }));
+        } else if (line.startsWith('- ')) {
+          // List item
+          paragraphs.push(new Paragraph({
+            text: line.substring(2),
+            bullet: { level: 0 },
+            spacing: { after: 80 }
+          }));
+        } else if (line.trim() === '') {
+          // Empty line
+          paragraphs.push(new Paragraph({
+            text: '',
+            spacing: { after: 100 }
+          }));
+        } else {
+          // Regular paragraph
+          paragraphs.push(new Paragraph({
+            text: line,
+            spacing: { after: 100 }
+          }));
+        }
+      }
       
       const doc = new Document({
+        styles: {
+          paragraphStyles: [
+            {
+              id: "Normal",
+              name: "Normal",
+              run: {
+                size: 24, // 12pt
+                font: "Poppins"
+              },
+              paragraph: {
+                spacing: { line: 276 } // 1.15 line spacing
+              }
+            }
+          ]
+        },
         sections: [{
           properties: {},
-          children: [
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: text,
-                  size: 24, // 12pt
-                }),
-              ],
-            }),
-          ],
+          children: paragraphs
         }],
       });
       
@@ -1656,79 +1885,73 @@
       const lineHeight = fontSize * 1.5;
       const paragraphGap = lineHeight * 1.15; // 1.15 line gap between paragraphs
       
-      // Split text into paragraphs
-      const paragraphs = text.split('\n\n');
+      // Parse markdown-like formatting
+      const lines = text.split('\n');
       let currentY = height - margin - fontSize;
+      let isList = false;
       
-      for (const paragraph of paragraphs) {
-        // Skip empty paragraphs
-        if (!paragraph.trim()) continue;
+      for (const line of lines) {
+        if (line.trim() === '') {
+          // Empty line - just add paragraph spacing
+          currentY -= paragraphGap;
+          isList = false;
+          continue;
+        }
         
-        // Split paragraph into lines that fit within the page width
-        const words = paragraph.split(/\s+/);
-        let currentLine = '';
+        let textToDraw = line;
+        let textOptions = {
+          size: fontSize,
+          color: rgb(0, 0, 0)
+        };
         
-        for (const word of words) {
-          const testLine = currentLine ? `${currentLine} ${word}` : word;
-          const testWidth = getTextWidth(testLine, fontSize);
-          
-          if (testWidth <= (width - margin * 2)) {
-            currentLine = testLine;
-          } else {
-            // Draw the current line
-            if (currentLine) {
-              page.drawText(currentLine, {
-                x: margin,
-                y: currentY,
-                size: fontSize,
-                color: rgb(0, 0, 0),
-              });
-              currentY -= lineHeight;
-            }
-            
-            // Start new line with the current word
-            currentLine = word;
-            
-            // Check if we need to add a new page
-            if (currentY < margin) {
-              page = pdfDoc.addPage([595.28, 841.89]);
-              currentY = height - margin - fontSize;
-            }
+        // Check for formatting
+        if (line.startsWith('# ')) {
+          // Heading 1
+          textToDraw = line.substring(2);
+          textOptions.size = fontSize * 1.8;
+          textOptions.color = rgb(0.2, 0.2, 0.4);
+        } else if (line.startsWith('## ')) {
+          // Heading 2
+          textToDraw = line.substring(3);
+          textOptions.size = fontSize * 1.4;
+          textOptions.color = rgb(0.3, 0.3, 0.5);
+        } else if (line.startsWith('**') && line.endsWith('**') && line.length > 4) {
+          // Bold text
+          textToDraw = line.substring(2, line.length - 2);
+        } else if (line.startsWith('*') && line.endsWith('*') && line.length > 2) {
+          // Italic text
+          textToDraw = line.substring(1, line.length - 1);
+        } else if (line.startsWith('_') && line.endsWith('_') && line.length > 2) {
+          // Underlined text
+          textToDraw = line.substring(1, line.length - 1);
+        } else if (line.startsWith('- ')) {
+          // List item
+          textToDraw = '• ' + line.substring(2);
+          if (!isList) {
+            currentY -= lineHeight * 0.5; // Extra space before list
+            isList = true;
           }
         }
         
-        // Draw the last line of the paragraph
-        if (currentLine) {
-          page.drawText(currentLine, {
-            x: margin,
-            y: currentY,
-            size: fontSize,
-            color: rgb(0, 0, 0),
-          });
-          currentY -= lineHeight;
-        }
-        
-        // Add paragraph spacing
-        currentY -= paragraphGap - lineHeight;
-        
-        // Check if we need to add a new page before next paragraph
+        // Check if we need a new page
         if (currentY < margin) {
           page = pdfDoc.addPage([595.28, 841.89]);
           currentY = height - margin - fontSize;
         }
+        
+        // Draw the text
+        page.drawText(textToDraw, {
+          x: margin,
+          y: currentY,
+          ...textOptions
+        });
+        
+        currentY -= lineHeight;
       }
       
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       saveAs(blob, `${filename}.pdf`);
-    }
-
-    // Helper function to estimate text width
-    function getTextWidth(text, fontSize) {
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      context.font = `${fontSize}px 'Poppins', sans-serif`;
-      return context.measureText(text).width;
     }
 
     // Enhanced image compression using browser-image-compression
@@ -1737,6 +1960,7 @@
       const quality = document.getElementById('image-quality').value / 100;
       const maxWidth = document.getElementById('image-resize').value;
       const outputFormat = document.getElementById('output-format').value;
+      const compressionMode = document.getElementById('advanced-compression').value;
       
       if (!fileInput.files || fileInput.files.length === 0) {
         showStatus('compress-image', 'Please select at least one image to compress', 'error');
@@ -1752,34 +1976,46 @@
         let totalOriginalSize = 0;
         let totalCompressedSize = 0;
 
+        // Enhanced compression options based on mode
+        const baseOptions = {
+          maxSizeMB: 1,
+          maxWidthOrHeight: maxWidth ? parseInt(maxWidth) : undefined,
+          useWebWorker: true,
+          initialQuality: quality,
+          maxIteration: 10
+        };
+
+        // Adjust options based on compression mode
+        let options;
+        if (compressionMode === 'aggressive') {
+          options = {
+            ...baseOptions,
+            maxIteration: 15,
+            quality: Math.max(0.1, quality * 0.8), // More aggressive quality reduction
+            fileType: outputFormat === 'original' ? undefined : outputFormat
+          };
+        } else if (compressionMode === 'conservative') {
+          options = {
+            ...baseOptions,
+            maxIteration: 5,
+            quality: Math.min(1, quality * 1.1), // Slightly better quality
+            fileType: outputFormat === 'original' ? undefined : outputFormat
+          };
+        } else {
+          // Balanced mode
+          options = {
+            ...baseOptions,
+            quality: quality,
+            fileType: outputFormat === 'original' ? undefined : outputFormat
+          };
+        }
+
         // Process each image with enhanced compression
         for (let i = 0; i < fileInput.files.length; i++) {
           const file = fileInput.files[i];
           if (!file.type.match('image.*')) continue;
 
           totalOriginalSize += file.size;
-
-          // Enhanced compression options
-          const options = {
-            maxSizeMB: 1,
-            maxWidthOrHeight: maxWidth ? parseInt(maxWidth) : undefined,
-            useWebWorker: true,
-            quality: quality,
-            initialQuality: quality,
-            maxIteration: 10 // More iterations for better compression
-          };
-
-          // Set output format
-          if (outputFormat !== 'original') {
-            if (outputFormat === 'webp') {
-              options.fileType = 'image/webp';
-              options.quality = Math.max(0.1, quality * 0.9); // WebP can be more aggressive
-            } else if (outputFormat === 'jpeg') {
-              options.fileType = 'image/jpeg';
-            } else if (outputFormat === 'png') {
-              options.fileType = 'image/png';
-            }
-          }
 
           try {
             const compressedFile = await browserImageCompression(file, options);
