@@ -12,18 +12,20 @@
   <meta property="og:description" content="Merge, compress and convert files instantly with our privacy-focused browser tools">
   <meta property="og:type" content="website">
   
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for hamburger icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Required Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js"></script>
   
-  <!-- Enhanced Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script>
+    // Set worker src for PDF.js
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/index.umd.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
@@ -726,7 +728,7 @@
       }
 
       .nav {
-        padding: 0.8rem 1rem;
+        padding: 0.8rem 1.1rem;
       }
 
       .nav h1 {
@@ -770,7 +772,6 @@
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header>
     <div class="nav">
       <h1>Quick Merge</h1>
@@ -792,9 +793,7 @@
     </div>
   </header>
 
-  <!-- Home Section -->
   <section id="home" class="content-section active-section">
-    <!-- Hero -->
     <section class="hero">
       <div class="container">
         <h2>Merge, Compress & Convert Files Instantly</h2>
@@ -805,10 +804,8 @@
       </div>
     </section>
 
-    <!-- Tools -->
     <section id="tools" class="container">
       <div class="tools">
-        <!-- Merge PDF -->
         <div class="tool-card fade-in" id="merge-pdf-card">
           <h3>Merge PDF</h3>
           <p>Combine multiple PDF files into one seamless document.</p>
@@ -829,7 +826,6 @@
           </div>
         </div>
 
-        <!-- Split PDF -->
         <div class="tool-card fade-in" id="split-pdf-card">
           <h3>Split PDF</h3>
           <p>Extract selected pages or split PDF into multiple parts.</p>
@@ -856,7 +852,6 @@
           </div>
         </div>
 
-        <!-- Compress PDF -->
         <div class="tool-card fade-in" id="compress-pdf-card">
           <h3>Compress PDF</h3>
           <p>Reduce PDF file size without losing quality or formatting.</p>
@@ -896,7 +891,6 @@
           </div>
         </div>
 
-        <!-- Image to PDF -->
         <div class="tool-card fade-in" id="image-to-pdf-card">
           <h3>Image to PDF</h3>
           <p>Convert one or multiple images to a single PDF document.</p>
@@ -931,7 +925,6 @@
           </div>
         </div>
 
-        <!-- Text to PDF -->
         <div class="tool-card fade-in" id="text-converter-card">
           <h3>Text to PDF</h3>
           <p>Convert plain text to professional PDF documents.</p>
@@ -946,42 +939,6 @@
                 <label for="text-filename">File name (without extension):</label>
                 <input type="text" id="text-filename" placeholder="document">
               </div>
-              <div class="option-group">
-                <label for="page-size">Page Size:</label>
-                <select id="page-size">
-                  <option value="a4">A4 (210 × 297 mm)</option>
-                  <option value="letter">Letter (8.5 × 11 in)</option>
-                  <option value="legal">Legal (8.5 × 14 in)</option>
-                  <option value="tabloid">Tabloid (11 × 17 in)</option>
-                </select>
-              </div>
-              <div class="option-group">
-                <label for="text-alignment">Text Alignment:</label>
-                <select id="text-alignment">
-                  <option value="left">Left</option>
-                  <option value="center">Center</option>
-                  <option value="right">Right</option>
-                  <option value="justify">Justify</option>
-                </select>
-              </div>
-              <div class="option-group">
-                <label for="line-spacing">Line Spacing:</label>
-                <select id="line-spacing">
-                  <option value="1">Single</option>
-                  <option value="1.15">1.15</option>
-                  <option value="1.5">1.5</option>
-                  <option value="2">Double</option>
-                </select>
-              </div>
-              <div class="option-group">
-                <label for="font-size">Font Size:</label>
-                <select id="font-size">
-                  <option value="10">10pt</option>
-                  <option value="12" selected>12pt</option>
-                  <option value="14">14pt</option>
-                  <option value="16">16pt</option>
-                </select>
-              </div>
             </div>
             <button class="tool-btn" id="text-convert-btn" onclick="convertTextToPDF()">Convert to PDF</button>
             <div class="spinner" id="text-converter-spinner"></div>
@@ -989,7 +946,6 @@
           </div>
         </div>
 
-        <!-- PDF to Word -->
         <div class="tool-card fade-in" id="pdf-to-word-card">
           <h3>PDF to Word</h3>
           <p>Convert PDF documents to editable Word files.</p>
@@ -1019,7 +975,6 @@
           </div>
         </div>
 
-        <!-- PDF Signer -->
         <div class="tool-card fade-in" id="pdf-signer-card">
           <h3>Sign PDF</h3>
           <p>Add your signature to PDF documents.</p>
@@ -1077,7 +1032,6 @@
           </div>
         </div>
 
-        <!-- Compress Images -->
         <div class="tool-card fade-in" id="compress-image-card">
           <h3>Compress Images</h3>
           <p>Smartly compress JPEG, PNG, or WebP images with advanced algorithms.</p>
@@ -1127,7 +1081,6 @@
           </div>
         </div>
 
-        <!-- QR Code Generator -->
         <div class="tool-card fade-in" id="qr-code-card">
           <h3>Advanced QR Code Generator</h3>
           <p>Create stylish QR codes with logos, custom colors, and patterns.</p>
@@ -1180,7 +1133,6 @@
     </section>
   </section>
 
-  <!-- About Section -->
   <section id="about" class="content-section content-page">
     <div class="content-container">
       <h1 class="fade-in">About Quick Merge</h1>
@@ -1224,7 +1176,6 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
   <section id="contact" class="content-section content-page">
     <div class="content-container">
       <h1 class="fade-in">Contact Quick Merge</h1>
@@ -1269,7 +1220,6 @@
     </div>
   </section>
 
-  <!-- Privacy Policy Section -->
   <section id="privacy" class="content-section content-page">
     <div class="content-container">
       <h1 class="fade-in">Privacy Policy</h1>
@@ -1328,7 +1278,6 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
     © 2025 Quick Merge – All rights reserved.
   </footer>
@@ -1371,17 +1320,19 @@
       }
     });
 
-    // Signature canvas functionality
-    let isDrawing = false;
-    let lastX = 0;
-    let lastY = 0;
-    let signatureImage = null;
-    let signatureCanvas = null;
-    let signatureCtx = null;
-    
+    // Close mobile menu on resize for desktop view
+    window.addEventListener('resize', function() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (window.innerWidth >= 769) { // Adjust breakpoint as needed
+        mobileMenu.classList.remove('active');
+      }
+    });
+
+    let signatureImage = null; // Stored signature image dataURL
+
     function setupSignatureCanvas() {
-      signatureCanvas = document.getElementById('signature-canvas');
-      signatureCtx = signatureCanvas.getContext('2d');
+      const signatureCanvas = document.getElementById('signature-canvas');
+      const signatureCtx = signatureCanvas.getContext('2d');
       
       // Set canvas background
       signatureCtx.fillStyle = 'rgba(255, 255, 255, 0.05)';
@@ -1390,17 +1341,106 @@
       signatureCtx.lineWidth = 2;
       signatureCtx.lineCap = 'round';
       signatureCtx.lineJoin = 'round';
+
+      let isDrawing = false;
+      let lastX = 0;
+      let lastY = 0;
       
       // Mouse event handlers
       signatureCanvas.addEventListener('mousedown', startDrawing);
       signatureCanvas.addEventListener('mousemove', draw);
       signatureCanvas.addEventListener('mouseup', stopDrawing);
-      signatureCanvas.addEventListener('mouseout', stopDrawing);
+      // Removed mouseout from stopDrawing to improve UX
       
       // Touch event handlers for mobile
       signatureCanvas.addEventListener('touchstart', handleTouchStart);
       signatureCanvas.addEventListener('touchmove', handleTouchMove);
       signatureCanvas.addEventListener('touchend', stopDrawing);
+
+      function startDrawing(e) {
+        isDrawing = true;
+        const rect = signatureCanvas.getBoundingClientRect();
+        lastX = e.clientX - rect.left;
+        lastY = e.clientY - rect.top;
+      }
+      
+      function draw(e) {
+        if (!isDrawing) return;
+        
+        const rect = signatureCanvas.getBoundingClientRect();
+        const currentX = e.clientX - rect.left;
+        const currentY = e.clientY - rect.top;
+        
+        signatureCtx.beginPath();
+        signatureCtx.moveTo(lastX, lastY);
+        signatureCtx.lineTo(currentX, currentY);
+        signatureCtx.stroke();
+        
+        lastX = currentX;
+        lastY = currentY;
+      }
+      
+      function stopDrawing() {
+        isDrawing = false;
+      }
+      
+      function handleTouchStart(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const mouseEvent = new MouseEvent('mousedown', {
+          clientX: touch.clientX,
+          clientY: touch.clientY
+        });
+        startDrawing(mouseEvent);
+      }
+      
+      function handleTouchMove(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const mouseEvent = new MouseEvent('mousemove', {
+          clientX: touch.clientX,
+          clientY: touch.clientY
+        });
+        draw(mouseEvent);
+      }
+
+      window.clearSignature = function() { // Expose to global scope
+        signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+        signatureCtx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+        signatureCtx.fillRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+        signatureImage = null;
+        document.getElementById('sign-pdf-btn').disabled = true; // Disable sign button if signature is cleared
+      };
+      
+      window.saveSignature = function() { // Expose to global scope
+        // Check if there's actually a signature drawn
+        const blankCanvas = document.createElement('canvas');
+        blankCanvas.width = signatureCanvas.width;
+        blankCanvas.height = signatureCanvas.height;
+        const blankCtx = blankCanvas.getContext('2d');
+        blankCtx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+        blankCtx.fillRect(0, 0, blankCanvas.width, blankCanvas.height);
+        
+        const blankData = blankCtx.getImageData(0, 0, blankCanvas.width, blankCanvas.height).data;
+        const signatureData = signatureCtx.getImageData(0, 0, signatureCanvas.width, signatureCanvas.height).data;
+        
+        let isBlank = true;
+        for (let i = 0; i < signatureData.length; i++) {
+          if (signatureData[i] !== blankData[i]) {
+            isBlank = false;
+            break;
+          }
+        }
+        
+        if (isBlank) {
+          showStatus('pdf-signer', 'Please draw a signature first', 'error');
+          return;
+        }
+        
+        signatureImage = signatureCanvas.toDataURL('image/png');
+        showStatus('pdf-signer', 'Signature saved!', 'success');
+        document.getElementById('sign-pdf-btn').disabled = false;
+      };
 
       // Signature size selector
       document.getElementById('signature-size').addEventListener('change', function() {
@@ -1410,90 +1450,6 @@
           document.getElementById('custom-size-group').style.display = 'none';
         }
       });
-    }
-    
-    function startDrawing(e) {
-      isDrawing = true;
-      const rect = signatureCanvas.getBoundingClientRect();
-      lastX = e.clientX - rect.left;
-      lastY = e.clientY - rect.top;
-    }
-    
-    function draw(e) {
-      if (!isDrawing) return;
-      
-      const rect = signatureCanvas.getBoundingClientRect();
-      const currentX = e.clientX - rect.left;
-      const currentY = e.clientY - rect.top;
-      
-      signatureCtx.beginPath();
-      signatureCtx.moveTo(lastX, lastY);
-      signatureCtx.lineTo(currentX, currentY);
-      signatureCtx.stroke();
-      
-      lastX = currentX;
-      lastY = currentY;
-    }
-    
-    function stopDrawing() {
-      isDrawing = false;
-    }
-    
-    function handleTouchStart(e) {
-      e.preventDefault();
-      const touch = e.touches[0];
-      const mouseEvent = new MouseEvent('mousedown', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-      });
-      startDrawing(mouseEvent);
-    }
-    
-    function handleTouchMove(e) {
-      e.preventDefault();
-      const touch = e.touches[0];
-      const mouseEvent = new MouseEvent('mousemove', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-      });
-      draw(mouseEvent);
-    }
-    
-    function clearSignature() {
-      signatureCtx.clearRect(0, 0, signatureCanvas.width, signatureCanvas.height);
-      signatureCtx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-      signatureCtx.fillRect(0, 0, signatureCanvas.width, signatureCanvas.height);
-      signatureImage = null;
-    }
-    
-    function saveSignature() {
-      // Check if there's actually a signature drawn
-      const blankCanvas = document.createElement('canvas');
-      blankCanvas.width = signatureCanvas.width;
-      blankCanvas.height = signatureCanvas.height;
-      const blankCtx = blankCanvas.getContext('2d');
-      blankCtx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-      blankCtx.fillRect(0, 0, blankCanvas.width, blankCanvas.height);
-      
-      const blankData = blankCtx.getImageData(0, 0, blankCanvas.width, blankCanvas.height).data;
-      const signatureData = signatureCtx.getImageData(0, 0, signatureCanvas.width, signatureCanvas.height).data;
-      
-      let isBlank = true;
-      for (let i = 0; i < signatureData.length; i++) {
-        if (signatureData[i] !== blankData[i]) {
-          isBlank = false;
-          break;
-        }
-      }
-      
-      if (isBlank) {
-        showStatus('pdf-signer', 'Please draw a signature first', 'error');
-        return;
-      }
-      
-      signatureImage = signatureCanvas.toDataURL('image/png');
-      showStatus('pdf-signer', 'Signature saved!', 'success');
-      document.getElementById('sign-pdf-btn').disabled = false;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -1560,7 +1516,16 @@
 
       // Handle dropped files
       dropArea.addEventListener('drop', function(e) {
-        handleDrop(e, fileInput, fileList, actionBtn, allowMultiple);
+        const dt = e.dataTransfer;
+        const files = dt.files;
+
+        if (!allowMultiple && files.length > 1) {
+          showStatus(toolId, 'Please select only one file for this tool.', 'error');
+          return;
+        }
+        // Update the file input with the dropped files
+        fileInput.files = files;
+        handleFiles(files, fileList, actionBtn, allowMultiple); // Pass allowMultiple for accurate button state
       }, false);
       
       // Handle click to browse files
@@ -1572,7 +1537,7 @@
 
       // Handle file selection via input
       fileInput.addEventListener('change', function(e) {
-        handleFiles(e.target.files, fileList, actionBtn);
+        handleFiles(e.target.files, fileList, actionBtn, allowMultiple); // Pass allowMultiple for accurate button state
       });
 
       function preventDefaults(e) {
@@ -1589,23 +1554,22 @@
       }
     }
 
-    function handleDrop(e, fileInput, fileList, actionBtn, allowMultiple) {
-      const dt = e.dataTransfer;
-      const files = dt.files;
-      
-      if (allowMultiple || files.length === 1) {
-        // Update the file input with the dropped files
-        fileInput.files = files;
-        handleFiles(files, fileList, actionBtn);
-      } else {
-        showStatus('bg-changer', 'Please select only one file for this tool.', 'error');
+    function handleFiles(files, fileListElement, actionBtn, allowMultiple) {
+      if (!files || files.length === 0) {
+        fileListElement.innerHTML = '';
+        if (actionBtn) actionBtn.disabled = true;
+        return;
       }
-    }
 
-    function handleFiles(files, fileListElement, actionBtn) {
-      if (!files || files.length === 0) return;
-      
-      fileListElement.innerHTML = '';
+      // Clear previous files if single file allowed
+      if (!allowMultiple) {
+        fileListElement.innerHTML = '';
+        if (files.length > 1) {
+          showStatus(fileListElement.closest('.tool-content').id, 'Please select only one file for this tool.', 'error');
+          if (actionBtn) actionBtn.disabled = true;
+          return;
+        }
+      }
       
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
@@ -1626,9 +1590,9 @@
         removeSpan.addEventListener('click', function(e) {
           e.stopPropagation();
           fileItem.remove();
-          // If no files left, disable the action button
-          if (fileListElement.children.length === 0 && actionBtn) {
-            actionBtn.disabled = true;
+          // Re-evaluate button state after removal
+          if (actionBtn) {
+            actionBtn.disabled = (fileListElement.children.length === 0) || (!allowMultiple && fileListElement.children.length !== 1);
           }
         });
         
@@ -1639,9 +1603,9 @@
         fileListElement.appendChild(fileItem);
       }
       
-      // Enable the action button if files are selected
+      // Enable the action button if files are selected appropriately
       if (actionBtn) {
-        actionBtn.disabled = false;
+        actionBtn.disabled = (fileListElement.children.length === 0) || (!allowMultiple && fileListElement.children.length !== 1);
       }
     }
 
@@ -1720,18 +1684,19 @@
         document.getElementById('download-qr-btn').style.display = 'none';
         document.getElementById('qr-preview').innerHTML = '';
         document.getElementById('qr-content').value = '';
-        showStatus('qr-code', '', '');
+        // showStatus('qr-code', '', ''); // Redundant with general status clear
       }
       
       // For text converter, clear textarea
       if (toolId === 'text-converter') {
         document.getElementById('text-content').value = '';
+        document.getElementById('text-filename').value = ''; // Clear filename too
       }
       
       // For PDF signer, clear signature
       if (toolId === 'pdf-signer') {
-        clearSignature();
-        document.getElementById('sign-pdf-btn').disabled = true;
+        clearSignature(); // Calls the global clearSignature function
+        document.getElementById('sign-pdf-btn').disabled = true; // Ensures button is disabled if signature is cleared
       }
     }
 
@@ -1753,12 +1718,21 @@
         // Process each file
         for (let i = 0; i < fileInput.files.length; i++) {
           const file = fileInput.files[i];
+          if (file.type !== 'application/pdf') { // Basic type check
+            showStatus('merge-pdf', `Skipping non-PDF file: ${file.name}`, 'error');
+            continue;
+          }
           const fileBuffer = await file.arrayBuffer();
           const pdfDoc = await PDFDocument.load(fileBuffer);
           
           // Copy pages
           const pages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
           pages.forEach(page => mergedPdf.addPage(page));
+        }
+
+        if (mergedPdf.getPageCount() === 0) { // Check if any pages were actually added
+          showStatus('merge-pdf', 'No valid PDF pages were merged. Please ensure your files are valid PDFs.', 'error');
+          return;
         }
         
         // Save merged PDF
@@ -1805,15 +1779,26 @@
         // Parse page ranges
         const pageRanges = parsePageRanges(pagesInput.value, pdfDoc.getPageCount());
         if (pageRanges.length === 0) {
-          showStatus('split-pdf', 'Invalid page range specified', 'error');
-          return;
+          showStatus('split-pdf', 'Invalid page range specified or no pages found in range. Max pages: ' + pdfDoc.getPageCount(), 'error');
+          hideSpinner('split-pdf'); // Ensure spinner hides on early exit
+          return; // Fix: Add return here to stop execution
         }
         
         // Create new PDF with selected pages
         const newPdf = await PDFDocument.create();
         for (const pageNum of pageRanges) {
-          const [copiedPage] = await newPdf.copyPages(pdfDoc, [pageNum - 1]);
-          newPdf.addPage(copiedPage);
+          // Ensure pageNum is within valid bounds after parsing
+          if (pageNum > 0 && pageNum <= pdfDoc.getPageCount()) {
+            const [copiedPage] = await newPdf.copyPages(pdfDoc, [pageNum - 1]);
+            newPdf.addPage(copiedPage);
+          } else {
+            console.warn(`Skipping invalid page number: ${pageNum}`);
+          }
+        }
+
+        if (newPdf.getPageCount() === 0) { // Check if any pages were actually copied
+          showStatus('split-pdf', 'No pages extracted. Check your page range.', 'error');
+          return;
         }
         
         // Save split PDF
@@ -1839,16 +1824,25 @@
       const pages = new Set();
       
       for (const range of ranges) {
-        if (range.includes('-')) {
-          const [start, end] = range.split('-').map(Number);
-          const validStart = Math.max(1, Math.min(start || 1, maxPages));
-          const validEnd = Math.max(1, Math.min(end || maxPages, maxPages));
+        const trimmedRange = range.trim();
+        if (trimmedRange.includes('-')) {
+          const parts = trimmedRange.split('-').map(Number);
+          let start = parts[0];
+          let end = parts[1];
+
+          // Handle cases like "5-" or "-10" by assuming boundaries
+          if (isNaN(start) && isNaN(end)) continue; // Both invalid
+          if (isNaN(start)) start = 1;
+          if (isNaN(end)) end = maxPages;
+          
+          const validStart = Math.max(1, Math.min(start, maxPages));
+          const validEnd = Math.max(1, Math.min(end, maxPages));
           
           for (let i = validStart; i <= validEnd; i++) {
             pages.add(i);
           }
-        } else if (range.trim()) {
-          const page = Number(range);
+        } else if (trimmedRange) {
+          const page = Number(trimmedRange);
           if (page >= 1 && page <= maxPages) {
             pages.add(page);
           }
@@ -1882,31 +1876,41 @@
           useObjectStreams: true,
           addDefaultPage: false,
           objectsPerTick: 50,
-          updateFieldAppearances: false
+          updateFieldAppearances: false,
+          // PDF-lib's save method doesn't directly offer compression levels like 'low', 'medium', 'high', 'extreme'
+          // nor modes like 'preserve-text', 'preserve-images' in the way user might expect.
+          // These options mainly influence internal PDF structure and object encoding.
+          // For true content compression (e.g., image downsampling), a dedicated PDF optimization library is often needed.
+          // We will map these to 'PDFDocument.save' options as best as possible.
         };
         
-        // Adjust options based on compression level
+        // Adjust options based on compression level (simulated best effort with PDF-lib)
+        // PDF-lib's compression is mostly about object stream encoding and filtering.
+        // It doesn't perform lossy compression on embedded images like dedicated tools.
         if (compressionLevel === 'low') {
-          options.useObjectStreams = false;
+          options.useObjectStreams = false; // Less aggressive on object streams
         } else if (compressionLevel === 'high') {
           options.useObjectStreams = true;
-          options.objectsPerTick = 100;
+          options.objectsPerTick = 100; // More objects processed at once
         } else if (compressionLevel === 'extreme') {
           options.useObjectStreams = true;
           options.objectsPerTick = 200;
-          options.updateFieldAppearances = false;
-          options.ignoreEncryption = true;
-          options.throwOnInvalidObject = false;
+          // Note: ignoreEncryption and throwOnInvalidObject are for loading, not saving compression
+          // options.ignoreEncryption = true;
+          // options.throwOnInvalidObject = false;
         }
         
-        // Adjust options based on compression mode
+        // Compression mode for text/images is more complex and typically requires parsing content streams.
+        // PDF-lib v1.x does not provide direct methods for this during 'save'.
+        // These settings will currently have no functional effect on 'save'.
+        // If advanced compression is truly needed, consider a different library or server-side processing.
+        /*
         if (compressionMode === 'preserve-text') {
-          options.preserveText = true;
-          options.preserveGraphics = false;
+          // No direct API in PDF-lib for this during save without content stream manipulation
         } else if (compressionMode === 'preserve-images') {
-          options.preserveText = false;
-          options.preserveGraphics = true;
+          // No direct API in PDF-lib for this during save without content stream manipulation
         }
+        */
         
         // Save compressed PDF
         const compressedPdfBytes = await pdfDoc.save(options);
@@ -1951,51 +1955,65 @@
         // Process each image
         for (let i = 0; i < fileInput.files.length; i++) {
           const file = fileInput.files[i];
-          if (!file.type.match('image.*')) continue;
+          if (!file.type.match('image.*')) {
+            console.warn(`Skipping non-image file: ${file.name}`);
+            continue;
+          }
           
-          // Convert image to data URL
           const imageBytes = await file.arrayBuffer();
           let image;
-          
+          let embeddedImageSuccess = false;
+
           try {
             if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
               image = await pdfDoc.embedJpg(imageBytes);
+              embeddedImageSuccess = true;
             } else if (file.type === 'image/png') {
               image = await pdfDoc.embedPng(imageBytes);
+              embeddedImageSuccess = true;
             } else {
               // For other image types, convert to JPEG first
-              const convertedImage = await convertImageToJpeg(file);
-              image = await pdfDoc.embedJpg(await convertedImage.arrayBuffer());
+              showStatus('image-to-pdf', `Converting ${file.name} to JPEG for PDF embedding...`, 'processing');
+              const convertedImageBlob = await convertImageToJpeg(file);
+              if (convertedImageBlob) {
+                image = await pdfDoc.embedJpg(await convertedImageBlob.arrayBuffer());
+                embeddedImageSuccess = true;
+              } else {
+                showStatus('image-to-pdf', `Failed to convert ${file.name} to JPEG. Skipping.`, 'error');
+              }
             }
             
+            if (!embeddedImageSuccess) continue; // Skip if embedding failed
+
             // Determine page size based on layout and image dimensions
             let pageWidth, pageHeight;
             const marginPoints = margin * 2.83465; // Convert mm to points (1mm = 2.83465pt)
             
+            // Calculate content area dimensions
+            const contentWidth = image.width;
+            const contentHeight = image.height;
+
             if (layout === 'auto') {
-              // Match image orientation
-              pageWidth = image.width + (marginPoints * 2);
-              pageHeight = image.height + (marginPoints * 2);
+              pageWidth = contentWidth + (marginPoints * 2);
+              pageHeight = contentHeight + (marginPoints * 2);
             } else if (layout === 'landscape') {
-              // Landscape (width > height)
-              const ratio = image.width / image.height;
-              if (ratio > 1) {
-                pageWidth = image.width + (marginPoints * 2);
-                pageHeight = image.height + (marginPoints * 2);
-              } else {
-                pageWidth = image.height + (marginPoints * 2);
-                pageHeight = image.width + (marginPoints * 2);
-              }
-            } else {
-              // Portrait (height > width)
-              const ratio = image.width / image.height;
-              if (ratio < 1) {
-                pageWidth = image.width + (marginPoints * 2);
-                pageHeight = image.height + (marginPoints * 2);
-              } else {
-                pageWidth = image.height + (marginPoints * 2);
-                pageHeight = image.width + (marginPoints * 2);
-              }
+                // Ensure page is wider than it is tall
+                if (contentWidth > contentHeight) {
+                    pageWidth = contentWidth + (marginPoints * 2);
+                    pageHeight = contentHeight + (marginPoints * 2);
+                } else {
+                    pageWidth = contentHeight + (marginPoints * 2); // Swap dimensions for landscape orientation
+                    pageHeight = contentWidth + (marginPoints * 2);
+                }
+            } else { // portrait
+                // Ensure page is taller than it is wide
+                if (contentHeight > contentWidth) {
+                    pageWidth = contentWidth + (marginPoints * 2);
+                    pageHeight = contentHeight + (marginPoints * 2);
+                } else {
+                    pageWidth = contentHeight + (marginPoints * 2); // Swap dimensions for portrait orientation
+                    pageHeight = contentWidth + (marginPoints * 2);
+                }
             }
             
             // Add a new page with the calculated dimensions
@@ -2018,12 +2036,13 @@
             });
           } catch (error) {
             console.error(`Error processing image ${file.name}:`, error);
-            continue;
+            showStatus('image-to-pdf', `Error processing ${file.name}: ${error.message}. Skipping.`, 'error');
+            continue; // Skip to next file if an error occurs
           }
         }
         
         if (pdfDoc.getPageCount() === 0) {
-          showStatus('image-to-pdf', 'No valid images were processed', 'error');
+          showStatus('image-to-pdf', 'No valid images were processed or added to PDF.', 'error');
           return;
         }
         
@@ -2058,155 +2077,135 @@
             ctx.drawImage(img, 0, 0);
             
             canvas.toBlob((blob) => {
-              resolve(new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), { type: 'image/jpeg' }));
+              // Ensure the blob is not null before resolving
+              if (blob) {
+                resolve(new File([blob], file.name.replace(/\.[^/.]+$/, '.jpg'), { type: 'image/jpeg' }));
+              } else {
+                resolve(null); // Resolve with null if blob creation failed
+              }
             }, 'image/jpeg', 0.9);
           };
+          img.onerror = () => { // Handle image loading errors
+            console.error(`Failed to load image: ${file.name}`);
+            resolve(null);
+          };
           img.src = event.target.result;
+        };
+        reader.onerror = () => { // Handle file reading errors
+          console.error(`Failed to read file: ${file.name}`);
+          resolve(null);
         };
         reader.readAsDataURL(file);
       });
     }
 
     async function convertTextToPDF() {
-      const textContent = document.getElementById('text-content').value;
-      const filename = document.getElementById('text-filename').value || 'document';
-      const pageSize = document.getElementById('page-size').value;
-      const alignment = document.getElementById('text-alignment').value;
-      const lineSpacing = parseFloat(document.getElementById('line-spacing').value);
-      const fontSize = parseInt(document.getElementById('font-size').value);
-      
-      if (!textContent.trim()) {
-        showStatus('text-converter', 'Please enter some text to convert', 'error');
-        return;
-      }
-
-      showStatus('text-converter', 'Converting text to PDF...', 'processing');
-      showSpinner('text-converter');
-      
-      try {
-        const { PDFDocument } = PDFLib;
+        const textContent = document.getElementById('text-content').value;
+        const filename = document.getElementById('text-filename').value || 'document';
         
-        // Determine page dimensions in points (1 inch = 72 points)
-        let pageWidth, pageHeight;
-        switch(pageSize) {
-          case 'letter':
-            pageWidth = 8.5 * 72;
-            pageHeight = 11 * 72;
-            break;
-          case 'legal':
-            pageWidth = 8.5 * 72;
-            pageHeight = 14 * 72;
-            break;
-          case 'tabloid':
-            pageWidth = 11 * 72;
-            pageHeight = 17 * 72;
-            break;
-          default: // A4
-            pageWidth = 210 * 0.3528 * 72; // mm to points
-            pageHeight = 297 * 0.3528 * 72;
+        if (!textContent.trim()) {
+            showStatus('text-converter', 'Please enter some text to convert', 'error');
+            return;
         }
+
+        showStatus('text-converter', 'Converting text to PDF...', 'processing');
+        showSpinner('text-converter');
         
-        const pdfDoc = await PDFDocument.create();
-        const page = pdfDoc.addPage([pageWidth, pageHeight]);
-        
-        const margin = 50;
-        const lineHeight = fontSize * 1.5 * lineSpacing;
-        
-        // Set font - we'll use Helvetica as it's a standard PDF font
-        const helveticaFont = await pdfDoc.embedFont('Helvetica');
-        
-        // Split text into paragraphs (preserve empty lines)
-        const paragraphs = textContent.split('\n');
-        let currentY = pageHeight - margin - fontSize;
-        
-        for (const paragraph of paragraphs) {
-          if (paragraph.trim() === '') {
-            // Empty line - just move down
-            currentY -= lineHeight;
-          } else {
-            // Split paragraph into lines that fit within page width
-            const words = paragraph.split(/\s+/);
-            let currentLine = '';
+        try {
+            const { PDFDocument, rgb, StandardFonts } = PDFLib;
+            const pdfDoc = await PDFDocument.create();
             
-            for (const word of words) {
-              // Test if adding the word would exceed the line width
-              const testLine = currentLine ? `${currentLine} ${word}` : word;
-              const testWidth = helveticaFont.widthOfTextAtSize(testLine, fontSize);
-              
-              if (testWidth > (pageWidth - margin * 2)) {
-                // Draw the current line
-                drawTextLine(page, currentLine, margin, currentY, fontSize, helveticaFont, alignment, pageWidth - margin * 2);
-                currentY -= lineHeight;
+            // Embed a standard font. Helvetica is generally good, but ensure proper handling of newlines.
+            const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+            
+            const fontSize = 12;
+            const lineHeight = fontSize * 1.2;
+            const textMargin = 50;
+            
+            // Replace common newline characters with '\n' (which pdf-lib can then break if specified)
+            // or specifically '\r' which is often handled as a line break by PDF viewers.
+            // For simple text layout, '\n' should work with drawText's maxWidth and wordBreaks: [' ']
+            // The original error "WinAnsi cannot encode " " (0x000a)" specifically refers to line feed (LF)
+            // characters (0x000A). Let's explicitly replace them to ensure proper encoding and layout.
+            let normalizedText = textContent.replace(/\r\n|\r/g, '\n'); // Normalize all newlines to LF
+            
+            // To prevent the WinAnsi encoding error, we need to manually break lines
+            // and draw them one by one, ensuring no problematic characters pass directly to drawText
+            // without proper context. Alternatively, use a font that natively supports more Unicode.
+            // However, with standard fonts, manual line breaking is safer for complex text.
+
+            const pages = [];
+            let currentPage = pdfDoc.addPage();
+            pages.push(currentPage);
+
+            let yPosition = currentPage.getHeight() - textMargin;
+            
+            // Splitting the text by lines and then by words to fit within page width
+            const rawLines = normalizedText.split('\n');
+            for (const rawLine of rawLines) {
+                let currentLineBuffer = '';
+                const words = rawLine.split(' ');
                 
-                // Start new line with the current word
-                currentLine = word;
-                
-                // Check if we need a new page
-                if (currentY < margin) {
-                  const newPage = pdfDoc.addPage([pageWidth, pageHeight]);
-                  currentY = pageHeight - margin - fontSize;
-                  drawTextLine(newPage, currentLine, margin, currentY, fontSize, helveticaFont, alignment, pageWidth - margin * 2);
-                  currentLine = '';
+                for (const word of words) {
+                    const testLine = currentLineBuffer === '' ? word : `${currentLineBuffer} ${word}`;
+                    const textWidth = helveticaFont.widthOfTextAtSize(testLine, fontSize);
+                    const availableWidth = currentPage.getWidth() - (2 * textMargin);
+
+                    if (textWidth > availableWidth && currentLineBuffer !== '') {
+                        // Draw the buffered line
+                        if (yPosition < textMargin) {
+                            currentPage = pdfDoc.addPage();
+                            pages.push(currentPage);
+                            yPosition = currentPage.getHeight() - textMargin;
+                        }
+                        currentPage.drawText(currentLineBuffer, {
+                            x: textMargin,
+                            y: yPosition,
+                            size: fontSize,
+                            font: helveticaFont,
+                            color: rgb(0, 0, 0),
+                        });
+                        yPosition -= lineHeight;
+                        currentLineBuffer = word; // Start new buffer with current word
+                    } else {
+                        currentLineBuffer = testLine;
+                    }
                 }
-              } else {
-                currentLine = testLine;
-              }
+                // Draw any remaining text in the buffer for the current line
+                if (currentLineBuffer.length > 0) {
+                    if (yPosition < textMargin) {
+                        currentPage = pdfDoc.addPage();
+                        pages.push(currentPage);
+                        yPosition = currentPage.getHeight() - textMargin;
+                    }
+                    currentPage.drawText(currentLineBuffer, {
+                        x: textMargin,
+                        y: yPosition,
+                        size: fontSize,
+                        font: helveticaFont,
+                        color: rgb(0, 0, 0),
+                    });
+                    yPosition -= lineHeight;
+                }
+            }
+
+            // If no text was drawn (e.g., input was just spaces/newlines), ensure at least one page exists
+            if (pdfDoc.getPageCount() === 0) {
+              pdfDoc.addPage();
             }
             
-            // Draw any remaining text in the paragraph
-            if (currentLine) {
-              drawTextLine(page, currentLine, margin, currentY, fontSize, helveticaFont, alignment, pageWidth - margin * 2);
-              currentY -= lineHeight;
-            }
-          }
-          
-          // Check for page break
-          if (currentY < margin) {
-            const newPage = pdfDoc.addPage([pageWidth, pageHeight]);
-            currentY = pageHeight - margin - fontSize;
-          }
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            saveAs(blob, `${filename}.pdf`);
+            showStatus('text-converter', 'PDF created successfully!', 'success');
+        } catch (error) {
+            console.error('Error converting text to PDF:', error);
+            showStatus('text-converter', 'Error: ' + error.message + '. Ensure text contains only supported characters.', 'error');
+        } finally {
+            hideSpinner('text-converter');
         }
-        
-        const pdfBytes = await pdfDoc.save();
-        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-        saveAs(blob, `${filename}.pdf`);
-        showStatus('text-converter', 'PDF created successfully!', 'success');
-      } catch (error) {
-        console.error('Error converting text to PDF:', error);
-        showStatus('text-converter', 'Error: ' + error.message, 'error');
-      } finally {
-        hideSpinner('text-converter');
-      }
     }
 
-    function drawTextLine(page, text, x, y, fontSize, font, alignment, maxLineWidth) {
-      let xPos = x;
-      const textWidth = font.widthOfTextAtSize(text, fontSize);
-      
-      switch(alignment) {
-        case 'center':
-          xPos = x + (maxLineWidth - textWidth) / 2;
-          break;
-        case 'right':
-          xPos = x + maxLineWidth - textWidth;
-          break;
-        case 'justify':
-          // For justify, we'd need to split into words and calculate spacing
-          // This is a simplified version that just left-aligns
-          xPos = x;
-          break;
-        default: // left
-          xPos = x;
-      }
-      
-      page.drawText(text, {
-        x: xPos,
-        y: y,
-        size: fontSize,
-        font: font,
-        color: PDFLib.rgb(0, 0, 0) // Fixed: Use PDFLib.rgb instead of rgb
-      });
-    }
 
     async function convertPDFToWord() {
       const fileInput = document.getElementById('pdf-to-word-file');
@@ -2217,15 +2216,35 @@
         return;
       }
 
-      showStatus('pdf-to-word', 'Converting PDF to Word...', 'processing');
+      showStatus('pdf-to-word', 'Extracting text from PDF...', 'processing');
       showSpinner('pdf-to-word');
       
       try {
         const file = fileInput.files[0];
-        const fileBuffer = await file.arrayBuffer();
-        
-        // In a real implementation, you would use a PDF parsing library here
-        // For this demo, we'll create a simple Word doc with a message
+        const fileReader = new FileReader();
+
+        const fullTextPromise = new Promise((resolve, reject) => {
+          fileReader.onload = async function() {
+            try {
+              const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(fileReader.result) }).promise;
+              let extractedText = '';
+              for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const textContent = await page.getTextContent();
+                extractedText += textContent.items.map(item => item.str).join(' ') + '\n\n';
+              }
+              resolve(extractedText);
+            } catch (error) {
+              reject(error);
+            }
+          };
+          fileReader.onerror = (error) => reject(error);
+          fileReader.readAsArrayBuffer(file);
+        });
+
+        const fullText = await fullTextPromise;
+
+        // Create a Word document
         const { Document, Paragraph, TextRun, Packer } = docx;
         
         const doc = new Document({
@@ -2235,8 +2254,8 @@
               new Paragraph({
                 children: [
                   new TextRun({
-                    text: "PDF content would be converted here",
-                    size: 24
+                    text: fullText,
+                    size: 24 // Font size 12pt (24 half-points)
                   })
                 ]
               })
@@ -2248,19 +2267,24 @@
         if (format === 'rtf') {
           mimeType = 'application/rtf';
           extension = 'rtf';
-        } else {
+          // Basic RTF conversion: will lose all formatting, images, etc.
+          // For actual RTF rich text, you need a full RTF generator, not just text replacement.
+          const rtfContent = `{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\fonttbl{\\f0\\fnil\\fcharset0 Calibri;}}\\viewkind4\\uc1\\pard\\f0\\fs24 ${fullText.replace(/\n/g, '\\par ')}\\par}`;
+          const blob = new Blob([rtfContent], { type: mimeType });
+          saveAs(blob, `converted-document.${extension}`);
+        } else { // docx
           mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
           extension = 'docx';
+          const blob = await Packer.toBlob(doc);
+          saveAs(blob, `converted-document.${extension}`);
         }
         
-        const blob = await Packer.toBlob(doc);
-        saveAs(blob, `converted-document.${extension}`);
-        showStatus('pdf-to-word', 'PDF converted to Word successfully!', 'success');
+        showStatus('pdf-to-word', 'PDF converted to Word successfully (text only)!', 'success');
         
         setTimeout(() => resetTool('pdf-to-word'), 2000);
       } catch (error) {
         console.error('Error converting PDF to Word:', error);
-        showStatus('pdf-to-word', 'Error: ' + error.message, 'error');
+        showStatus('pdf-to-word', 'Error converting PDF to Word: ' + error.message + '. Complex PDF layouts may lose formatting.', 'error');
       } finally {
         hideSpinner('pdf-to-word');
       }
@@ -2296,7 +2320,14 @@
         const signatureImg = await pdfDoc.embedPng(signatureImage);
         
         // Get the page to sign (0-based index)
-        const pageIndex = Math.min(Math.max(0, pageNum - 1), pdfDoc.getPageCount() - 1);
+        const pageCount = pdfDoc.getPageCount();
+        const pageIndex = Math.min(Math.max(0, pageNum - 1), pageCount - 1); // Ensure index is within bounds
+
+        if (pageCount === 0) {
+          showStatus('pdf-signer', 'The selected PDF has no pages to sign.', 'error');
+          return;
+        }
+
         const page = pdfDoc.getPage(pageIndex);
         
         // Calculate signature dimensions
@@ -2390,16 +2421,18 @@
       try {
         const zip = new JSZip();
         let imgCount = 0;
+        let compressedImgCount = 0;
         let totalOriginalSize = 0;
         let totalCompressedSize = 0;
 
         // Enhanced compression options based on mode
         const baseOptions = {
-          maxSizeMB: 1,
+          maxSizeMB: 1, // Target size in MB for each image
           maxWidthOrHeight: maxWidth ? parseInt(maxWidth) : undefined,
           useWebWorker: true,
           initialQuality: quality,
-          maxIteration: 10
+          maxIteration: 10,
+          preserveExif: true // Keep EXIF data
         };
 
         // Adjust options based on compression mode
@@ -2407,36 +2440,40 @@
         if (compressionMode === 'aggressive') {
           options = {
             ...baseOptions,
-            maxIteration: 15,
+            maxIteration: 15, // More iterations for smaller size
             quality: Math.max(0.1, quality * 0.8), // More aggressive quality reduction
-            fileType: outputFormat === 'original' ? undefined : outputFormat
+            fileType: outputFormat === 'original' ? undefined : `image/${outputFormat}` // Correct MIME type
           };
         } else if (compressionMode === 'conservative') {
           options = {
             ...baseOptions,
-            maxIteration: 5,
+            maxIteration: 5, // Fewer iterations for better quality
             quality: Math.min(1, quality * 1.1), // Slightly better quality
-            fileType: outputFormat === 'original' ? undefined : outputFormat
+            fileType: outputFormat === 'original' ? undefined : `image/${outputFormat}` // Correct MIME type
           };
         } else {
           // Balanced mode
           options = {
             ...baseOptions,
             quality: quality,
-            fileType: outputFormat === 'original' ? undefined : outputFormat
+            fileType: outputFormat === 'original' ? undefined : `image/${outputFormat}` // Correct MIME type
           };
         }
 
         // Process each image with enhanced compression
         for (let i = 0; i < fileInput.files.length; i++) {
           const file = fileInput.files[i];
-          if (!file.type.match('image.*')) continue;
+          if (!file.type.match('image.*')) {
+            console.warn(`Skipping non-image file: ${file.name}`);
+            continue;
+          }
 
           totalOriginalSize += file.size;
 
           try {
             const compressedFile = await browserImageCompression(file, options);
             totalCompressedSize += compressedFile.size;
+            compressedImgCount++;
             
             // Generate filename with appropriate extension
             let filename = file.name;
@@ -2453,11 +2490,12 @@
             // Fallback to original file if compression fails
             zip.file(`original_${file.name}`, file);
             imgCount++;
+            showStatus('compress-image', `Error compressing ${file.name}. Adding original to zip.`, 'error');
           }
         }
 
         if (imgCount === 0) {
-          showStatus('compress-image', 'No valid images found', 'error');
+          showStatus('compress-image', 'No valid images found for compression.', 'error');
           return;
         }
 
@@ -2471,8 +2509,17 @@
         saveAs(zipContent, 'compressed_images.zip');
         
         // Calculate overall compression ratio
-        const compressionRatio = ((totalOriginalSize - totalCompressedSize) / totalOriginalSize * 100).toFixed(1);
-        showStatus('compress-image', `${imgCount} images compressed successfully! Overall size reduced by ${compressionRatio}%`, 'success');
+        let compressionMessage = '';
+        if (totalOriginalSize > 0) {
+          const compressionRatio = ((totalOriginalSize - totalCompressedSize) / totalOriginalSize * 100).toFixed(1);
+          compressionMessage = `Overall size reduced by ${compressionRatio}%`;
+        }
+        
+        if (compressedImgCount === imgCount) {
+          showStatus('compress-image', `${imgCount} images compressed successfully! ${compressionMessage}`, 'success');
+        } else {
+          showStatus('compress-image', `Finished processing ${imgCount} images. ${compressedImgCount} were compressed, ${imgCount - compressedImgCount} were added as originals. ${compressionMessage}`, 'success');
+        }
         
         setTimeout(() => resetTool('compress-image'), 2000);
       } catch (error) {
@@ -2494,6 +2541,9 @@
       
       if (!content) {
         showStatus('qr-code', 'Please enter content for the QR code', 'error');
+        // Clear previous QR code if content is empty
+        document.getElementById('qr-preview').innerHTML = '';
+        document.getElementById('download-qr-btn').style.display = 'none';
         return;
       }
       
@@ -2534,8 +2584,13 @@
 
     function generateQRCodePreview() {
       const content = document.getElementById('qr-content').value;
-      if (content) {
+      // Only generate if there's content to avoid errors or empty previews
+      if (content.trim()) {
         generateQRCode();
+      } else {
+        document.getElementById('qr-preview').innerHTML = ''; // Clear preview if no content
+        document.getElementById('download-qr-btn').style.display = 'none'; // Hide download button
+        showStatus('qr-code', '', ''); // Clear status
       }
     }
 
@@ -2544,12 +2599,7 @@
         window.currentQRCode.download({ name: "qrcode", extension: "png" });
         
         // Reset tool after download
-        setTimeout(() => {
-          document.getElementById('qr-preview').innerHTML = '';
-          document.getElementById('download-qr-btn').style.display = 'none';
-          document.getElementById('qr-content').value = '';
-          showStatus('qr-code', '', '');
-        }, 2000);
+        setTimeout(() => resetTool('qr-code'), 2000); // resetTool now handles clearing status
       }
     }
 
@@ -2591,7 +2641,7 @@
       };
     }
 
-    // Dynamically load JS if missing
+    // Dynamically load JS if missing (currently not used but kept)
     function loadScript(src) {
       return new Promise((resolve, reject) => {
         const script = document.createElement('script');
