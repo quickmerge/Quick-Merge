@@ -202,6 +202,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       border: 1px solid rgba(255,255,255,0.06);
       box-shadow: 0 0 20px rgba(108, 93, 211, 0.08);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex; /* Make it a flex container */
+      flex-direction: column; /* Stack children vertically */
     }
 
     .tool-card:hover {
@@ -215,15 +217,69 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       margin-bottom: 0.5rem;
     }
 
-    .tool-card p {
-      color: #bbb;
-      font-size: 0.95rem;
+    /* Accordion styles */
+    .tool-info-accordion {
+        margin-top: 1rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 1rem;
     }
 
-    /* Tool Content */
+    .accordion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.7rem 0;
+        cursor: pointer;
+        color: #00f6ff; /* Highlighted color */
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: color 0.2s;
+    }
+
+    .accordion-header:hover {
+        color: #fff;
+    }
+
+    .accordion-header i {
+        transition: transform 0.3s ease;
+        margin-left: 0.5rem;
+    }
+
+    .accordion-header.active i {
+        transform: rotate(180deg);
+    }
+
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-out;
+        color: #bbb;
+        font-size: 0.9rem;
+        padding-bottom: 0; /* No initial padding-bottom */
+    }
+
+    .accordion-content.active {
+        max-height: 500px; /* Adjust as needed for max content */
+        padding-bottom: 1rem; /* Add padding when active */
+    }
+
+    .accordion-content p {
+        margin-bottom: 0.8rem;
+    }
+    .accordion-content ul, .accordion-content ol {
+        padding-left: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+    .accordion-content li {
+        margin-bottom: 0.4rem;
+    }
+
+    /* Tool Content - this is for the functional part of the tool */
     .tool-content {
       display: none;
-      margin-top: 1.5rem;
+      margin-top: auto; /* Push the tool content to the bottom of the card */
+      border-top: 1px solid rgba(255,255,255,0.1); /* Separator */
+      padding-top: 1.5rem;
     }
 
     .tool-card.active {
@@ -818,9 +874,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <section id="tools" class="container">
       <div class="tools">
+        <!-- Merge PDF Tool Card -->
         <div class="tool-card fade-in" id="merge-pdf-card">
           <h3>Merge PDF</h3>
           <p>Combine multiple PDF files into one seamless document.</p>
+          
+          <div class="tool-info-accordion">
+            <div class="accordion-header" data-target="merge-pdf-about" role="button" aria-expanded="false" aria-controls="merge-pdf-about">
+                <span>About this Tool</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="merge-pdf-about">
+                <p>Our powerful PDF Merge tool allows you to seamlessly combine two or more Portable Document Format (PDF) files into a single, cohesive document. This is perfect for consolidating reports, compiling research papers, or creating a single portfolio from multiple files. Quick Merge offers a fast, secure, and entirely private solution as all merging operations are performed directly in your browser, meaning your sensitive documents never leave your device and are not uploaded to any external servers.</p>
+                <p>This tool is ideal for professionals, students, and anyone who needs to streamline their document management. You can easily arrange the order of your PDFs before merging, ensuring the final output meets your exact requirements.</p>
+            </div>
+
+            <div class="accordion-header" data-target="merge-pdf-how-to" role="button" aria-expanded="false" aria-controls="merge-pdf-how-to">
+                <span>How to Use</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="merge-pdf-how-to">
+                <ol>
+                    <li>Click the "Use Tool" button below to open the Merge PDF interface.</li>
+                    <li>Drag and drop your PDF files into the designated area, or click to browse and select them from your device. You can select multiple files at once.</li>
+                    <li>Once files are loaded, you can rearrange their order by dragging them in the list if needed.</li>
+                    <li>Click the "Merge PDFs" button to initiate the process.</li>
+                    <li>Your new merged PDF will be automatically downloaded to your device in seconds.</li>
+                </ol>
+            </div>
+
+            <div class="accordion-header" data-target="merge-pdf-benefits" role="button" aria-expanded="false" aria-controls="merge-pdf-benefits">
+                <span>Benefits & Features</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="merge-pdf-benefits">
+                <ul>
+                    <li><strong>Complete Privacy:</strong> Your documents are never uploaded; all processing happens locally.</li>
+                    <li><strong>Blazing Fast:</strong> Merge even large PDF files quickly without server delays.</li>
+                    <li><strong>User-Friendly:</strong> Simple drag-and-drop interface for easy file selection.</li>
+                    <li><strong>No Installation:</strong> Works directly in your browser on any operating system.</li>
+                    <li><strong>Free & Unlimited:</strong> Merge as many PDFs as you need, entirely free of charge.</li>
+                    <li><strong>Secure:</strong> Encrypted connections (HTTPS) ensure safe browsing.</li>
+                </ul>
+            </div>
+          </div>
+
           <button class="tool-btn" onclick="toggleTool('merge-pdf')">Use Tool</button>
           <div class="tool-content" id="merge-pdf">
             <div class="file-input">
@@ -838,9 +933,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
 
+        <!-- Split PDF Tool Card -->
         <div class="tool-card fade-in" id="split-pdf-card">
           <h3>Split PDF</h3>
           <p>Extract selected pages or split PDF into multiple parts.</p>
+
+          <div class="tool-info-accordion">
+            <div class="accordion-header" data-target="split-pdf-about" role="button" aria-expanded="false" aria-controls="split-pdf-about">
+                <span>About this Tool</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="split-pdf-about">
+                <p>Our PDF Splitter allows you to precisely extract selected pages from a PDF document or divide a single PDF into multiple smaller files. This is incredibly useful for isolating specific chapters, removing unnecessary pages, or creating separate documents from a large PDF. Like all our tools, the splitting process occurs entirely within your browser, ensuring your document's privacy and security without any server uploads.</p>
+                <p>Whether you need to extract a single crucial page or segment a lengthy report, our tool provides the flexibility and speed you need for efficient document management.</p>
+            </div>
+
+            <div class="accordion-header" data-target="split-pdf-how-to" role="button" aria-expanded="false" aria-controls="split-pdf-how-to">
+                <span>How to Use</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="split-pdf-how-to">
+                <ol>
+                    <li>Click the "Use Tool" button to expand the splitter.</li>
+                    <li>Upload your PDF file using drag & drop or by clicking to select it from your device.</li>
+                    <li>In the "Pages to extract" field, specify the page numbers or ranges you wish to extract (e.g., `1-3,5,7-9`). You can mix individual pages and ranges.</li>
+                    <li>Click the "Split PDF" button.</li>
+                    <li>Your new PDF containing the extracted pages will be downloaded automatically.</li>
+                </ol>
+            </div>
+
+            <div class="accordion-header" data-target="split-pdf-benefits" role="button" aria-expanded="false" aria-controls="split-pdf-benefits">
+                <span>Benefits & Features</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="split-pdf-benefits">
+                <ul>
+                    <li><strong>Precise Page Extraction:</strong> Extract individual pages or custom ranges with ease.</li>
+                    <li><strong>Data Privacy:</strong> All operations are performed locally on your device, ensuring maximum security.</li>
+                    <li><strong>Fast & Efficient:</strong> Split large PDFs quickly without time-consuming uploads.</li>
+                    <li><strong>User-Friendly:</strong> Simple interface for selecting pages and ranges.</li>
+                    <li><strong>No Hidden Costs:</strong> Free to use without limitations or subscriptions.</li>
+                </ul>
+            </div>
+          </div>
+
           <button class="tool-btn" onclick="toggleTool('split-pdf')">Use Tool</button>
           <div class="tool-content" id="split-pdf">
             <div class="file-input">
@@ -864,9 +997,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
 
+        <!-- Compress PDF Tool Card -->
         <div class="tool-card fade-in" id="compress-pdf-card">
           <h3>Compress PDF</h3>
           <p>Reduce PDF file size without losing quality or formatting.</p>
+
+          <div class="tool-info-accordion">
+            <div class="accordion-header" data-target="compress-pdf-about" role="button" aria-expanded="false" aria-controls="compress-pdf-about">
+                <span>About this Tool</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="compress-pdf-about">
+                <p>Reduce the size of your PDF files without compromising their quality or integrity using our PDF Compression tool. This is essential for sending documents via email, uploading them to websites with size limits, or simply saving storage space on your device. Our browser-based compressor intelligently optimizes your PDF by removing redundant information and optimizing internal structures. Crucially, all processing is done locally, ensuring your documents remain completely private.</p>
+                <p>We offer various compression levels, allowing you to find the perfect balance between file size reduction and document quality, making it versatile for all your needs.</p>
+            </div>
+
+            <div class="accordion-header" data-target="compress-pdf-how-to" role="button" aria-expanded="false" aria-controls="compress-pdf-how-to">
+                <span>How to Use</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="compress-pdf-how-to">
+                <ol>
+                    <li>Click "Use Tool" to open the compression interface.</li>
+                    <li>Drag and drop your PDF file or click to select it from your device.</li>
+                    <li>Choose your desired compression level: <strong>Low</strong> (better quality), <strong>Medium</strong> (balanced), <strong>High</strong> (smaller file), or <strong>Extreme</strong> (maximum compression).</li>
+                    <li>Select a Compression Mode for additional control (Balanced, Preserve Text Quality, or Preserve Image Quality).</li>
+                    <li>Click the "Compress PDF" button.</li>
+                    <li>The optimized PDF will download automatically once compressed.</li>
+                </ol>
+            </div>
+
+            <div class="accordion-header" data-target="compress-pdf-benefits" role="button" aria-expanded="false" aria-controls="compress-pdf-benefits">
+                <span>Benefits & Features</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="compress-pdf-benefits">
+                <ul>
+                    <li><strong>Optimize File Size:</strong> Significantly reduce PDF size for easier sharing and storage.</li>
+                    <li><strong>Quality Control:</strong> Choose from various compression levels to balance size and visual fidelity.</li>
+                    <li><strong>Local Processing:</strong> Your files are never sent to a server, ensuring maximum privacy.</li>
+                    <li><strong>Fast & Reliable:</strong> Quick compression directly in your web browser.</li>
+                    <li><strong>Supports All PDFs:</strong> Works with various PDF structures and content types, including those with images and text.</li>
+                </ul>
+            </div>
+          </div>
+
           <button class="tool-btn" onclick="toggleTool('compress-pdf')">Use Tool</button>
           <div class="tool-content" id="compress-pdf">
             <div class="file-input">
@@ -903,9 +1075,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
 
+        <!-- Image to PDF Tool Card -->
         <div class="tool-card fade-in" id="image-to-pdf-card">
           <h3>Image to PDF</h3>
           <p>Convert one or multiple images to a single PDF document.</p>
+
+          <div class="tool-info-accordion">
+            <div class="accordion-header" data-target="image-to-pdf-about" role="button" aria-expanded="false" aria-controls="image-to-pdf-about">
+                <span>About this Tool</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="image-to-pdf-about">
+                <p>Effortlessly convert one or multiple image files (like JPG, PNG, WebP, etc.) into a single, high-quality PDF document. This tool is perfect for compiling photo albums, creating digital portfolios, archiving scanned documents, or converting any visual content into a universally compatible and shareable format. All image-to-PDF conversions are performed securely in your browser, guaranteeing your visual content remains private and protected.</p>
+                <p>You have full control over the page layout and margins, allowing for a professional finish to your digital documents.</p>
+            </div>
+
+            <div class="accordion-header" data-target="image-to-pdf-how-to" role="button" aria-expanded="false" aria-controls="image-to-pdf-how-to">
+                <span>How to Use</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="image-to-pdf-how-to">
+                <ol>
+                    <li>Click "Use Tool" to access the converter.</li>
+                    <li>Drag and drop your image files into the upload area. You can select multiple images at once.</li>
+                    <li>Choose your desired page layout: <strong>Portrait</strong>, <strong>Landscape</strong>, or <strong>Auto</strong> (to match image orientation).</li>
+                    <li>Adjust the margin size in millimeters (mm) if needed, to add white space around your images on the PDF page.</li>
+                    <li>Click the "Convert to PDF" button.</li>
+                    <li>Your new PDF document, containing all your selected images, will be downloaded instantly.</li>
+                </ol>
+            </div>
+
+            <div class="accordion-header" data-target="image-to-pdf-benefits" role="button" aria-expanded="false" aria-controls="image-to-pdf-benefits">
+                <span>Benefits & Features</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="image-to-pdf-benefits">
+                <ul>
+                    <li><strong>Multi-Image Support:</strong> Combine numerous images into one cohesive PDF.</li>
+                    <li><strong>Layout Control:</strong> Define page orientation and margins for professional results.</li>
+                    <li><strong>Browser-Based:</strong> No uploads, ensuring maximum privacy for your images.</li>
+                    <li><strong>High-Quality Output:</strong> Images are embedded into the PDF with optimal clarity.</li>
+                    <li><strong>Versatile Use:</strong> Ideal for portfolios, archives, presentations, or sharing image collections.</li>
+                    <li><strong>Supports Common Formats:</strong> Works with JPG, PNG, and automatically converts others.</li>
+                </ul>
+            </div>
+          </div>
+
           <button class="tool-btn" onclick="toggleTool('image-to-pdf')">Use Tool</button>
           <div class="tool-content" id="image-to-pdf">
             <div class="file-input">
@@ -937,9 +1149,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
 
+        <!-- Text to PDF Tool Card -->
         <div class="tool-card fade-in" id="text-converter-card">
           <h3>Text to PDF</h3>
           <p>Convert plain text to professional PDF documents.</p>
+
+          <div class="tool-info-accordion">
+            <div class="accordion-header" data-target="text-converter-about" role="button" aria-expanded="false" aria-controls="text-converter-about">
+                <span>About this Tool</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="text-converter-about">
+                <p>Transform your plain text content into professional-looking PDF documents instantly with our Text to PDF converter. This tool is ideal for quickly saving notes, code snippets, articles, emails, or any textual content into a universal, non-editable format suitable for sharing, printing, and long-term archiving. All processing is done locally within your browser, guaranteeing the privacy and security of your written content.</p>
+                <p>Simply paste your text, and let the tool create a clean, readable PDF for you without any complex settings.</p>
+            </div>
+
+            <div class="accordion-header" data-target="text-converter-how-to" role="button" aria-expanded="false" aria-controls="text-converter-how-to">
+                <span>How to Use</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="text-converter-how-to">
+                <ol>
+                    <li>Click "Use Tool" to reveal the text input area.</li>
+                    <li>Type or paste your desired text content into the large text box.</li>
+                    <li>Optionally, enter a custom filename for your output PDF in the designated field.</li>
+                    <li>Click the "Convert to PDF" button.</li>
+                    <li>Your text will be converted and downloaded as a PDF document.</li>
+                </ol>
+            </div>
+
+            <div class="accordion-header" data-target="text-converter-benefits" role="button" aria-expanded="false" aria-controls="text-converter-benefits">
+                <span>Benefits & Features</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="text-converter-benefits">
+                <ul>
+                    <li><strong>Simple & Fast:</strong> Convert text to PDF in just a few clicks.</li>
+                    <li><strong>Privacy-Focused:</strong> No text content leaves your device; processing is entirely local.</li>
+                    <li><strong>Custom Filename:</strong> Name your PDF exactly as you need for better organization.</li>
+                    <li><strong>Universal Compatibility:</strong> Create standard PDFs viewable on any device or operating system.</li>
+                    <li><strong>Clean Output:</strong> Generates a clean, readable PDF from your plain text input.</li>
+                </ul>
+            </div>
+          </div>
+
           <button class="tool-btn" onclick="toggleTool('text-converter')">Use Tool</button>
           <div class="tool-content" id="text-converter">
             <div class="options">
@@ -953,14 +1203,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             </div>
             <button class="tool-btn" id="text-convert-btn" onclick="convertTextToPDF()">Convert to PDF</button>
+            <button class="tool-btn secondary" id="enhance-text-btn" onclick="enhanceTextContent()">Enhance Text ✨</button>
             <div class="spinner" id="text-converter-spinner"></div>
             <div class="status-message" id="text-converter-status"></div>
           </div>
         </div>
 
+        <!-- PDF to Word Tool Card -->
         <div class="tool-card fade-in" id="pdf-to-word-card">
           <h3>PDF to Word</h3>
           <p>Convert PDF documents to editable Word files.</p>
+
+          <div class="tool-info-accordion">
+            <div class="accordion-header" data-target="pdf-to-word-about" role="button" aria-expanded="false" aria-controls="pdf-to-word-about">
+                <span>About this Tool</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="pdf-to-word-about">
+                <p>Our PDF to Word converter extracts the textual content from your PDF documents and converts it into an editable Microsoft Word (.docx) or Rich Text Format (.rtf) file. This is perfect for when you need to repurpose content from a PDF, make edits, or copy text without losing its structure. Please note that due to the complexity of PDF layouts and the nature of client-side text extraction, complex formatting, images, and non-text elements might not be perfectly preserved. Your files remain private as conversion occurs in your browser.</p>
+                <p>This tool excels at extracting pure text and simple structures, providing a solid base for further editing in a Word processor.</p>
+            </div>
+
+            <div class="accordion-header" data-target="pdf-to-word-how-to" role="button" aria-expanded="false" aria-controls="pdf-to-word-how-to">
+                <span>How to Use</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="pdf-to-word-how-to">
+                <ol>
+                    <li>Click "Use Tool" to open the converter.</li>
+                    <li>Upload your PDF file via drag & drop or by clicking to browse.</li>
+                    <li>Select your preferred output format: <strong>.docx</strong> (Microsoft Word Document) or <strong>.rtf</strong> (Rich Text Format).</li>
+                    <li>Click the "Convert to Word" button.</li>
+                    <li>Your new editable Word or RTF file will be downloaded directly to your device.</li>
+                </ol>
+            </div>
+
+            <div class="accordion-header" data-target="pdf-to-word-benefits" role="button" aria-expanded="false" aria-controls="pdf-to-word-benefits">
+                <span>Benefits & Features</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="pdf-to-word-benefits">
+                <ul>
+                    <li><strong>Editable Output:</strong> Get your PDF content into an editable format for easy modifications.</li>
+                    <li><strong>Privacy Assured:</strong> Files are processed client-side; no uploads to external servers.</li>
+                    <li><strong>Fast & Easy:</strong> Quick conversion with minimal steps and a user-friendly interface.</li>
+                    <li><strong>Multiple Formats:</strong> Choose between industry-standard DOCX and RTF outputs.</li>
+                    <li><strong>Free Online Tool:</strong> Convert PDFs to Word for free, anytime, without software installation.</li>
+                </ul>
+            </div>
+          </div>
+
           <button class="tool-btn" onclick="toggleTool('pdf-to-word')">Use Tool</button>
           <div class="tool-content" id="pdf-to-word">
             <div class="file-input">
@@ -982,14 +1271,55 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             </div>
             <button class="tool-btn" id="pdf-to-word-btn" onclick="convertPDFToWord()" disabled>Convert to Word</button>
+            <!-- Summarize PDF Text button and output removed as requested -->
             <div class="spinner" id="pdf-to-word-spinner"></div>
             <div class="status-message" id="pdf-to-word-status"></div>
           </div>
         </div>
 
+        <!-- PDF Signer Tool Card -->
         <div class="tool-card fade-in" id="pdf-signer-card">
           <h3>Sign PDF</h3>
           <p>Add your signature to PDF documents.</p>
+
+          <div class="tool-info-accordion">
+            <div class="accordion-header" data-target="pdf-signer-about" role="button" aria-expanded="false" aria-controls="pdf-signer-about">
+                <span>About this Tool</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="pdf-signer-about">
+                <p>Digitally sign your PDF documents directly in your browser with our intuitive PDF Signer. You can draw your signature using your mouse or touchscreen, and then place it precisely onto any page of your PDF. This tool is ideal for quickly signing contracts, agreements, or forms without the need for printing, signing by hand, and scanning. Your signature and document privacy are guaranteed as all operations are client-side, meaning no uploads whatsoever.</p>
+                <p>Streamline your workflow and handle digital documents efficiently with this secure and easy-to-use signing solution.</p>
+            </div>
+
+            <div class="accordion-header" data-target="pdf-signer-how-to" role="button" aria-expanded="false" aria-controls="pdf-signer-how-to">
+                <span>How to Use</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="pdf-signer-how-to">
+                <ol>
+                    <li>Click "Use Tool" to access the signing interface.</li>
+                    <li>Upload the PDF file you wish to sign using the drag & drop area or file selector.</li>
+                    <li>Adjust the page number where you want to place the signature, its position (e.g., Bottom Right), and the desired size (Small, Medium, Large, or Custom).</li>
+                    <li>Use the drawing canvas to create your signature. Once you're happy, click "Save Signature".</li>
+                    <li>Click the "Sign PDF" button.</li>
+                    <li>Your signed PDF will be downloaded instantly to your device.</li>
+                </ol>
+            </div>
+
+            <div class="accordion-header" data-target="pdf-signer-benefits" role="button" aria-expanded="false" aria-controls="pdf-signer-benefits">
+                <span>Benefits & Features</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="pdf-signer-benefits">
+                <ul>
+                    <li><strong>Secure Signing:</strong> All signing processes occur locally in your browser, maintaining privacy.</li>
+                    <li><strong>Customizable Placement:</strong> Choose exactly where your signature appears on the page.</li>
+                    <li><strong>Adjustable Size:</strong> Control the size and dimensions of your digital signature.</li>
+                    <li><strong>No Special Software:</strong> Sign PDFs online without installing any desktop applications.</li>
+                    <li><strong>Efficient Workflow:</strong> Streamline your document signing process for speed and convenience.</li>
+                    <li><strong>Intuitive Drawing:</strong> Easy-to-use canvas for creating your unique signature.</li>
+                </ul>
+            </div>
+          </div>
+
           <button class="tool-btn" onclick="toggleTool('pdf-signer')">Use Tool</button>
           <div class="tool-content" id="pdf-signer">
             <div class="file-input">
@@ -1044,9 +1374,50 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
 
+        <!-- Compress Images Tool Card -->
         <div class="tool-card fade-in" id="compress-image-card">
           <h3>Compress Images</h3>
           <p>Smartly compress JPEG, PNG, or WebP images with advanced algorithms.</p>
+
+          <div class="tool-info-accordion">
+            <div class="accordion-header" data-target="compress-image-about" role="button" aria-expanded="false" aria-controls="compress-image-about">
+                <span>About this Tool</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="compress-image-about">
+                <p>Optimize your JPEG, PNG, or WebP images with our smart image compression tool. This significantly reduces file sizes, leading to faster website loading times, easier email attachments, and more efficient storage. Our advanced, browser-based algorithms ensure maximum size reduction while preserving visual quality as much as possible. All image compression takes place securely within your browser, ensuring your photos and graphics remain completely private.</p>
+                <p>You can fine-tune the compression quality, resize images, and even convert them to different formats for optimal results.</p>
+            </div>
+
+            <div class="accordion-header" data-target="compress-image-how-to" role="button" aria-expanded="false" aria-controls="compress-image-how-to">
+                <span>How to Use</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="compress-image-how-to">
+                <ol>
+                    <li>Click "Use Tool" to open the image compression interface.</li>
+                    <li>Drag and drop your image files into the upload area, or click to browse and select them from your device.</li>
+                    <li>Adjust the "Quality" slider (from 0 to 100%) to find the perfect balance between file size and visual fidelity.</li>
+                    <li>Optionally, set a maximum width for resizing your images to a specific pixel dimension.</li>
+                    <li>Choose your desired output format: <strong>Keep original format</strong>, <strong>JPEG</strong>, <strong>PNG</strong>, or <strong>WebP</strong>.</li>
+                    <li>Select an "Advanced Compression" mode (Balanced, Aggressive for smaller files, or Conservative for better quality).</li>
+                    <li>Click the "Compress Images" button. Your compressed images will be downloaded as a ZIP archive.</li>
+                </ol>
+            </div>
+
+            <div class="accordion-header" data-target="compress-image-benefits" role="button" aria-expanded="false" aria-controls="compress-image-benefits">
+                <span>Benefits & Features</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="compress-image-benefits">
+                <ul>
+                    <li><strong>Optimal Compression:</strong> Significantly reduce image file sizes for faster web performance and sharing.</li>
+                    <li><strong>Maintain Quality:</strong> Fine-tune compression quality and choose advanced modes to meet your specific needs.</li>
+                    <li><strong>Privacy-Friendly:</strong> All image processing is done client-side; your photos are never uploaded.</li>
+                    <li><strong>Batch Processing:</strong> Compress multiple images simultaneously in one go.</li>
+                    <li><strong>Output Format Control:</strong> Choose output as JPG, PNG, or WebP for maximum compatibility and efficiency.</li>
+                    <li><strong>Resizing Option:</strong> Resize images to specific dimensions during compression.</li>
+                </ul>
+            </div>
+          </div>
+
           <button class="tool-btn" onclick="toggleTool('compress-image')">Use Tool</button>
           <div class="tool-content" id="compress-image">
             <div class="file-input">
@@ -1093,9 +1464,50 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
 
+        <!-- QR Code Tool Card -->
         <div class="tool-card fade-in" id="qr-code-card">
           <h3>Advanced QR Code Generator</h3>
           <p>Create stylish QR codes with logos, custom colors, and patterns.</p>
+
+          <div class="tool-info-accordion">
+            <div class="accordion-header" data-target="qr-code-about" role="button" aria-expanded="false" aria-controls="qr-code-about">
+                <span>About this Tool</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="qr-code-about">
+                <p>Create highly customizable QR codes with our advanced generator. You can embed various types of content, such as URLs, plain text, contact information, Wi-Fi details, and more. What sets our tool apart is the ability to personalize your QR code with custom colors, unique dot styles, and distinct corner patterns, making your QR codes not just functional but also visually appealing. This tool is perfect for marketing campaigns, personal use, or quickly sharing information digitally. All QR code generation happens instantly and securely in your browser, ensuring your data remains private.</p>
+                <p>Design a QR code that truly stands out and represents your brand or message effectively.</p>
+            </div>
+
+            <div class="accordion-header" data-target="qr-code-how-to" role="button" aria-expanded="false" aria-controls="qr-code-how-to">
+                <span>How to Use</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="qr-code-how-to">
+                <ol>
+                    <li>Click "Use Tool" to reveal the QR code options.</li>
+                    <li>Enter the content you want to embed (e.g., a website URL, text message, Wi-Fi details) into the "QR Code Content" field.</li>
+                    <li>Adjust the "Size" of the QR code in pixels to fit your needs.</li>
+                    <li>Choose your desired "Foreground Color" (for the dots) and "Background Color."</li>
+                    <li>Experiment with different "Dot Style" and "Corner Style" options to create a unique look for your QR code.</li>
+                    <li>Click the "Generate QR Code" button to see a live preview of your customized QR code.</li>
+                    <li>Click "Download QR Code" to save your customized QR code as a high-quality PNG image.</li>
+                </ol>
+            </div>
+
+            <div class="accordion-header" data-target="qr-code-benefits" role="button" aria-expanded="false" aria-controls="qr-code-benefits">
+                <span>Benefits & Features</span> <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content" id="qr-code-benefits">
+                <ul>
+                    <li><strong>Highly Customizable Design:</strong> Personalize colors, dot, and corner styles for unique QR codes.</li>
+                    <li><strong>Versatile Content:</strong> Embed URLs, text, email, phone numbers, and various other data types.</li>
+                    <li><strong>Instant Generation:</strong> Create QR codes on the fly with a live preview.</li>
+                    <li><strong>High-Quality Output:</strong> Downloadable as a crisp PNG image suitable for print and digital use.</li>
+                    <li><strong>No Server Interaction:</strong> Your data remains private and secure during the generation process.</li>
+                    <li><strong>User-Friendly Interface:</strong> Easy to navigate options for quick customization.</li>
+                </ul>
+            </div>
+          </div>
+
           <button class="tool-btn" onclick="toggleTool('qr-code')">Use Tool</button>
           <div class="tool-content" id="qr-code">
             <div class="options">
@@ -1149,42 +1561,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="content-container">
       <h1 class="fade-in">About Quick Merge</h1>
       
-      <p class="fade-in">Quick Merge is a revolutionary client-side file processing tool that empowers you to merge, split, convert, and edit files directly in your browser—without ever compromising your privacy by uploading them to external servers.</p>
+      <p class="fade-in">Welcome to Quick Merge, your premier destination for fast, secure, and private online file processing. In today's digital world, managing documents and media efficiently is crucial, but so is protecting your sensitive information. We founded Quick Merge with a clear mission: to provide powerful, professional-grade file manipulation tools that operate entirely within your browser, ensuring your data never leaves your device.</p>
+      <p class="fade-in">Unlike many other online file converters and editors, Quick Merge prioritizes your privacy above all else. We believe you shouldn't have to compromise security for convenience. Our innovative client-side processing architecture means that when you merge, compress, convert, or sign a file, the entire operation happens locally on your computer. This eliminates the need for file uploads to external servers, protecting your confidential documents from potential breaches and ensuring complete anonymity.</p>
       
       <div class="feature-list fade-in">
-        <h2>Why Choose Quick Merge?</h2>
+        <h2>Why Quick Merge Stands Out</h2>
         <div class="feature-item">
-          <strong>Complete Privacy Assurance</strong> - Your files never leave your device, ensuring maximum security for sensitive documents
+          <strong>Unmatched Privacy & Security:</strong> Your files are processed directly in your browser, ensuring they never touch our servers or any third-party clouds. This offers the highest level of data protection for sensitive documents.
         </div>
         <div class="feature-item">
-          <strong>No Account Required</strong> - Get started immediately without registration or login
+          <strong>Blazing Fast Performance:</strong> With no server uploads or downloads, our tools execute operations at lightning speed, delivering results instantly. Experience seamless processing even with large files.
         </div>
         <div class="feature-item">
-          <strong>Professional-Grade Tools</strong> - Powerful features designed for both casual users and professionals
+          <strong>Absolutely No Account Required:</strong> Jump straight into using our tools without the hassle of registration, logins, or subscriptions. We believe in immediate access and ultimate convenience.
         </div>
         <div class="feature-item">
-          <strong>Universal Compatibility</strong> - Works seamlessly across all modern browsers and devices
+          <strong>Professional-Grade Functionality:</strong> Our suite includes robust tools for PDF merging, splitting, compression, image conversion, text-to-PDF, PDF signing, and advanced QR code generation, all designed for precision and reliability.
+        </div>
+        <div class="feature-item">
+          <strong>Universal Compatibility:</strong> Quick Merge works flawlessly across all modern web browsers and devices, providing a consistent and reliable experience whether you're on a desktop, laptop, or mobile device.
         </div>
       </div>
       
-      <h2 class="fade-in">Our Technology</h2>
-      <p class="fade-in">Quick Merge leverages cutting-edge web technologies to bring you:</p>
+      <h2 class="fade-in">Our Technology: The Power of Client-Side Processing</h2>
+      <p class="fade-in">Quick Merge leverages cutting-edge web technologies to deliver its unique privacy-focused experience. Our core principle is client-side processing, which means:</p>
       <ul class="fade-in">
-        <li>Advanced PDF manipulation using PDF-lib technology</li>
-        <li>Efficient image processing with WebAssembly</li>
-        <li>Client-side file handling with Web APIs</li>
-        <li>Secure processing environment isolated from external networks</li>
+        <li><strong>Zero Data Transmission:</strong> When you use our tools, your files are loaded into your browser's memory and processed there. They are never transmitted over the internet to our servers or any third-party services.</li>
+        <li><strong>Enhanced Security:</strong> By keeping your data local, we eliminate the risks associated with server-side processing, such as data breaches during transit or storage.</li>
+        <li><strong>Instant Results:</strong> Without the need to upload and download files, operations complete much faster, saving you valuable time and bandwidth.</li>
+        <li><strong>Automatic Cleanup:</strong> All temporary data generated during processing is automatically purged from your browser's memory the moment you close the tab or navigate away.</li>
       </ul>
+      <p class="fade-in">We utilize powerful JavaScript libraries and Web APIs, including PDF-lib for advanced PDF manipulation, JSZip for efficient file archiving, and browser-image-compression for smart image optimization. Our commitment to a secure processing environment is paramount, with regular code audits to maintain the highest standards.</p>
       
-      <h2 class="fade-in">Who Uses Quick Merge?</h2>
-      <p class="fade-in">Our tools are trusted by professionals across industries:</p>
+      <h2 class="fade-in">Who Benefits from Quick Merge?</h2>
+      <p class="fade-in">Our versatile tools are designed to empower a wide range of users across various industries and personal needs:</p>
       <ul class="fade-in">
-        <li>Legal professionals handling sensitive case documents</li>
-        <li>Healthcare providers managing patient records</li>
-        <li>Financial analysts working with confidential reports</li>
-        <li>Students and educators organizing research materials</li>
-        <li>Business professionals preparing presentations and contracts</li>
+        <li><strong>Legal Professionals:</strong> Securely merge case documents, redact sensitive information, or sign contracts without risking confidential data exposure.</li>
+        <li><strong>Healthcare Providers:</strong> Manage patient records, consent forms, and medical reports with absolute privacy, adhering to strict data protection regulations.</li>
+        <li><strong>Financial Analysts:</strong> Compile confidential reports, merge spreadsheets, and compress large financial documents without uploading sensitive figures.</li>
+        <li><strong>Students and Educators:</strong> Organize research materials, merge lecture notes, convert images for assignments, or compress large files for easy submission.</li>
+        <li><strong>Business Professionals:</strong> Prepare presentations, merge contracts, compress images for web use, and generate custom QR codes for marketing materials, all while maintaining corporate data integrity.</li>
+        <li><strong>Everyday Users:</strong> Anyone who needs quick, reliable, and private file conversion, compression, or editing for personal documents, photos, and more.</li>
       </ul>
+      <p class="fade-in">At Quick Merge, we are continuously working to expand our suite of tools and enhance user experience, always with privacy and performance at the forefront. Thank you for choosing Quick Merge for your file processing needs!</p>
     </div>
   </section>
 
@@ -1192,43 +1611,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="content-container">
       <h1 class="fade-in">Contact Quick Merge</h1>
       
+      <p class="fade-in">We are dedicated to providing excellent support and value every piece of feedback from our users. Your insights help us improve Quick Merge and ensure it remains the best privacy-focused file processing tool available. Whether you have a technical question, a suggestion for a new feature, or simply want to share your experience, we're here to listen.</p>
+      <p class="fade-in">While our tools operate client-side, meaning we don't handle your files directly, we are fully committed to assisting you with any inquiries related to our website's functionality, performance, or policies. Please choose the most relevant contact method below:</p>
+        
       <div class="contact-box fade-in">
         <h2>Get in Touch</h2>
-        <p>We're committed to providing exceptional support and value your feedback. Here's how you can reach us:</p>
         
         <div class="contact-method">
-          <h3>Technical Support</h3>
+          <h3>Technical Support & Feature Requests</h3>
           <p>Email: <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a></p>
-          <p>For assistance with tool functionality, troubleshooting, or feature requests.</p>
+          <p>If you encounter any issues while using our tools, have questions about specific features, or wish to suggest new functionalities you'd like to see implemented on Quick Merge, please reach out to our technical support team. We aim to troubleshoot problems efficiently and consider all user suggestions for future updates.</p>
         </div>
         
         <div class="contact-method">
-          <h3>Privacy Questions</h3>
+          <h3>Privacy & Data Security Inquiries</h3>
           <p>Email: <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a></p>
-          <p>For any concerns regarding our privacy policy or data handling practices.</p>
+          <p>For any concerns or detailed questions regarding our Privacy Policy, how your data is handled (or not handled, in our case!), or the security measures implemented on our website, please contact our dedicated Privacy Officer. We are transparent about our client-side processing model and are happy to provide further clarification.</p>
+        </div>
+
+        <div class="contact-method">
+          <h3>Business Partnerships & Media Inquiries</h3>
+          <p>Email: <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a></p>
+          <p>If you are interested in exploring potential business collaborations, media features, or have any other professional inquiries, please contact our business development team. We are open to discussing how Quick Merge's unique technology can integrate with other platforms or be featured in relevant publications.</p>
         </div>
       </div>
       
-      <h2 class="fade-in">Support Hours</h2>
-      <p class="fade-in">Our team is available to assist you during the following hours:</p>
+      <h2 class="fade-in">What to Expect When You Contact Us</h2>
+      <p class="fade-in">We strive to respond to all inquiries promptly and thoroughly. Here’s what you can expect:</p>
       <ul class="fade-in">
-        <li>Monday-Friday: 9:00 AM - 5:00 PM (GMT)</li>
-        <li>Emergency support available for critical issues</li>
-        <li>Typical response time: 24-48 hours</li>
+        <li><strong>Typical Response Time:</strong> We aim to reply to all emails within 24-48 hours during business days (Monday-Friday).</li>
+        <li><strong>Detailed Assistance:</strong> Our team will provide comprehensive answers and guidance to resolve your queries effectively.</li>
+        <li><strong>Confidentiality:</strong> All communications are treated with the utmost confidentiality.</li>
+        <li><strong>No Automated Responses:</strong> You'll receive a personalized response from a member of our team.</li>
       </ul>
       
-      <h2 class="fade-in">We Value Your Feedback</h2>
-      <p class="fade-in">Help us improve Quick Merge by sharing your thoughts on:</p>
+      <h2 class="fade-in">Your Feedback Drives Our Innovation</h2>
+      <p class="fade-in">We are constantly working to enhance Quick Merge and your feedback is invaluable to us. Please don't hesitate to share your thoughts on:</p>
       <ul class="fade-in">
-        <li>New features you'd like to see implemented</li>
-        <li>Your experience with our current tools</li>
-        <li>Any difficulties you've encountered</li>
-        <li>Suggestions for improving our interface</li>
+        <li>New features you'd like to see implemented to make your workflow even smoother.</li>
+        <li>Your overall experience with our current tools – what you love and what could be better.</li>
+        <li>Any difficulties or bugs you've encountered, so we can address them swiftly.</li>
+        <li>Suggestions for improving our website's interface or user experience.</li>
       </ul>
-      
-      <h2 class="fade-in">Business Partnerships</h2>
-      <p class="fade-in">Interested in integrating Quick Merge technology into your platform?</p>
-      <p class="fade-in">Contact our business development team at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a> to discuss collaboration opportunities.</p>
+      <p class="fade-in">Thank you for helping us make Quick Merge even better!</p>
     </div>
   </section>
 
@@ -1238,54 +1663,70 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="update-date fade-in">Last Updated: 21.05.2025</p>
       
       <div class="policy-section fade-in">
-        <h2>Our Commitment to Privacy</h2>
-        <p>At Quick Merge, we've built our platform on a fundamental principle: your data belongs to you. Unlike traditional online tools, we've designed our service to operate entirely within your browser, ensuring complete privacy and security.</p>
+        <h2>Our Unwavering Commitment to Your Privacy</h2>
+        <p class="fade-in">At Quick Merge, your privacy is not just a feature; it's the foundational principle upon which our entire platform is built. We understand the critical importance of keeping your personal and sensitive documents secure. Unlike most online file processing services that require you to upload your files to their servers, we've engineered Quick Merge to operate with an innovative client-side architecture. This means your files and data never leave your device, ensuring unparalleled privacy and security from start to finish.</p>
+        <p class="fade-in">This Privacy Policy outlines our transparent approach to data handling. Because all file processing occurs directly in your web browser, we do not collect, store, or transmit your files or their content. We are committed to maintaining a truly private and anonymous experience for every user.</p>
       </div>
       
       <div class="policy-section fade-in">
-        <h2>How We Protect Your Data</h2>
+        <h2>How We Protect Your Data: The Client-Side Advantage</h2>
         
-        <h3>Local Processing Architecture</h3>
-        <p>Our innovative approach means:</p>
+        <h3>Local Processing Architecture Explained</h3>
+        <p>Our unique approach guarantees your data remains under your control:</p>
         <ul>
-          <li><strong>Zero Data Transmission:</strong> Files are processed directly in your browser with no server interaction</li>
-          <li><strong>Automatic Cleanup:</strong> All temporary data is purged when you close your browser tab</li>
-          <li><strong>No Tracking:</strong> We don't use cookies, analytics, or any tracking mechanisms</li>
+          <li><strong>Zero Data Transmission:</strong> When you use any tool on Quick Merge (e.g., merging PDFs, compressing images, generating QR codes), your files are loaded directly into your browser's temporary memory. All processing, manipulation, and conversion tasks are performed locally on your computer. Your files are never uploaded to our servers, nor are they shared with any third-party services.</li>
+          <li><strong>No Server Storage:</strong> We do not store any of your files or their content on our servers, even temporarily. Once you download your processed file, or close your browser tab, the data is purged from your device's temporary memory.</li>
+          <li><strong>Complete Anonymity:</strong> Because we don't receive or store your files, we cannot link any processed data back to you. Your activities on Quick Merge are entirely private and anonymous.</li>
         </ul>
         
-        <h3>Security Features</h3>
-        <p>We've implemented multiple safeguards:</p>
+        <h3>Security Features & Measures</h3>
+        <p>Even though your files stay local, we've implemented robust safeguards to ensure a secure processing environment:</p>
         <ul>
-          <li>Modern encryption standards for all processing</li>
-          <li>Sandboxed execution environment</li>
-          <li>Regular security audits of our codebase</li>
+          <li><strong>Modern Encryption Standards:</strong> Our website uses HTTPS (Hypertext Transfer Protocol Secure) to encrypt all communication between your browser and our server. This protects your browsing activity and ensures the integrity of the website's code.</li>
+          <li><strong>Sandboxed Execution Environment:</strong> The file processing operations occur within the secure sandbox of your web browser, isolating them from other processes on your device.</li>
+          <li><strong>Regular Code Audits:</strong> Our codebase is regularly reviewed and updated to identify and mitigate potential vulnerabilities, ensuring the highest level of security for our client-side operations.</li>
+          <li><strong>Dependency Security:</strong> We carefully select and monitor third-party JavaScript libraries (like PDF-lib, JSZip, browser-image-compression) to ensure they adhere to security best practices and do not compromise your privacy.</li>
         </ul>
       </div>
       
       <div class="policy-section fade-in">
-        <h2>Your Responsibilities</h2>
-        <p>While we provide the tools for secure processing, we recommend:</p>
+        <h2>Information We DO NOT Collect</h2>
+        <p>To be absolutely clear about our privacy stance, Quick Merge explicitly states that we DO NOT collect:</p>
         <ul>
-          <li>Using updated browsers with security patches</li>
-          <li>Avoiding public computers for sensitive documents</li>
-          <li>Maintaining your device's antivirus protection</li>
+            <li>Your uploaded files or their content.</li>
+            <li>Any personal identifying information (like your name, email address, IP address, or location) that could be linked to your file processing activities.</li>
+            <li>Usage data tied to individual users or specific file operations.</li>
+            <li>Cookies for tracking or personalization purposes.</li>
         </ul>
+        <p>We use Google Tag Manager (GTM-KKBN3TSQ) solely for general, aggregated website performance and traffic analysis (e.g., number of page views, popular tools). This data is completely anonymous and cannot be used to identify individual users or their file processing activities. It helps us understand overall site usage and improve our service.</p>
+      </div>
+
+      <div class="policy-section fade-in">
+        <h2>Your Rights & Control Over Your Data</h2>
+        <p>Given our local processing model, you inherently retain full control over your data:</p>
+        <ul>
+          <li><strong>Right to Access:</strong> You always have direct access to your files on your device.</li>
+          <li><strong>Right to Rectification:</strong> You can modify your files directly on your device.</li>
+          <li><strong>Right to Erasure:</strong> Once you close your browser tab or delete the downloaded file, your data is gone from our operational scope. We never have a copy to "erase" from our end because we never received it.</li>
+          <li><strong>Right to Object:</strong> By choosing to use our client-side tools, you are exercising your right to object to server-side data processing.</li>
+        </ul>
+        <p>Your control is fundamental to our service.</p>
       </div>
       
       <div class="policy-section fade-in">
         <h2>Policy Updates</h2>
-        <p>We may occasionally update this policy to reflect:</p>
+        <p>We may occasionally update this Privacy Policy to reflect:</p>
         <ul>
-          <li>New features that maintain our privacy standards</li>
-          <li>Changes in applicable laws and regulations</li>
-          <li>Improvements to our security documentation</li>
+          <li>Introduction of new client-side features that maintain our privacy standards.</li>
+          <li>Changes in applicable laws and regulations regarding online privacy.</li>
+          <li>Improvements to our security documentation and transparency.</li>
         </ul>
-        <p>We encourage you to review this policy periodically to stay informed about how we're protecting your information.</p>
+        <p>We encourage you to review this policy periodically to stay informed about how we're protecting your information. Any significant changes will be highlighted on our website.</p>
       </div>
       
       <div class="policy-section fade-in">
-        <h2>Contact Us</h2>
-        <p>For any questions about this Privacy Policy or our practices, please contact our Privacy Officer at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>.</p>
+        <h2>Contact Us Regarding Privacy</h2>
+        <p>For any questions, concerns, or requests related to this Privacy Policy or our data handling practices, please do not hesitate to contact our Privacy Officer directly at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>. We are committed to addressing all inquiries promptly and transparently.</p>
       </div>
     </div>
   </section>
@@ -1295,6 +1736,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </footer>
 
   <script>
+    // Global variable to store extracted PDF text for summarization (now removed)
+    // let extractedPdfText = ''; // This line is removed as summarize feature is removed
+
     // Navigation function
     function showSection(sectionId) {
       // Hide all sections
@@ -1498,6 +1942,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           element.addEventListener('change', debounce(generateQRCodePreview, 500));
         }
       });
+
+      // Setup accordions
+      document.querySelectorAll('.accordion-header').forEach(header => {
+          // Add keyboard accessibility
+          header.addEventListener('keydown', function(event) {
+              if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault(); // Prevent default scroll behavior for spacebar
+                  this.click(); // Simulate a click
+              }
+          });
+
+          header.addEventListener('click', function() {
+              const targetId = this.dataset.target;
+              const content = document.getElementById(targetId);
+              
+              const isActive = this.classList.toggle('active');
+              content.classList.toggle('active');
+
+              // Update aria-expanded attribute
+              this.setAttribute('aria-expanded', isActive);
+
+              if (isActive) {
+                  content.style.maxHeight = content.scrollHeight + "px";
+              } else {
+                  content.style.maxHeight = "0";
+              }
+          });
+      });
     });
 
     function setupDragAndDrop(toolId, allowMultiple) {
@@ -1570,6 +2042,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (!files || files.length === 0) {
         fileListElement.innerHTML = '';
         if (actionBtn) actionBtn.disabled = true;
+        
+        // Specific for PDF to Word: disable summarize button if no file (removed summarize)
+        // if (fileListElement.id === 'pdf-to-word-file-list') {
+        //     document.getElementById('summarize-pdf-btn').disabled = true;
+        //     document.getElementById('pdf-summary-output').style.display = 'none';
+        // }
         return;
       }
 
@@ -1606,6 +2084,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           if (actionBtn) {
             actionBtn.disabled = (fileListElement.children.length === 0) || (!allowMultiple && fileListElement.children.length !== 1);
           }
+          // Specific for PDF to Word: disable summarize button if no file (removed summarize)
+          // if (fileListElement.id === 'pdf-to-word-file-list') {
+          //     document.getElementById('summarize-pdf-btn').disabled = true;
+          //     document.getElementById('pdf-summary-output').style.display = 'none';
+          // }
         });
         
         fileItem.appendChild(fileNameSpan);
@@ -1619,6 +2102,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (actionBtn) {
         actionBtn.disabled = (fileListElement.children.length === 0) || (!allowMultiple && fileListElement.children.length !== 1);
       }
+
+      // Specific for PDF to Word: enable summarize button if a file is selected (removed summarize)
+      // if (fileListElement.id === 'pdf-to-word-file-list' && fileListElement.children.length === 1) {
+      //     document.getElementById('summarize-pdf-btn').disabled = false;
+      //     document.getElementById('pdf-summary-output').style.display = 'none'; // Hide previous summary
+      // }
     }
 
     function sanitizeFilename(filename) {
@@ -1703,12 +2192,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (toolId === 'text-converter') {
         document.getElementById('text-content').value = '';
         document.getElementById('text-filename').value = ''; // Clear filename too
+        document.getElementById('enhance-text-btn').disabled = false; // Enable enhance button
       }
       
       // For PDF signer, clear signature
       if (toolId === 'pdf-signer') {
         clearSignature(); // Calls the global clearSignature function
         document.getElementById('sign-pdf-btn').disabled = true; // Ensures button is disabled if signature is cleared
+      }
+
+      // Specific for PDF to Word: clear extracted text and disable summarize button (removed summarize)
+      // if (toolId === 'pdf-to-word') {
+      //     extractedPdfText = ''; // Clear stored text
+      //     document.getElementById('summarize-pdf-btn').disabled = true;
+      //     document.getElementById('pdf-summary-output').style.display = 'none';
+      //     document.getElementById('pdf-summary-output').textContent = '';
+      // }
+
+      // Close all accordions within the tool card
+      const toolCard = document.getElementById(`${toolId}-card`);
+      if (toolCard) {
+          toolCard.querySelectorAll('.accordion-header.active').forEach(header => {
+              header.classList.remove('active');
+              const content = document.getElementById(header.dataset.target);
+              if (content) {
+                content.classList.remove('active');
+                content.style.maxHeight = "0";
+                header.setAttribute('aria-expanded', 'false'); // Update aria-expanded
+              }
+          });
       }
     }
 
@@ -2239,13 +2751,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           fileReader.onload = async function() {
             try {
               const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(fileReader.result) }).promise;
-              let extractedText = '';
+              let extracted = '';
               for (let i = 1; i <= pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
                 const textContent = await page.getTextContent();
-                extractedText += textContent.items.map(item => item.str).join(' ') + '\n\n';
+                extracted += textContent.items.map(item => item.str).join(' ') + '\n\n';
               }
-              resolve(extractedText);
+              resolve(extracted);
             } catch (error) {
               reject(error);
             }
@@ -2255,6 +2767,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         });
 
         const fullText = await fullTextPromise;
+        // extractedPdfText = fullText; // Removed as summarize feature is removed
 
         // Create a Word document
         const { Document, Paragraph, TextRun, Packer } = docx;
@@ -2301,6 +2814,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         hideSpinner('pdf-to-word');
       }
     }
+
+    // summarizePdfText function removed as requested
+    // async function summarizePdfText() { ... }
+
 
     async function signPDF() {
       const fileInput = document.getElementById('pdf-signer-file');
@@ -2662,6 +3179,79 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         script.onerror = reject;
         document.head.appendChild(script);
       });
+    }
+
+    // New Gemini API integration for text enhancement
+    async function enhanceTextContent() {
+        const textContentElement = document.getElementById('text-content');
+        let textToEnhance = textContentElement.value;
+
+        if (!textToEnhance.trim()) {
+            showStatus('text-converter', 'Please enter some text to enhance.', 'error');
+            return;
+        }
+
+        showStatus('text-converter', 'Enhancing text with Gemini API...', 'processing');
+        showSpinner('text-converter');
+        document.getElementById('enhance-text-btn').disabled = true; // Disable button during processing
+
+        const prompt = `Enhance the following text to be more professional, detailed, and engaging. Improve grammar, vocabulary, and sentence structure without changing the core meaning. If it's a short phrase, expand it into a short paragraph. If it's a paragraph, make it more descriptive and articulate:\n\n${textToEnhance}`;
+        const apiKey = ""; // If you want to use models other than gemini-2.5-flash-preview-05-20 or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        let chatHistory = [];
+        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+        const payload = { contents: chatHistory };
+
+        let retries = 0;
+        const maxRetries = 3;
+        const baseDelay = 1000; // 1 second
+
+        while (retries < maxRetries) {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    if (response.status === 429 && retries < maxRetries - 1) {
+                        const delay = baseDelay * Math.pow(2, retries);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        retries++;
+                        continue; // Retry
+                    } else {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                }
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const enhancedText = result.candidates[0].content.parts[0].text;
+                    textContentElement.value = enhancedText; // Update the textarea with enhanced text
+                    showStatus('text-converter', 'Text enhanced successfully!', 'success');
+                    break; // Success, exit loop
+                } else {
+                    throw new Error('Gemini API response structure unexpected or content missing.');
+                }
+            } catch (error) {
+                console.error('Error calling Gemini API for enhancement:', error);
+                showStatus('text-converter', 'Error enhancing text: ' + error.message, 'error');
+                break; // Exit loop on unrecoverable error
+            } finally {
+                hideSpinner('text-converter');
+                document.getElementById('enhance-text-btn').disabled = false; // Re-enable button
+            }
+        }
+        if (retries === maxRetries) {
+            showStatus('text-converter', 'Failed to enhance text after multiple retries. Please try again later.', 'error');
+            hideSpinner('text-converter');
+            document.getElementById('enhance-text-btn').disabled = false;
+        }
     }
   </script>
 </body>
