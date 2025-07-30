@@ -1825,24 +1825,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       let lastX = 0;
       let lastY = 0;
       
-      // Mouse event handlers
-      signatureCanvas.addEventListener('mousedown', startDrawing);
-      signatureCanvas.addEventListener('mousemove', draw);
-      signatureCanvas.addEventListener('mouseup', stopDrawing);
-      
-      // Touch event handlers for mobile
-      signatureCanvas.addEventListener('touchstart', handleTouchStart);
-      signatureCanvas.addEventListener('touchmove', handleTouchMove);
-      signatureCanvas.addEventListener('touchend', stopDrawing);
-
-      function startDrawing(e) {
+      // Define functions as const to ensure proper hoisting within setupSignatureCanvas scope
+      const startDrawing = (e) => {
         isDrawing = true;
         const rect = signatureCanvas.getBoundingClientRect();
         lastX = e.clientX - rect.left;
         lastY = e.clientY - rect.top;
-      }
+      };
       
-      function draw(e) {
+      const draw = (e) => {
         if (!isDrawing) return;
         
         const rect = signatureCanvas.getBoundingClientRect();
@@ -1856,12 +1847,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
         lastX = currentX;
         lastY = currentY;
-      }
+      };
       
-      function stopDrawing() {
+      const stopDrawing = () => {
         isDrawing = false;
-      }
+      };
+
+      // Mouse event handlers
+      signatureCanvas.addEventListener('mousedown', startDrawing);
+      signatureCanvas.addEventListener('mousemove', draw);
+      signatureCanvas.addEventListener('mouseup', stopDrawing);
       
+      // Touch event handlers for mobile
+      signatureCanvas.addEventListener('touchstart', handleTouchStart);
+      signatureCanvas.addEventListener('touchmove', handleTouchMove);
+      signatureCanvas.addEventListener('touchend', stopDrawing);
+
       function handleTouchStart(e) {
         e.preventDefault();
         const touch = e.touches[0];
