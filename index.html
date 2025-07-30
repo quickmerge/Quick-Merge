@@ -1723,26 +1723,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     © 2025 Quick Merge – All rights reserved.
   </footer>
 
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js"></script>
-  
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-  <script defer>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Check if pdfjsLib is defined before accessing it
-      if (typeof pdfjsLib !== 'undefined') {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-      }
-    });
-  </script>
-
-  <script defer src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/index.umd.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
-
-  <script defer>
+  <script>
     // Navigation function
     function showSection(sectionId) {
       // Hide all sections
@@ -1795,6 +1776,129 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
 
     let signatureImage = null; // Stored signature image dataURL
+
+    // Centralized library loading tracker and loader
+    const loadedLibraries = {
+        'pdf-lib': false,
+        'filesaver': false,
+        'jszip': false,
+        'docx': false,
+        'pdfjslib': false,
+        'pdfjs_worker_set': false, // To track if workerSrc is set
+        'browser-image-compression': false,
+        'qrcode-styling': false
+    };
+
+    const libraryUrls = {
+        'pdf-lib': 'https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js',
+        'filesaver': 'https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js',
+        'jszip': 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js',
+        'docx': 'https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js',
+        'pdfjslib': 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js',
+        'pdfjs_worker': 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js',
+        'browser-image-compression': 'https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.min.js',
+        'qrcode-styling': 'https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js'
+    };
+
+    const loadingPromises = {}; // To store promises for scripts currently being loaded
+
+    /**
+     * Dynamically loads a JavaScript file and returns a Promise that resolves when the script is loaded.
+     * Prevents redundant loading of the same script.
+     * @param {string} key The key for the library (e.g., 'pdf-lib').
+     * @returns {Promise<void>} A Promise that resolves when the script is loaded.
+     */
+    function loadScript(key) {
+        if (loadedLibraries[key]) {
+            return Promise.resolve(); // Already loaded
+        }
+        if (loadingPromises[key]) {
+            return loadingPromises[key]; // Already loading, return existing promise
+        }
+
+        const url = libraryUrls[key];
+        if (!url) {
+            return Promise.reject(new Error(`Unknown library key: ${key}`));
+        }
+
+        loadingPromises[key] = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = url;
+            script.onload = () => {
+                loadedLibraries[key] = true;
+                delete loadingPromises[key]; // Remove promise once loaded
+                resolve();
+            };
+            script.onerror = () => {
+                delete loadingPromises[key]; // Remove promise on error
+                reject(new Error(`Failed to load script for ${key}: ${url}`));
+            };
+            document.head.appendChild(script);
+        });
+
+        return loadingPromises[key];
+    }
+
+    /**
+     * Ensures all necessary libraries for a specific tool are loaded.
+     * @param {string} toolId The ID of the tool.
+     * @returns {Promise<void>} A Promise that resolves when all necessary libraries are loaded.
+     */
+    async function ensureLibrariesLoaded(toolId) {
+        showStatus(toolId, 'Loading necessary libraries...', 'processing');
+        showSpinner(toolId);
+        try {
+            switch (toolId) {
+                case 'merge-pdf':
+                case 'split-pdf':
+                case 'compress-pdf':
+                case 'image-to-pdf':
+                case 'pdf-signer':
+                    await Promise.all([
+                        loadScript('pdf-lib'),
+                        loadScript('filesaver')
+                    ]);
+                    break;
+                case 'text-converter':
+                    await Promise.all([
+                        loadScript('pdf-lib'), // pdf-lib is needed for text-to-pdf functionality
+                        loadScript('filesaver')
+                    ]);
+                    // Gemini API doesn't require a separate library, just fetch
+                    break;
+                case 'pdf-to-word':
+                    await Promise.all([
+                        loadScript('pdfjslib'),
+                        loadScript('docx'),
+                        loadScript('filesaver')
+                    ]);
+                    // Special handling for PDF.js worker
+                    if (typeof pdfjsLib !== 'undefined' && !loadedLibraries['pdfjs_worker_set']) {
+                        pdfjsLib.GlobalWorkerOptions.workerSrc = libraryUrls['pdfjs_worker'];
+                        loadedLibraries['pdfjs_worker_set'] = true;
+                    }
+                    break;
+                case 'compress-image':
+                    await Promise.all([
+                        loadScript('browser-image-compression'),
+                        loadScript('jszip'),
+                        loadScript('filesaver')
+                    ]);
+                    break;
+                case 'qr-code':
+                    await loadScript('qrcode-styling');
+                    break;
+            }
+            showStatus(toolId, 'Libraries loaded successfully.', 'success');
+        } catch (error) {
+            console.error(`Error loading libraries for ${toolId}:`, error);
+            showStatus(toolId, `Error loading libraries: ${error.message}. Please check your internet connection and try again.`, 'error');
+            throw error; // Propagate error so toggleTool can handle it
+        } finally {
+            hideSpinner(toolId);
+        }
+    }
+
 
     function setupSignatureCanvas() {
       const signatureCanvas = document.getElementById('signature-canvas');
@@ -1938,9 +2042,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       setupDragAndDrop('image-to-pdf', true);
       setupDragAndDrop('pdf-to-word', false);
       setupDragAndDrop('pdf-signer', false);
-      
-      // Set up signature canvas (will only run if the element exists)
-      setupSignatureCanvas();
       
       // Set up fade-in animations
       setupAnimations(); // This will observe and fade in elements as they scroll into view
@@ -2133,7 +2234,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
-    function toggleTool(toolId) {
+    async function toggleTool(toolId) {
       const toolCard = document.getElementById(`${toolId}-card`);
       const toolContent = document.getElementById(toolId);
       
@@ -2147,8 +2248,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           card.querySelector('.tool-content').style.display = 'none';
         });
         
-        toolCard.classList.add('active');
-        toolContent.style.display = 'block';
+        // Before showing the tool, ensure its libraries are loaded
+        try {
+            await ensureLibrariesLoaded(toolId);
+            toolCard.classList.add('active');
+            toolContent.style.display = 'block';
+
+            if (toolId === 'pdf-signer') {
+                setupSignatureCanvas(); // Setup canvas when PDF Signer is active
+            }
+        } catch (error) {
+            // Error message already shown by ensureLibrariesLoaded
+            console.error(`Failed to activate tool ${toolId} due to library loading error.`);
+            // Do not activate the tool if libraries fail to load
+            toolCard.classList.remove('active'); 
+            toolContent.style.display = 'none';
+        }
       }
     }
 
@@ -2238,11 +2353,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     // PDF Processing Functions
     async function mergePDFs() {
-      // Ensure PDFLib is loaded
-      if (typeof PDFLib === 'undefined') {
-        showStatus('merge-pdf', 'Libraries not loaded. Please refresh the page and try again.', 'error');
-        return;
-      }
+      // Library check is now handled by ensureLibrariesLoaded
       const fileInput = document.getElementById('merge-pdf-files');
       if (!fileInput.files || fileInput.files.length < 2) {
         showStatus('merge-pdf', 'Please select at least 2 PDF files to merge', 'error');
@@ -2253,7 +2364,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       showSpinner('merge-pdf');
       
       try {
-        const { PDFDocument } = PDFLib;
+        const { PDFDocument } = window.PDFLib; // Access from global window object
         const mergedPdf = await PDFDocument.create();
         
         // Process each file
@@ -2281,12 +2392,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
         
         // Download the file
-        // Ensure FileSaver is loaded
-        if (typeof saveAs === 'undefined') {
+        if (typeof window.saveAs === 'undefined') { // Access from global window object
           showStatus('merge-pdf', 'File saving library not loaded. Please refresh.', 'error');
           return;
         }
-        saveAs(blob, 'merged-document.pdf');
+        window.saveAs(blob, 'merged-document.pdf');
         showStatus('merge-pdf', 'PDFs merged successfully!', 'success');
         
         // Reset tool after download
@@ -2300,11 +2410,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 
     async function splitPDF() {
-      // Ensure PDFLib is loaded
-      if (typeof PDFLib === 'undefined') {
-        showStatus('split-pdf', 'Libraries not loaded. Please refresh the page and try again.', 'error');
-        return;
-      }
+      // Library check is now handled by ensureLibrariesLoaded
       const fileInput = document.getElementById('split-pdf-file');
       const pagesInput = document.getElementById('split-pages');
       
@@ -2322,7 +2428,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       showSpinner('split-pdf');
       
       try {
-        const { PDFDocument } = PDFLib;
+        const { PDFDocument } = window.PDFLib; // Access from global window object
         const file = fileInput.files[0];
         const fileBuffer = await file.arrayBuffer();
         const pdfDoc = await PDFDocument.load(fileBuffer);
@@ -2357,11 +2463,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const blob = new Blob([splitPdfBytes], { type: 'application/pdf' });
         
         // Download the file
-        if (typeof saveAs === 'undefined') {
+        if (typeof window.saveAs === 'undefined') { // Access from global window object
           showStatus('split-pdf', 'File saving library not loaded. Please refresh.', 'error');
           return;
         }
-        saveAs(blob, 'split-document.pdf');
+        window.saveAs(blob, 'split-document.pdf');
         showStatus('split-pdf', 'PDF split successfully!', 'success');
         
         // Reset tool after download
@@ -2408,11 +2514,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 
     async function compressPDF() {
-      // Ensure PDFLib is loaded
-      if (typeof PDFLib === 'undefined') {
-        showStatus('compress-pdf', 'Libraries not loaded. Please refresh the page and try again.', 'error');
-        return;
-      }
+      // Library check is now handled by ensureLibrariesLoaded
       const fileInput = document.getElementById('compress-pdf-file');
       const compressionLevel = document.getElementById('compression-level').value;
       const compressionMode = document.getElementById('compression-mode').value; // Currently unused, but kept for future expansion
@@ -2426,7 +2528,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       showSpinner('compress-pdf');
       
       try {
-        const { PDFDocument } = PDFLib;
+        const { PDFDocument } = window.PDFLib; // Access from global window object
         const file = fileInput.files[0];
         const fileBuffer = await file.arrayBuffer();
         const pdfDoc = await PDFDocument.load(fileBuffer);
@@ -2460,11 +2562,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const ratio = ((originalSize - compressedSize) / originalSize * 100).toFixed(2);
         
         // Download the file
-        if (typeof saveAs === 'undefined') {
+        if (typeof window.saveAs === 'undefined') { // Access from global window object
           showStatus('compress-pdf', 'File saving library not loaded. Please refresh.', 'error');
           return;
         }
-        saveAs(blob, 'compressed-document.pdf');
+        window.saveAs(blob, 'compressed-document.pdf');
         showStatus('compress-pdf', `PDF compressed successfully! Size reduced by ${ratio}%`, 'success');
         
         // Reset tool after download
@@ -2478,11 +2580,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 
     async function convertImagesToPDF() {
-      // Ensure PDFLib is loaded
-      if (typeof PDFLib === 'undefined') {
-        showStatus('image-to-pdf', 'Libraries not loaded. Please refresh the page and try again.', 'error');
-        return;
-      }
+      // Library check is now handled by ensureLibrariesLoaded
       const fileInput = document.getElementById('image-to-pdf-files');
       const layout = document.getElementById('pdf-layout').value;
       const margin = parseInt(document.getElementById('pdf-margin').value);
@@ -2496,7 +2594,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       showSpinner('image-to-pdf');
       
       try {
-        const { PDFDocument } = PDFLib;
+        const { PDFDocument } = window.PDFLib; // Access from global window object
         const pdfDoc = await PDFDocument.create();
         
         // Process each image
@@ -2598,11 +2696,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
         
         // Download the file
-        if (typeof saveAs === 'undefined') {
+        if (typeof window.saveAs === 'undefined') { // Access from global window object
           showStatus('image-to-pdf', 'File saving library not loaded. Please refresh.', 'error');
           return;
         }
-        saveAs(blob, 'converted-images.pdf');
+        window.saveAs(blob, 'converted-images.pdf');
         showStatus('image-to-pdf', 'Images converted to PDF successfully!', 'success');
         
         // Reset tool after download
@@ -2651,11 +2749,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
 
     async function convertTextToPDF() {
-        // Ensure PDFLib is loaded
-        if (typeof PDFLib === 'undefined') {
-          showStatus('text-converter', 'Libraries not loaded. Please refresh the page and try again.', 'error');
-          return;
-        }
+        // Library check is now handled by ensureLibrariesLoaded
         const textContent = document.getElementById('text-content').value;
         const filename = document.getElementById('text-filename').value || 'document';
         
@@ -2668,7 +2762,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         showSpinner('text-converter');
         
         try {
-            const { PDFDocument, rgb, StandardFonts } = PDFLib;
+            const { PDFDocument, rgb, StandardFonts } = window.PDFLib; // Access from global window object
             const pdfDoc = await PDFDocument.create();
             
             // Embed a standard font. Helvetica is generally good, but ensure proper handling of newlines.
@@ -2751,11 +2845,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             
             const pdfBytes = await pdfDoc.save();
             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-            if (typeof saveAs === 'undefined') {
+            if (typeof window.saveAs === 'undefined') { // Access from global window object
               showStatus('text-converter', 'File saving library not loaded. Please refresh.', 'error');
               return;
             }
-            saveAs(blob, `${filename}.pdf`);
+            window.saveAs(blob, `${filename}.pdf`);
             showStatus('text-converter', 'PDF created successfully!', 'success');
         } catch (error) {
             console.error('Error converting text to PDF:', error);
@@ -2767,12 +2861,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     async function convertPDFToWord() {
-      // Ensure PDF.js and docx libraries are loaded
-      if (typeof pdfjsLib === 'undefined' || typeof docx === 'undefined') {
-        showStatus('pdf-to-word', 'Libraries not loaded. Please refresh the page and try again.', 'error');
-        return;
-      }
-
+      // Library check is now handled by ensureLibrariesLoaded
       const fileInput = document.getElementById('pdf-to-word-file');
       const format = document.getElementById('word-format').value;
       
@@ -2791,7 +2880,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const fullTextPromise = new Promise((resolve, reject) => {
           fileReader.onload = async function() {
             try {
-              const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(fileReader.result) }).promise;
+              const pdf = await window.pdfjsLib.getDocument({ data: new Uint8Array(fileReader.result) }).promise; // Access from global window object
               let extracted = '';
               for (let i = 1; i <= pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
@@ -2810,7 +2899,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const fullText = await fullTextPromise;
 
         // Create a Word document
-        const { Document, Paragraph, TextRun, Packer } = docx;
+        const { Document, Paragraph, TextRun, Packer } = window.docx; // Access from global window object
         
         const doc = new Document({
           sections: [{
@@ -2835,20 +2924,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           // Basic RTF conversion: will lose all formatting, images, etc.
           const rtfContent = `{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\fonttbl{\\f0\\fnil\\fcharset0 Calibri;}}\\viewkind4\\uc1\\pard\\f0\\fs24 ${fullText.replace(/\n/g, '\\par ')}\\par}`;
           const blob = new Blob([rtfContent], { type: mimeType });
-          if (typeof saveAs === 'undefined') {
+          if (typeof window.saveAs === 'undefined') { // Access from global window object
             showStatus('pdf-to-word', 'File saving library not loaded. Please refresh.', 'error');
             return;
           }
-          saveAs(blob, `converted-document.${extension}`);
+          window.saveAs(blob, `converted-document.${extension}`);
         } else { // docx
           mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
           extension = 'docx';
           const blob = await Packer.toBlob(doc);
-          if (typeof saveAs === 'undefined') {
+          if (typeof window.saveAs === 'undefined') { // Access from global window object
             showStatus('pdf-to-word', 'File saving library not loaded. Please refresh.', 'error');
             return;
           }
-          saveAs(blob, `converted-document.${extension}`);
+          window.saveAs(blob, `converted-document.${extension}`);
         }
         
         showStatus('pdf-to-word', 'PDF converted to Word successfully (text only)!', 'success');
@@ -2864,11 +2953,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     async function signPDF() {
-      // Ensure PDFLib is loaded
-      if (typeof PDFLib === 'undefined') {
-        showStatus('pdf-signer', 'Libraries not loaded. Please refresh the page and try again.', 'error');
-        return;
-      }
+      // Library check is now handled by ensureLibrariesLoaded
       const fileInput = document.getElementById('pdf-signer-file');
       const pageNum = parseInt(document.getElementById('signature-page').value) || 1;
       const position = document.getElementById('signature-position').value;
@@ -2889,7 +2974,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       showSpinner('pdf-signer');
       
       try {
-        const { PDFDocument } = PDFLib;
+        const { PDFDocument } = window.PDFLib; // Access from global window object
         const file = fileInput.files[0];
         const fileBuffer = await file.arrayBuffer();
         const pdfDoc = await PDFDocument.load(fileBuffer);
@@ -2968,11 +3053,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
         
         // Download the file
-        if (typeof saveAs === 'undefined') {
+        if (typeof window.saveAs === 'undefined') { // Access from global window object
           showStatus('pdf-signer', 'File saving library not loaded. Please refresh.', 'error');
           return;
         }
-        saveAs(blob, 'signed-document.pdf');
+        window.saveAs(blob, 'signed-document.pdf');
         showStatus('pdf-signer', 'PDF signed successfully!', 'success');
         
         setTimeout(() => resetTool('pdf-signer'), 2000);
@@ -2986,12 +3071,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     // Enhanced image compression using browser-image-compression
     async function compressImages() {
-      // Ensure browserImageCompression and JSZip are loaded
-      if (typeof browserImageCompression === 'undefined' || typeof JSZip === 'undefined') {
-        showStatus('compress-image', 'Libraries not loaded. Please refresh the page and try again.', 'error');
-        return;
-      }
-
+      // Library check is now handled by ensureLibrariesLoaded
       const fileInput = document.getElementById('compress-image-files');
       const quality = document.getElementById('image-quality').value / 100;
       const maxWidth = document.getElementById('image-resize').value;
@@ -3007,11 +3087,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       showSpinner('compress-image');
       
       try {
-        const zip = new JSZip();
+        const zip = new window.JSZip(); // Access from global window object
         let imgCount = 0;
         let compressedImgCount = 0;
         let totalOriginalSize = 0;
         let totalCompressedSize = 0;
+        let failedCompressions = [];
 
         // Enhanced compression options based on mode
         const baseOptions = {
@@ -3053,13 +3134,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           const file = fileInput.files[i];
           if (!file.type.match('image.*')) {
             console.warn(`Skipping non-image file: ${file.name}`);
+            failedCompressions.push(`${file.name} (not an image)`);
             continue;
           }
 
           totalOriginalSize += file.size;
 
           try {
-            const compressedFile = await browserImageCompression(file, options);
+            const compressedFile = await window.browserImageCompression(file, options); // Access from global window object
             totalCompressedSize += compressedFile.size;
             compressedImgCount++;
             
@@ -3078,7 +3160,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             // Fallback to original file if compression fails
             zip.file(`original_${file.name}`, file);
             imgCount++;
-            showStatus('compress-image', `Error compressing ${file.name}. Adding original to zip.`, 'error');
+            failedCompressions.push(`${file.name} (${error.message})`);
           }
         }
 
@@ -3094,11 +3176,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           compressionOptions: { level: 6 }
         });
 
-        if (typeof saveAs === 'undefined') {
+        if (typeof window.saveAs === 'undefined') { // Access from global window object
           showStatus('compress-image', 'File saving library not loaded. Please refresh.', 'error');
           return;
         }
-        saveAs(zipContent, 'compressed_images.zip');
+        window.saveAs(zipContent, 'compressed_images.zip');
         
         // Calculate overall compression ratio
         let compressionMessage = '';
@@ -3107,10 +3189,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           compressionMessage = `Overall size reduced by ${compressionRatio}%`;
         }
         
-        if (compressedImgCount === imgCount) {
+        if (failedCompressions.length === 0) {
           showStatus('compress-image', `${imgCount} images compressed successfully! ${compressionMessage}`, 'success');
         } else {
-          showStatus('compress-image', `Finished processing ${imgCount} images. ${imgCount - compressedImgCount} were added as originals. ${compressionMessage}`, 'success');
+          showStatus('compress-image', `Finished processing ${imgCount} images. Some failed: ${failedCompressions.join(', ')}. ${compressionMessage}`, 'success');
         }
         
         setTimeout(() => resetTool('compress-image'), 2000);
@@ -3124,11 +3206,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     // Enhanced QR Code generation with styling
     function generateQRCode() {
-      // Ensure QRCodeStyling is loaded
-      if (typeof QRCodeStyling === 'undefined') {
-        showStatus('qr-code', 'Libraries not loaded. Please refresh the page and try again.', 'error');
-        return;
-      }
+      // Library check is now handled by ensureLibrariesLoaded
       const content = document.getElementById('qr-content').value;
       const size = parseInt(document.getElementById('qr-size').value);
       const color = document.getElementById('qr-color').value;
@@ -3148,7 +3226,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       preview.innerHTML = '';
       
       // Create QR code with advanced styling
-      const qrCode = new QRCodeStyling({
+      const qrCode = new window.QRCodeStyling({ // Access from global window object
         width: size,
         height: size,
         type: "canvas",
@@ -3248,13 +3326,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             return;
         }
 
+        const enhanceTextBtn = document.getElementById('enhance-text-btn');
+        if (enhanceTextBtn) enhanceTextBtn.disabled = true; // Disable button immediately
+
         showStatus('text-converter', 'Enhancing text with Gemini API...', 'processing');
         showSpinner('text-converter');
-        const enhanceTextBtn = document.getElementById('enhance-text-btn');
-        if (enhanceTextBtn) enhanceTextBtn.disabled = true; // Disable button during processing
 
-        const prompt = `Enhance the following text to be more professional, detailed, and engaging. Improve grammar, vocabulary, and sentence structure without changing the core meaning. If it's a short phrase, expand it into a short paragraph. If it's a paragraph, make it more descriptive and articulate:\n\n${textToEnhance}`;
-        const apiKey = ""; // If you want to use models other than gemini-2.5-flash-preview-05-20 or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+        // IMPORTANT: Replace "YOUR_GEMINI_API_KEY" with your actual Gemini API Key
+        // Get your API key from Google AI Studio: https://aistudio.google.com/
+        const apiKey = "YOUR_GEMINI_API_KEY"; 
+        
+        if (apiKey === "YOUR_GEMINI_API_KEY" || !apiKey) {
+            showStatus('text-converter', 'Gemini API key is missing. Please replace "YOUR_GEMINI_API_KEY" in the code with your actual key.', 'error');
+            hideSpinner('text-converter');
+            if (enhanceTextBtn) enhanceTextBtn.disabled = false;
+            return;
+        }
+
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
         let chatHistory = [];
@@ -3265,8 +3353,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const maxRetries = 3;
         const baseDelay = 1000; // 1 second
 
-        while (retries < maxRetries) {
-            try {
+        try {
+            while (retries < maxRetries) {
                 const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -3276,11 +3364,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 if (!response.ok) {
                     if (response.status === 429 && retries < maxRetries - 1) {
                         const delay = baseDelay * Math.pow(2, retries);
+                        showStatus('text-converter', `Rate limit hit. Retrying in ${delay / 1000} seconds...`, 'processing');
                         await new Promise(resolve => setTimeout(resolve, delay));
                         retries++;
                         continue; // Retry
                     } else {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
                     }
                 }
 
@@ -3296,19 +3385,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 } else {
                     throw new Error('Gemini API response structure unexpected or content missing.');
                 }
-            } catch (error) {
-                console.error('Error calling Gemini API for enhancement:', error);
-                showStatus('text-converter', 'Error enhancing text: ' + error.message, 'error');
-                break; // Exit loop on unrecoverable error
-            } finally {
-                hideSpinner('text-converter');
-                if (enhanceTextBtn) enhanceTextBtn.disabled = false; // Re-enable button
             }
-        }
-        if (retries === maxRetries) {
-            showStatus('text-converter', 'Failed to enhance text after multiple retries. Please try again later.', 'error');
+            if (retries === maxRetries) {
+                showStatus('text-converter', 'Failed to enhance text after multiple retries. Please try again later.', 'error');
+            }
+        } catch (error) {
+            console.error('Error calling Gemini API for enhancement:', error);
+            showStatus('text-converter', 'Error enhancing text: ' + error.message, 'error');
+        } finally {
             hideSpinner('text-converter');
-            if (enhanceTextBtn) enhanceTextBtn.disabled = false;
+            if (enhanceTextBtn) enhanceTextBtn.disabled = false; // Re-enable button
         }
     }
   </script>
