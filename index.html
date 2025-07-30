@@ -35,22 +35,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Core JavaScript Libraries (async loading where possible) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js"></script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-  <script>
-    // Set worker src for PDF.js
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/index.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
-  
+  <!-- Google AdSense script (async) -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4141481490330428"
        crossorigin="anonymous"></script>
   
@@ -1289,7 +1274,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             </div>
             <button class="tool-btn" id="pdf-to-word-btn" onclick="convertPDFToWord()" disabled>Convert to Word</button>
-            <!-- Summarize PDF Text button and output removed as requested -->
             <div class="spinner" id="pdf-to-word-spinner"></div>
             <div class="status-message" id="pdf-to-word-status"></div>
           </div>
@@ -1848,10 +1832,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
         lastX = currentX;
         lastY = currentY;
-      }
-      
-      function stopDrawing() {
-        isDrawing = false;
       }
       
       function handleTouchStart(e) {
