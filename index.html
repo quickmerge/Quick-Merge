@@ -19,9 +19,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <meta property="og:description" content="Merge, compress and convert files instantly with our privacy-focused browser tools">
   <meta property="og:type" content="website">
   
+  <!-- Preconnect and DNS-prefetch for faster resource loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://www.gstatic.com">
+  <link rel="dns-prefetch" href="https://www.gstatic.com">
+
+  <!-- Google Fonts with font-display: swap for better performance -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
+  <!-- Core JavaScript Libraries (async loading where possible) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -41,12 +55,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
        crossorigin="anonymous"></script>
   
   <style>
+    /* Universal Box-Sizing */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    /* Body & Global Typography */
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(to right, #0f0f10, #111215);
@@ -57,12 +73,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       flex-direction: column;
     }
 
+    /* Anchor Tag Styling */
     a {
       text-decoration: none;
       color: inherit;
     }
 
-    /* Header */
+    /* Header Styles */
     header {
       background: rgba(15, 15, 16, 0.95);
       position: sticky;
@@ -104,7 +121,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       color: #fff;
     }
 
-    /* Mobile menu styles */
+    /* Mobile Menu Styles */
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -142,6 +159,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       background: rgba(108, 93, 211, 0.1);
     }
 
+    /* Main Container & Hero Section */
     .container {
       max-width: 1200px;
       margin: auto;
@@ -665,7 +683,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       margin: 0 auto;
     }
 
-    /* Footer */
+    /* Footer Styles */
     footer {
       margin-top: auto;
       padding: 2rem;
@@ -703,7 +721,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       to { transform: rotate(360deg); }
     }
 
-    /* Hide content sections by default */
+    /* Content Section Display Control */
     .content-section {
       display: none;
     }
@@ -718,7 +736,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       outline-offset: 2px;
     }
 
-    /* Responsive adjustments */
+    /* Responsive Adjustments */
     @media (max-width: 768px) {
       .hero h2 {
         font-size: 2rem;
@@ -1736,9 +1754,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </footer>
 
   <script>
-    // Global variable to store extracted PDF text for summarization (now removed)
-    // let extractedPdfText = ''; // This line is removed as summarize feature is removed
-
     // Navigation function
     function showSection(sectionId) {
       // Hide all sections
@@ -1806,7 +1821,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       signatureCanvas.addEventListener('mousedown', startDrawing);
       signatureCanvas.addEventListener('mousemove', draw);
       signatureCanvas.addEventListener('mouseup', stopDrawing);
-      // Removed mouseout from stopDrawing to improve UX
       
       // Touch event handlers for mobile
       signatureCanvas.addEventListener('touchstart', handleTouchStart);
@@ -2042,12 +2056,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (!files || files.length === 0) {
         fileListElement.innerHTML = '';
         if (actionBtn) actionBtn.disabled = true;
-        
-        // Specific for PDF to Word: disable summarize button if no file (removed summarize)
-        // if (fileListElement.id === 'pdf-to-word-file-list') {
-        //     document.getElementById('summarize-pdf-btn').disabled = true;
-        //     document.getElementById('pdf-summary-output').style.display = 'none';
-        // }
         return;
       }
 
@@ -2084,11 +2092,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           if (actionBtn) {
             actionBtn.disabled = (fileListElement.children.length === 0) || (!allowMultiple && fileListElement.children.length !== 1);
           }
-          // Specific for PDF to Word: disable summarize button if no file (removed summarize)
-          // if (fileListElement.id === 'pdf-to-word-file-list') {
-          //     document.getElementById('summarize-pdf-btn').disabled = true;
-          //     document.getElementById('pdf-summary-output').style.display = 'none';
-          // }
         });
         
         fileItem.appendChild(fileNameSpan);
@@ -2102,12 +2105,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (actionBtn) {
         actionBtn.disabled = (fileListElement.children.length === 0) || (!allowMultiple && fileListElement.children.length !== 1);
       }
-
-      // Specific for PDF to Word: enable summarize button if a file is selected (removed summarize)
-      // if (fileListElement.id === 'pdf-to-word-file-list' && fileListElement.children.length === 1) {
-      //     document.getElementById('summarize-pdf-btn').disabled = false;
-      //     document.getElementById('pdf-summary-output').style.display = 'none'; // Hide previous summary
-      // }
     }
 
     function sanitizeFilename(filename) {
@@ -2185,7 +2182,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         document.getElementById('download-qr-btn').style.display = 'none';
         document.getElementById('qr-preview').innerHTML = '';
         document.getElementById('qr-content').value = '';
-        // showStatus('qr-code', '', ''); // Redundant with general status clear
       }
       
       // For text converter, clear textarea
@@ -2200,14 +2196,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         clearSignature(); // Calls the global clearSignature function
         document.getElementById('sign-pdf-btn').disabled = true; // Ensures button is disabled if signature is cleared
       }
-
-      // Specific for PDF to Word: clear extracted text and disable summarize button (removed summarize)
-      // if (toolId === 'pdf-to-word') {
-      //     extractedPdfText = ''; // Clear stored text
-      //     document.getElementById('summarize-pdf-btn').disabled = true;
-      //     document.getElementById('pdf-summary-output').style.display = 'none';
-      //     document.getElementById('pdf-summary-output').textContent = '';
-      // }
 
       // Close all accordions within the tool card
       const toolCard = document.getElementById(`${toolId}-card`);
@@ -2401,40 +2389,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           addDefaultPage: false,
           objectsPerTick: 50,
           updateFieldAppearances: false,
-          // PDF-lib's save method doesn't directly offer compression levels like 'low', 'medium', 'high', 'extreme'
-          // nor modes like 'preserve-text', 'preserve-images' in the way user might expect.
-          // These options mainly influence internal PDF structure and object encoding.
-          // For true content compression (e.g., image downsampling), a dedicated PDF optimization library is often needed.
-          // We will map these to 'PDFDocument.save' options as best as possible.
         };
         
         // Adjust options based on compression level (simulated best effort with PDF-lib)
-        // PDF-lib's compression is mostly about object stream encoding and filtering.
-        // It doesn't perform lossy compression on embedded images like dedicated tools.
         if (compressionLevel === 'low') {
-          options.useObjectStreams = false; // Less aggressive on object streams
+          options.useObjectStreams = false;
         } else if (compressionLevel === 'high') {
           options.useObjectStreams = true;
-          options.objectsPerTick = 100; // More objects processed at once
+          options.objectsPerTick = 100;
         } else if (compressionLevel === 'extreme') {
           options.useObjectStreams = true;
           options.objectsPerTick = 200;
-          // Note: ignoreEncryption and throwOnInvalidObject are for loading, not saving compression
-          // options.ignoreEncryption = true;
-          // options.throwOnInvalidObject = false;
         }
-        
-        // Compression mode for text/images is more complex and typically requires parsing content streams.
-        // PDF-lib v1.x does not provide direct methods for this during 'save'.
-        // These settings will currently have no functional effect on 'save'.
-        // If advanced compression is truly needed, consider a different library or server-side processing.
-        /*
-        if (compressionMode === 'preserve-text') {
-          // No direct API in PDF-lib for this during save without content stream manipulation
-        } else if (compressionMode === 'preserve-images') {
-          // No direct API in PDF-lib for this during save without content stream manipulation
-        }
-        */
         
         // Save compressed PDF
         const compressedPdfBytes = await pdfDoc.save(options);
@@ -2767,7 +2733,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         });
 
         const fullText = await fullTextPromise;
-        // extractedPdfText = fullText; // Removed as summarize feature is removed
 
         // Create a Word document
         const { Document, Paragraph, TextRun, Packer } = docx;
@@ -2793,7 +2758,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           mimeType = 'application/rtf';
           extension = 'rtf';
           // Basic RTF conversion: will lose all formatting, images, etc.
-          // For actual RTF rich text, you need a full RTF generator, not just text replacement.
           const rtfContent = `{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\fonttbl{\\f0\\fnil\\fcharset0 Calibri;}}\\viewkind4\\uc1\\pard\\f0\\fs24 ${fullText.replace(/\n/g, '\\par ')}\\par}`;
           const blob = new Blob([rtfContent], { type: mimeType });
           saveAs(blob, `converted-document.${extension}`);
@@ -2814,9 +2778,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         hideSpinner('pdf-to-word');
       }
     }
-
-    // summarizePdfText function removed as requested
-    // async function summarizePdfText() { ... }
 
 
     async function signPDF() {
@@ -3170,18 +3131,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       };
     }
 
-    // Dynamically load JS if missing (currently not used but kept)
-    function loadScript(src) {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-
-    // New Gemini API integration for text enhancement
+    // Gemini API integration for text enhancement
     async function enhanceTextContent() {
         const textContentElement = document.getElementById('text-content');
         let textToEnhance = textContentElement.value;
