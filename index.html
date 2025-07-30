@@ -1737,7 +1737,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     © 2025 Quick Merge – All rights reserved.
   </footer>
 
+  <!-- JavaScript Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js"></script>
+  
+  <!-- PDF.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <!-- PDF.js worker configuration MUST come AFTER pdf.min.js is loaded -->
   <script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/index.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+
+  <!-- Your Custom JavaScript (deferred for performance) -->
+  <script defer>
     // Navigation function
     function showSection(sectionId) {
       // Hide all sections
@@ -1756,6 +1774,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         setTimeout(() => {
           setupAnimations();
         }, 50);
+      } else {
+        // Explicitly make tool cards visible when home section is active
+        const toolCards = document.querySelectorAll('#tools .tool-card.fade-in');
+        toolCards.forEach(card => {
+            card.classList.add('visible');
+        });
       }
     }
 
@@ -1832,6 +1856,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
         lastX = currentX;
         lastY = currentY;
+      }
+      
+      function stopDrawing() {
+        isDrawing = false;
       }
       
       function handleTouchStart(e) {
@@ -1916,7 +1944,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       setupSignatureCanvas();
       
       // Set up fade-in animations
-      setupAnimations();
+      setupAnimations(); // This will observe and fade in elements as they scroll into view
+
+      // Explicitly make tool cards visible on initial load of the home section
+      const toolCards = document.querySelectorAll('#tools .tool-card.fade-in');
+      toolCards.forEach(card => {
+          card.classList.add('visible');
+      });
       
       // Setup quality slider
       const qualitySlider = document.getElementById('image-quality');
@@ -2988,7 +3022,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         if (compressedImgCount === imgCount) {
           showStatus('compress-image', `${imgCount} images compressed successfully! ${compressionMessage}`, 'success');
         } else {
-          showStatus('compress-image', `Finished processing ${imgCount} images. ${compressedImgCount} were compressed, ${imgCount - compressedImgCount} were added as originals. ${compressionMessage}`, 'success');
+          showStatus('compress-image', `Finished processing ${imgCount} images. ${imgCount - compressedImgCount} were added as originals. ${compressionMessage}`, 'success');
         }
         
         setTimeout(() => resetTool('compress-image'), 2000);
