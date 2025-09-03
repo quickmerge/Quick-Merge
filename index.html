@@ -619,7 +619,7 @@
         'pdf-lib': 'https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js',
         'filesaver': 'https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js',
         'jszip': 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js',
-        'docx': 'https://cdn.jsdelivr.net/npm/docx@8.2.2/build/index.min.js',
+        'docx': 'https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js',
         'pdfjs': 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js',
         'pdfjs-worker': 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js',
         'image-compression': 'https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.min.js',
@@ -812,12 +812,54 @@
         const { PDFDocument, rgb, StandardFonts } = window.PDFLib;
         const text = document.getElementById('text-content').value;
         if (!text.trim()) throw new Error("Please enter some text.");
+
         const pdfDoc = await PDFDocument.create();
-        const page = pdfDoc.addPage();
+        let page = pdfDoc.addPage();
         const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-        page.drawText(text, { x: 50, y: page.getHeight() - 50, font, size: 12, color: rgb(0,0,0), lineHeight: 14 });
+        const { width, height } = page.getSize();
+        const fontSize = 12;
+        const margin = 50;
+        const lineHeight = 15;
+        const maxWidth = width - margin * 2;
+        let y = height - margin;
+
+        const lines = text.replace(/\r\n/g, '\n').split('\n');
+
+        for (const line of lines) {
+            if (y < margin) {
+                page = pdfDoc.addPage();
+                y = height - margin;
+            }
+
+            if (line.trim() === '') {
+                y -= lineHeight;
+                continue;
+            }
+
+            let currentLine = '';
+            const words = line.split(' ');
+            for (const word of words) {
+                const testLine = currentLine.length > 0 ? `${currentLine} ${word}` : word;
+                const textWidth = font.widthOfTextAtSize(testLine, fontSize);
+
+                if (textWidth > maxWidth && currentLine.length > 0) {
+                    page.drawText(currentLine, { x: margin, y, font, size: fontSize, color: rgb(0, 0, 0) });
+                    y -= lineHeight;
+                    if (y < margin) {
+                        page = pdfDoc.addPage();
+                        y = height - margin;
+                    }
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            page.drawText(currentLine, { x: margin, y, font, size: fontSize, color: rgb(0, 0, 0) });
+            y -= lineHeight;
+        }
+
         const bytes = await pdfDoc.save();
-        saveAs(new Blob([bytes]), 'document.pdf');
+        saveAs(new Blob([bytes], { type: 'application/pdf' }), 'document.pdf');
         showStatus('text-converter', 'Success! Your PDF is downloaded.', 'success');
     });
 
@@ -936,3 +978,5 @@
   </script>
 </body>
 </html>
+
+
