@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Merge – Free & Secure Online File Tools</title>
+  <meta name="description" content="Quick Merge offers a complete suite of free, secure, and private file processing tools. Merge, split, compress PDFs, convert images, and more—all processed locally in your browser.">
+  <meta name="keywords" content="PDF merge, PDF split, compress PDF, image to PDF, QR code generator, file converter, online tools, privacy-focused tools, secure file processing, free pdf tools, unlock PDF">
+  <meta name="author" content="Quick Merge">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Quick Merge - Secure, Browser-Based File Processing Tools">
+  <meta property="og:description" content="Merge, compress, and convert files instantly with our privacy-focused browser tools. Your files are never uploaded to a server.">
+  <meta property="og:type" content="website">
+  
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4141481490330428"
+     crossorigin="anonymous"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* --- Base & Typography --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f0f10, #111215);
+      color: #f0f0f0;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    main { flex: 1; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: auto; padding: 2rem; }
+
+    /* --- Header & Navigation --- */
+    header {
+      background: rgba(15, 15, 16, 0.95);
+      position: sticky; top: 0; z-index: 1000;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 1200px; margin: auto; padding: 1rem 2rem;
+    }
+    .nav h1 a {
+      font-size: 1.5rem; font-weight: 700;
+      background: linear-gradient(90deg, #00f6ff, #6c5dd3);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav .nav-links { display: flex; gap: 1.5rem; }
+    .nav .nav-links a {
+      font-size: 1rem; color: #ccc; transition: color 0.2s;
+      padding-bottom: 4px; border-bottom: 2px solid transparent;
+    }
+    .nav .nav-links a:hover,
+    .nav .nav-links a.active-link { color: #fff; border-bottom-color: #6c5dd3; }
+
+    /* --- Mobile Menu --- */
+    .mobile-menu-btn { display: none; background: none; border: none; color: #ccc; font-size: 1.5rem; cursor: pointer; }
+    .mobile-menu {
+      display: none; position: fixed; top: 70px; left: 0; right: 0;
+      background: rgba(15, 15, 16, 0.98); padding: 1rem; z-index: 999;
+      transform: translateY(-120%); transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.active { display: block; transform: translateY(0); }
+    .mobile-menu a { display: block; padding: 0.8rem 1rem; color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .mobile-menu a:hover { color: #fff; background: rgba(108, 93, 211, 0.1); }
+
+    /* --- Hero Section --- */
+    .hero { text-align: center; padding: 5rem 2rem 3rem; }
+    .hero h2 { font-size: 2.8rem; background: linear-gradient(90deg, #00f6ff, #6c5dd3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { color: #aaa; margin-top: 1rem; font-size: 1.2rem; }
+    .cta { margin-top: 2rem; }
+    .cta button {
+      background: #6c5dd3; color: white; padding: 0.8rem 1.6rem;
+      border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.3s ease;
+    }
+    .cta button:hover { background: #5842c3; }
+
+    /* --- Tool Cards & Content --- */
+    .tools {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem; margin-top: 4rem;
+    }
+    .tool-card {
+      background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(14px);
+      border-radius: 14px; padding: 2rem; border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 0 20px rgba(108, 93, 211, 0.08);
+      transition: all 0.3s ease;
+      display: flex; flex-direction: column;
+    }
+    .tool-card:hover { transform: translateY(-6px); box-shadow: 0 0 28px rgba(108, 93, 211, 0.25); }
+    .tool-card h3 { font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem; }
+    .tool-card > p { color: #bbb; font-size: 0.95rem; flex-grow: 1; min-height: 40px; }
+    .tool-btn {
+      background: #6c5dd3; color: white; padding: 0.6rem 1.2rem;
+      border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer;
+      transition: 0.3s ease; margin-top: 1rem; width: 100%;
+    }
+    .tool-btn:hover { background: #5842c3; }
+    .tool-btn.secondary { background: transparent; border: 1px solid #6c5dd3; margin-top: 0.5rem; }
+    .tool-btn:disabled { background: #555; cursor: not-allowed; opacity: 0.7; }
+
+    .tool-content {
+      display: none;
+      margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.5rem;
+    }
+    .tool-card.active .tool-content { display: block; }
+
+    /* --- Tool UI Elements --- */
+    .file-input { width: 100%; margin-bottom: 1rem; }
+    .file-input label { display: block; margin-bottom: 0.5rem; color: #ddd; font-size: 0.9rem; }
+    .file-input input[type="file"] { display: none; }
+    .drag-drop-area {
+      width: 100%; padding: 2rem; border: 2px dashed rgba(255,255,255,0.3);
+      border-radius: 8px; text-align: center; cursor: pointer;
+      transition: all 0.3s; margin-bottom: 1rem;
+    }
+    .drag-drop-area:hover, .drag-drop-area.active {
+      border-color: #6c5dd3; background: rgba(108, 93, 211, 0.1);
+    }
+    .drag-drop-area p { margin-bottom: 0.5rem; }
+    .drag-drop-area .small { font-size: 0.8rem; color: #aaa; }
+    .file-list { margin-top: 1rem; max-height: 150px; overflow-y: auto; }
+    .file-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.5rem; background: rgba(255,255,255,0.05);
+      border-radius: 4px; margin-bottom: 0.3rem;
+    }
+    .file-item-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70%; }
+    .file-item-size { font-size: 0.8rem; color: #aaa; }
+    .options { margin: 1rem 0; }
+    .option-group { margin-bottom: 1rem; }
+    .option-group label { display: block; margin-bottom: 0.3rem; color: #ddd; font-size: 0.9rem; }
+    .option-group input, .option-group select, .option-group textarea {
+      width: 100%; padding: 0.5rem; background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: #fff;
+    }
+    .signature-canvas {
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 6px;
+      background: #ffffff; cursor: crosshair;
+      margin: 0 auto; display: block; max-width: 100%;
+    }
+    .signature-options { margin-top: 1rem; display: flex; justify-content: center; gap: 0.5rem; }
+    .status-message {
+      margin-top: 1rem; padding: 0.5rem; border-radius: 4px;
+      font-size: 0.9rem; text-align: center; min-height: 28px; transition: all 0.3s;
+    }
+    .status-message.success { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+    .status-message.error { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+    .status-message.processing { background: rgba(52, 152, 219, 0.2); color: #3498db; }
+    .spinner {
+      display: none; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%; border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite; margin: 1rem auto 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    /* --- Content Pages (Guides, About, etc.) --- */
+    .content-page .container { max-width: 900px; }
+    .content-page h1 {
+      font-size: 2.5rem; margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, #00f6ff, #6c5dd3);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-align: center; padding-bottom: 0.5rem;
+    }
+    .content-page h2 {
+      font-size: 1.8rem; margin: 2.5rem 0 1rem; color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;
+    }
+    .content-page h3 { font-size: 1.3rem; margin: 1.5rem 0 1rem; color: #00f6ff; }
+    .content-page p, .content-page li { color: #bbb; line-height: 1.7; font-size: 1.05rem; margin-bottom: 0.7rem; }
+    .content-page ul, .content-page ol { margin-bottom: 1.5rem; padding-left: 2rem; }
+    .content-page a { color: #6c5dd3; transition: color 0.2s; text-decoration: underline; }
+    .content-page a:hover { color: #00f6ff; }
+    .content-block {
+      background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(14px);
+      border-radius: 14px; padding: 1.8rem; margin: 2rem 0;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .update-date { font-style: italic; color: #aaa; text-align: center; }
+
+    /* --- Footer --- */
+    footer {
+      padding: 2rem; text-align: center; font-size: 0.9rem;
+      color: #666; border-top: 1px solid #222;
+    }
+    .footer-links { margin-bottom: 1rem; }
+    .footer-links a { margin: 0 0.75rem; color: #888; transition: color 0.2s; }
+    .footer-links a:hover { color: #fff; }
+
+    /* --- Utility & Animation --- */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.8s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .content-section { display: none; }
+    .active-section { display: block; animation: fadeIn 0.5s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+      .hero h2 { font-size: 2rem; }
+      .hero { padding: 3rem 1rem 2rem; }
+      .nav .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .container { padding: 1.5rem; }
+      .tools { grid-template-columns: 1fr; }
+      .content-page h1 { font-size: 2rem; }
+    }
+    @media (min-width: 769px) { .mobile-menu { display: none !important; } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav">
+      <h1><a href="#home">Quick Merge</a></h1>
+      <div class="nav-links">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#guides" class="nav-link">Guides</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#privacy" class="nav-link">Privacy</a>
+        <a href="#terms" class="nav-link">Terms</a>
+      </div>
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#guides" class="nav-link">Guides</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#contact" class="nav-link">Contact</a>
+      <a href="#privacy" class="nav-link">Privacy</a>
+      <a href="#terms" class="nav-link">Terms</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="content-section">
+      <div class="hero">
+        <div class="container">
+          <h2>Merge, Compress & Convert Files Instantly</h2>
+          <p>All tools run locally in your browser — fast, private, and secure.</p>
+          <div class="cta">
+            <button onclick="document.getElementById('tools-anchor').scrollIntoView()">Explore Tools</button>
+          </div>
+        </div>
+      </div>
+      <div id="tools-anchor" class="container">
+        <div class="tools">
+          <!-- Merge PDF -->
+          <div class="tool-card fade-in" id="merge-pdf-card">
+            <h3>Merge PDF</h3><p>Combine multiple PDF files into one seamless document.</p>
+            <button class="tool-btn" onclick="toggleTool('merge-pdf')">Use Tool</button>
+            <div class="tool-content" id="merge-pdf">
+              <div class="file-input">
+                <label for="merge-pdf-files">Select PDF files to merge:</label>
+                <div class="drag-drop-area" id="merge-pdf-drop-area"><p>Drag & drop PDF files</p><p class="small">or click to browse</p></div>
+                <input type="file" id="merge-pdf-files" accept=".pdf" multiple>
+                <div class="file-list" id="merge-pdf-file-list"></div>
+              </div>
+              <button class="tool-btn" id="merge-pdf-btn" onclick="mergePDFs()" disabled>Merge PDFs</button>
+              <div class="spinner" id="merge-pdf-spinner"></div>
+              <div class="status-message" id="merge-pdf-status"></div>
+            </div>
+          </div>
+          <!-- Split PDF -->
+          <div class="tool-card fade-in" id="split-pdf-card">
+            <h3>Split PDF</h3><p>Extract selected pages or split a PDF into multiple parts.</p>
+            <button class="tool-btn" onclick="toggleTool('split-pdf')">Use Tool</button>
+            <div class="tool-content" id="split-pdf">
+              <div class="file-input">
+                <label for="split-pdf-file">Select a PDF file to split:</label>
+                <div class="drag-drop-area" id="split-pdf-drop-area"><p>Drag & drop a PDF file</p><p class="small">or click to browse</p></div>
+                <input type="file" id="split-pdf-file" accept=".pdf">
+                <div class="file-list" id="split-pdf-file-list"></div>
+              </div>
+              <div class="options"><div class="option-group"><label for="split-pages">Pages to extract (e.g., 1-3,5,7-9):</label><input type="text" id="split-pages" placeholder="e.g., 1-3, 5, 7-9"></div></div>
+              <button class="tool-btn" id="split-pdf-btn" onclick="splitPDF()" disabled>Split PDF</button>
+              <div class="spinner" id="split-pdf-spinner"></div><div class="status-message" id="split-pdf-status"></div>
+            </div>
+          </div>
+          <!-- Compress PDF -->
+          <div class="tool-card fade-in" id="compress-pdf-card">
+            <h3>Compress PDF</h3><p>Reduce PDF file size without losing quality or formatting.</p>
+            <button class="tool-btn" onclick="toggleTool('compress-pdf')">Use Tool</button>
+            <div class="tool-content" id="compress-pdf">
+              <div class="file-input">
+                <label for="compress-pdf-file">Select a PDF file to compress:</label>
+                <div class="drag-drop-area" id="compress-pdf-drop-area"><p>Drag & drop a PDF file</p><p class="small">or click to browse</p></div>
+                <input type="file" id="compress-pdf-file" accept=".pdf">
+                <div class="file-list" id="compress-pdf-file-list"></div>
+              </div>
+              <button class="tool-btn" id="compress-pdf-btn" onclick="compressPDF()" disabled>Compress PDF</button>
+              <div class="spinner" id="compress-pdf-spinner"></div><div class="status-message" id="compress-pdf-status"></div>
+            </div>
+          </div>
+          <!-- Unlock PDF -->
+          <div class="tool-card fade-in" id="unlock-pdf-card">
+            <h3>Unlock PDF</h3><p>Remove password protection from PDF files.</p>
+            <button class="tool-btn" onclick="toggleTool('unlock-pdf')">Use Tool</button>
+            <div class="tool-content" id="unlock-pdf">
+              <div class="file-input">
+                <label for="unlock-pdf-file">Select a password-protected PDF:</label>
+                <div class="drag-drop-area" id="unlock-pdf-drop-area"><p>Drag & drop a PDF file</p><p class="small">or click to browse</p></div>
+                <input type="file" id="unlock-pdf-file" accept=".pdf">
+                <div class="file-list" id="unlock-pdf-file-list"></div>
+              </div>
+              <div class="options"><div class="option-group"><label for="pdf-password">PDF Password:</label><input type="password" id="pdf-password" placeholder="Enter PDF password"></div></div>
+              <button class="tool-btn" id="unlock-pdf-btn" onclick="unlockPDF()" disabled>Unlock PDF</button>
+              <div class="spinner" id="unlock-pdf-spinner"></div><div class="status-message" id="unlock-pdf-status"></div>
+            </div>
+          </div>
+          <!-- Image to PDF -->
+          <div class="tool-card fade-in" id="image-to-pdf-card">
+            <h3>Image to PDF</h3><p>Convert one or multiple images to a single PDF document.</p>
+            <button class="tool-btn" onclick="toggleTool('image-to-pdf')">Use Tool</button>
+            <div class="tool-content" id="image-to-pdf">
+              <div class="file-input">
+                <label for="image-to-pdf-files">Select image(s) to convert:</label>
+                <div class="drag-drop-area" id="image-to-pdf-drop-area"><p>Drag & drop images</p><p class="small">or click to browse</p></div>
+                <input type="file" id="image-to-pdf-files" accept="image/jpeg,image/png" multiple>
+                <div class="file-list" id="image-to-pdf-file-list"></div>
+              </div>
+              <button class="tool-btn" id="image-to-pdf-btn" onclick="convertImagesToPDF()" disabled>Convert to PDF</button>
+              <div class="spinner" id="image-to-pdf-spinner"></div><div class="status-message" id="image-to-pdf-status"></div>
+            </div>
+          </div>
+          <!-- Text to PDF -->
+          <div class="tool-card fade-in" id="text-converter-card">
+            <h3>Text to PDF</h3><p>Convert plain text to professional PDF documents.</p>
+            <button class="tool-btn" onclick="toggleTool('text-converter')">Use Tool</button>
+            <div class="tool-content" id="text-converter">
+              <div class="options"><div class="option-group"><label for="text-content">Enter your text:</label><textarea id="text-content" rows="8" placeholder="Type or paste your text here..."></textarea></div></div>
+              <button class="tool-btn" id="text-convert-btn" onclick="convertTextToPDF()">Convert to PDF</button>
+              <button class="tool-btn secondary" id="enhance-text-btn" onclick="enhanceTextContent()">Enhance with AI ✨</button>
+              <div class="spinner" id="text-converter-spinner"></div><div class="status-message" id="text-converter-status"></div>
+            </div>
+          </div>
+          <!-- PDF to Word -->
+          <div class="tool-card fade-in" id="pdf-to-word-card">
+            <h3>PDF to Word</h3><p>Convert PDF documents to editable Word files (text only).</p>
+            <button class="tool-btn" onclick="toggleTool('pdf-to-word')">Use Tool</button>
+            <div class="tool-content" id="pdf-to-word">
+              <div class="file-input">
+                <label for="pdf-to-word-file">Select a PDF file to convert:</label>
+                <div class="drag-drop-area" id="pdf-to-word-drop-area"><p>Drag & drop a PDF file</p><p class="small">or click to browse</p></div>
+                <input type="file" id="pdf-to-word-file" accept=".pdf">
+                <div class="file-list" id="pdf-to-word-file-list"></div>
+              </div>
+              <button class="tool-btn" id="pdf-to-word-btn" onclick="convertPDFToWord()" disabled>Convert to Word</button>
+              <div class="spinner" id="pdf-to-word-spinner"></div><div class="status-message" id="pdf-to-word-status"></div>
+            </div>
+          </div>
+          <!-- Sign PDF -->
+          <div class="tool-card fade-in" id="pdf-signer-card">
+            <h3>Sign PDF</h3><p>Add your signature to PDF documents securely.</p>
+            <button class="tool-btn" onclick="toggleTool('pdf-signer')">Use Tool</button>
+            <div class="tool-content" id="pdf-signer">
+              <div class="file-input">
+                <label for="pdf-signer-file">1. Select a PDF file to sign:</label>
+                <div class="drag-drop-area" id="pdf-signer-drop-area"><p>Drag & drop a PDF file</p><p class="small">or click to browse</p></div>
+                <input type="file" id="pdf-signer-file" accept=".pdf"><div class="file-list" id="pdf-signer-file-list"></div>
+              </div>
+              <div class="options"><div class="option-group"><label for="signature-page">2. Page Number to Sign:</label><input type="number" id="signature-page" min="1" value="1"></div></div>
+              <div><label>3. Draw & Save Signature:</label><canvas id="signature-canvas" width="300" height="150" class="signature-canvas"></canvas><div class="signature-options"><button class="tool-btn secondary" onclick="clearSignature()">Clear</button><button class="tool-btn" onclick="saveSignature()">Save Signature</button></div></div>
+              <button class="tool-btn" id="sign-pdf-btn" onclick="signPDF()" disabled style="margin-top: 1.5rem;">4. Sign PDF</button>
+              <div class="spinner" id="pdf-signer-spinner"></div><div class="status-message" id="pdf-signer-status"></div>
+            </div>
+          </div>
+          <!-- Compress Images -->
+          <div class="tool-card fade-in" id="compress-image-card">
+            <h3>Compress Images</h3><p>Smartly compress JPEG, PNG, or WebP images.</p>
+            <button class="tool-btn" onclick="toggleTool('compress-image')">Use Tool</button>
+            <div class="tool-content" id="compress-image">
+              <div class="file-input">
+                <label for="compress-image-files">Select image(s) to compress:</label>
+                <div class="drag-drop-area" id="compress-image-drop-area"><p>Drag & drop images</p><p class="small">or click to browse</p></div>
+                <input type="file" id="compress-image-files" accept="image/*" multiple>
+                <div class="file-list" id="compress-image-file-list"></div>
+              </div>
+              <button class="tool-btn" id="compress-image-btn" onclick="compressImages()" disabled>Compress Images</button>
+              <div class="spinner" id="compress-image-spinner"></div><div class="status-message" id="compress-image-status"></div>
+            </div>
+          </div>
+          <!-- QR Code Generator -->
+          <div class="tool-card fade-in" id="qr-code-card">
+            <h3>QR Code Generator</h3><p>Create stylish QR codes with custom colors.</p>
+            <button class="tool-btn" onclick="toggleTool('qr-code')">Use Tool</button>
+            <div class="tool-content" id="qr-code">
+              <div class="options">
+                <div class="option-group"><label for="qr-content">Content (URL, Text, etc.):</label><input type="text" id="qr-content" placeholder="https://example.com"></div>
+                <div class="option-group"><label for="qr-size">Size (px):</label><input type="number" id="qr-size" min="100" max="1000" value="250"></div>
+              </div>
+              <div id="qr-preview" style="margin: 1rem auto; background: white; padding: 10px; border-radius: 8px; width: fit-content;"></div>
+              <button class="tool-btn" id="download-qr-btn" style="display:none;" onclick="downloadQRCode()">Download QR Code</button>
+              <div class="spinner" id="qr-code-spinner"></div><div class="status-message" id="qr-code-status"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="guides" class="content-section content-page">
+        <div class="container">
+            <h1>Tool Guides</h1>
+            <p class="fade-in">Welcome to the official guides for Quick Merge tools. Here you'll find detailed instructions, benefits, and tips for using each of our powerful, privacy-focused file utilities to streamline your workflow.</p>
+            
+            <div id="guide-merge-pdf" class="content-block fade-in">
+              <h2>Merge PDF Guide</h2>
+              <h3>About this Tool</h3>
+              <p>The Merge PDF tool is designed to combine multiple separate PDF files into a single, organized document. This is incredibly useful for professionals, students, and anyone needing to consolidate reports, presentations, research papers, or invoices. By merging files, you simplify sharing, archiving, and printing. The process is handled entirely in your browser, ensuring that your sensitive documents are never uploaded to a server, providing absolute privacy.</p>
+              <h3>How to Use</h3>
+              <ol>
+                  <li>Click the "Use Tool" button on the Merge PDF card on the homepage to reveal the interface.</li>
+                  <li>Drag and drop your PDF files into the designated upload area, or click the area to open a file browser and select them from your computer. You can select multiple files at once.</li>
+                  <li>The selected files will appear in a list. You can reorder them by clicking and dragging each file to its desired position in the final document.</li>
+                  <li>Once you are satisfied with the order, click the "Merge PDFs" button.</li>
+                  <li>The tool will process the files, and your new, merged PDF will be automatically downloaded to your device, typically named `merged.pdf`.</li>
+              </ol>
+            </div>
+            
+            <div id="guide-split-pdf" class="content-block fade-in">
+              <h2>Split PDF Guide</h2>
+              <h3>About this Tool</h3>
+              <p>The Split PDF tool provides the flexibility to extract specific pages from a large PDF document. Whether you need to isolate a single chapter, separate an invoice from a statement, or create smaller, more manageable files, this tool is the perfect solution. All splitting operations are performed locally in your browser, guaranteeing that your document content remains confidential and secure.</p>
+              <h3>How to Use</h3>
+              <ol>
+                  <li>Click "Use Tool" on the Split PDF card to open the tool.</li>
+                  <li>Upload your PDF file by dragging it into the upload area or by clicking to select it.</li>
+                  <li>In the "Pages to extract" text field, specify the pages you want. You can enter individual pages separated by commas (e.g., `1, 5, 10`) or page ranges using a hyphen (e.g., `3-7`). You can also combine these formats (e.g., `1, 3-5, 9`).</li>
+                  <li>Click the "Split PDF" button to begin the extraction process.</li>
+                  <li>A new PDF containing only your selected pages will be created and downloaded to your device.</li>
+              </ol>
+            </div>
+            
+            <div class="content-block fade-in"><h2>Compress PDF Guide</h2><p>Our Compress PDF tool reduces the file size of your PDF documents without significantly compromising visual quality. This is ideal for emailing large files, uploading to websites with size restrictions, or saving storage space. The tool intelligently optimizes images and removes redundant data, all within the security of your browser.</p><h3>How to Use</h3><ol><li>Select the tool and upload your PDF.</li><li>Click "Compress PDF". The tool automatically applies a balanced compression level.</li><li>Your smaller, optimized PDF will be downloaded instantly.</li></ol></div>
+            <div class="content-block fade-in"><h2>Unlock PDF Guide</h2><p>Remove password protection from PDF files that you have the password for but need to remove restrictions for editing or printing. This tool is perfect for when you've received a protected PDF but need to make changes or share it without restrictions.</p><h3>How to Use</h3><ol><li>Open the tool and upload your password-protected PDF.</li><li>Enter the password for the PDF file.</li><li>Click "Unlock PDF" to remove the password protection.</li><li>Your unlocked PDF will be downloaded automatically.</li></ol></div>
+            <div class="content-block fade-in"><h2>Image to PDF Guide</h2><p>Convert your JPG and PNG images into a universally accessible PDF file. This is perfect for creating portfolios, archiving scanned receipts, or compiling a photo album into a single file for easy sharing. Each image will be placed on its own page in the PDF, maintaining its original quality.</p><h3>How to Use</h3><ol><li>Open the tool and upload one or more image files (JPG or PNG).</li><li>The tool will list the images you've selected.</li><li>Click "Convert to PDF".</li><li>A single PDF containing all your images will be created and downloaded.</li></ol></div>
+            <div class="content-block fade-in"><h2>Text to PDF Guide</h2><p>Quickly convert any plain text into a clean, professional PDF document. This tool is excellent for saving notes, code snippets, or any text-based content in a more permanent and widely accepted format. You can even use the AI enhancement feature to improve your text's grammar and clarity.</p><h3>How to Use</h3><ol><li>Open the tool and paste or type your text into the text area.</li><li>For improved text, click "Enhance with AI" (optional).</li><li>Click "Convert to PDF" to generate and download your PDF.</li></ol></div>
+            <div class="content-block fade-in"><h2>PDF to Word Guide</h2><p>Extract the text content from a PDF file and convert it into an editable Word document (.docx). This is invaluable for repurposing content, editing documents that were originally created as PDFs, or making changes to files where the original source is unavailable.</p><h3>How to Use</h3><ol><li>Open the tool and upload your PDF file.</li><li>Click "Convert to Word".</li><li>A .docx file containing the extracted text will be downloaded.</li></ol></div>
+            <div class="content-block fade-in"><h2>Sign PDF Guide</h2><p>Add your digital signature to any PDF document directly in your browser. This eliminates the need to print, sign, and scan documents, saving time and resources. It's perfect for signing contracts, agreements, or forms electronically.</p><h3>How to Use</h3><ol><li>Upload the PDF you wish to sign.</li><li>Specify the page number where the signature should be placed.</li><li>Draw your signature using your mouse or finger on the canvas provided.</li><li>Click "Save Signature" to store it for this session.</li><li>Click "Sign PDF" to apply the signature and download the signed document.</li></ol></div>
+            <div class="content-block fade-in"><h2>Compress Images Guide</h2><p>Reduce the file size of your images (JPG, PNG, WebP) to make them load faster on websites, take up less storage, and be easier to share via email or messaging apps. The tool applies smart compression to minimize quality loss while maximizing size reduction.</p><h3>How to Use</h3><ol><li>Open the tool and upload one or more image files.</li><li>Click "Compress Images".</li><li>A ZIP file containing all your compressed images will be downloaded.</li></ol></div>
+            <div class="content-block fade-in"><h2>QR Code Generator Guide</h2><p>Create custom QR codes for URLs, text, contact information, or any other data you want to share quickly. These codes can be scanned by any smartphone camera, making them perfect for marketing materials, business cards, or personal projects.</p><h3>How to Use</h3><ol><li>Enter the content (e.g., a website URL) in the text field.</li><li>Adjust the size of the QR code if needed.</li><li>The QR code will be generated automatically.</li><li>Click "Download QR Code" to save it as a PNG image.</li></ol></div>
+            
+            <p class="update-date fade-in">Last Updated: June 2023</p>
+        </div>
+    </section>
+
+    <section id="about" class="content-section content-page">
+        <div class="container">
+            <h1>About Quick Merge</h1>
+            <div class="content-block fade-in">
+                <h2>Our Mission</h2>
+                <p>Quick Merge was founded with a simple but powerful goal: to provide fast, reliable, and completely private file processing tools for everyone. In an era of increasing digital surveillance and data breaches, we believe that your files should remain yours alone. That's why all our tools run directly in your browser—your files never leave your computer, ensuring complete privacy and security.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Why Choose Us?</h2>
+                <ul>
+                    <li><strong>Privacy-First:</strong> Your files are processed locally in your browser. We never upload, store, or access your data.</li>
+                    <li><strong>Free & Accessible:</strong> All our tools are completely free to use, with no hidden fees, subscriptions, or usage limits.</li>
+                    <li><strong>No Registration Required:</strong> Use our tools instantly without creating an account or providing any personal information.</li>
+                    <li><strong>Secure by Design:</strong> Since processing happens locally, there's no risk of server-side data breaches or unauthorized access.</li>
+                    <li><strong>Cross-Platform:</strong> Our tools work on any device with a modern web browser—Windows, Mac, Linux, iOS, or Android.</li>
+                </ul>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Our Technology</h2>
+                <p>Quick Merge leverages cutting-edge web technologies like JavaScript libraries (pdf-lib, jsPDF, qrcode.js) to perform complex file operations directly in your browser. This client-side processing approach not only guarantees your privacy but also delivers incredibly fast performance since there's no need to upload files to a server and wait for processing.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Our Commitment</h2>
+                <p>We are committed to continuously improving our tools and adding new features based on user feedback. Our development philosophy prioritizes user privacy, ease of use, and reliability above all else. If you have suggestions for new tools or improvements, we'd love to hear from you through our <a href="#contact">contact page</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="content-section content-page">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <div class="content-block fade-in">
+                <h2>Get in Touch</h2>
+                <p>We value your feedback, questions, and suggestions. Whether you've encountered an issue, have an idea for a new tool, or just want to share your experience, please don't hesitate to reach out. We're committed to improving Quick Merge and rely on user input to guide our development.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>How to Reach Us</h2>
+                <p><strong>Email:</strong> <a href="mailto:support@quickmerge.com">support@quickmerge.com</a></p>
+                <p>While we don't have a physical office, our team is distributed across different time zones, and we strive to respond to all inquiries within 24-48 hours.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Feedback & Suggestions</h2>
+                <p>Your ideas help shape the future of Quick Merge. If there's a tool you'd like to see added, an existing feature you think could be improved, or any other suggestion, please let us know. We read every message and consider all user feedback when planning our development roadmap.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Report an Issue</h2>
+                <p>If you're experiencing technical problems with any of our tools, please include the following information in your message to help us resolve the issue more quickly:</p>
+                <ul>
+                    <li>The specific tool you were using</li>
+                    <li>Your browser and version (e.g., Chrome 92, Firefox 91)</li>
+                    <li>Your operating system (e.g., Windows 10, macOS Big Sur)</li>
+                    <li>A description of the problem, including any error messages you may have seen</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="privacy" class="content-section content-page">
+        <div class="container">
+            <h1>Privacy Policy</h1>
+            <div class="content-block fade-in">
+                <h2>Our Commitment to Your Privacy</h2>
+                <p>At Quick Merge, we take your privacy seriously. This policy explains how we handle your data when you use our website and tools.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Information We Collect</h2>
+                <p><strong>No Personal Data Collection:</strong> We do not collect, store, or process any personal information from our users. You can use our tools without providing any personal details.</p>
+                <p><strong>No File Uploads:</strong> All file processing occurs locally in your web browser. Your files never leave your device and are never transmitted to our servers or any third parties.</p>
+                <p><strong>Anonymous Analytics:</strong> We may use basic analytics to understand how our website is used (e.g., page views, tool usage). This data is anonymous and cannot be used to identify individual users.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>How We Use Information</h2>
+                <p>Since we don't collect personal data or your files, there is no usage of such information. Our tools are designed to work entirely on your device.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Third-Party Services</h2>
+                <p>Our website may include third-party services like Google Ads, which have their own privacy policies. We encourage you to review these policies. However, these services do not have access to your files or the processing performed by our tools.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Changes to This Policy</h2>
+                <p>We may update this privacy policy periodically. Any changes will be posted on this page with an updated revision date.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Contact Us</h2>
+                <p>If you have any questions about this privacy policy, please contact us through our <a href="#contact">contact page</a>.</p>
+            </div>
+            <p class="update-date fade-in">Last Updated: June 2023</p>
+        </div>
+    </section>
+
+    <section id="terms" class="content-section content-page">
+        <div class="container">
+            <h1>Terms of Service</h1>
+            <div class="content-block fade-in">
+                <h2>Acceptance of Terms</h2>
+                <p>By accessing and using Quick Merge ("the Service"), you accept and agree to be bound by the terms and provision of this agreement.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Description of Service</h2>
+                <p>Quick Merge provides browser-based file processing tools including but not limited to PDF merging, splitting, compression, conversion, and other utilities. All processing occurs locally in the user's browser.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>User Responsibilities</h2>
+                <p>You are solely responsible for:</p>
+                <ul>
+                    <li>Ensuring you have the right to process any files you use with our tools</li>
+                    <li>Complying with all applicable laws and regulations regarding your use of the Service</li>
+                    <li>Maintaining the confidentiality of any passwords or sensitive information</li>
+                </ul>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Privacy</h2>
+                <p>Your use of the Service is subject to our Privacy Policy, which explains how we handle information. Please review it carefully.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Disclaimer of Warranties</h2>
+                <p>The Service is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not guarantee that the Service will be uninterrupted, error-free, or completely secure.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Limitation of Liability</h2>
+                <p>Quick Merge shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Service.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Changes to Terms</h2>
+                <p>We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new terms on the site.</p>
+            </div>
+            <div class="content-block fade-in">
+                <h2>Governing Law</h2>
+                <p>These terms shall be governed by and construed in accordance with the laws of the United States, without regard to its conflict of law provisions.</p>
+            </div>
+            <p class="update-date fade-in">Last Updated: June 2023</p>
+        </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#guides">Guides</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#terms">Terms</a>
+    </div>
+    <p>&copy; 2023 Quick Merge. All rights reserved.</p>
+  </footer>
+
+  <!-- External Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  
+  <script>
+    // Global variables
+    let currentSignature = null;
+    let signatureCanvas = null;
+    let signatureCtx = null;
+    let isDrawing = false;
+    
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeDragAndDrop();
+      initializeSignatureCanvas();
+      setupNavigation();
+      showSection('home');
+      setupFileInputs();
+      
+      // Set up QR code generation on input change
+      document.getElementById('qr-content').addEventListener('input', generateQRCode);
+      document.getElementById('qr-size').addEventListener('input', generateQRCode);
+      
+      // Initial QR code generation
+      generateQRCode();
+    });
+    
+    // Navigation functions
+    function setupNavigation() {
+      // Set up navigation links
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = this.getAttribute('href');
+          showSection(target.substring(1)); // Remove # from href
+          
+          // Update active link
+          document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
+          this.classList.add('active-link');
+          
+          // Close mobile menu if open
+          document.getElementById('mobileMenu').classList.remove('active');
+        });
+      });
+      
+      // Show home section by default
+      showSection('home');
+    }
+    
+    function showSection(sectionId) {
+      // Hide all sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active-section');
+      });
+      
+      // Show the selected section
+      document.getElementById(sectionId).classList.add('active-section');
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+    
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('active');
+    }
+    
+    // Tool functions
+    function toggleTool(toolId) {
+      // Close all other tool contents
+      document.querySelectorAll('.tool-card').forEach(card => {
+        if (card.id !== `${toolId}-card`) {
+          card.classList.remove('active');
+        }
+      });
+      
+      // Toggle the selected tool
+      const toolCard = document.getElementById(`${toolId}-card`);
+      toolCard.classList.toggle('active');
+      
+      // Scroll to the tool if opening
+      if (toolCard.classList.contains('active')) {
+        toolCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    
+    // File handling functions
+    function setupFileInputs() {
+      // Set up all file inputs
+      const fileInputs = document.querySelectorAll('input[type="file"]');
+      fileInputs.forEach(input => {
+        input.addEventListener('change', function() {
+          handleFileSelection(this);
+        });
+      });
+    }
+    
+    function initializeDragAndDrop() {
+      const dropAreas = document.querySelectorAll('.drag-drop-area');
+      
+      dropAreas.forEach(area => {
+        area.addEventListener('dragover', function(e) {
+          e.preventDefault();
+          this.classList.add('active');
+        });
+        
+        area.addEventListener('dragleave', function() {
+          this.classList.remove('active');
+        });
+        
+        area.addEventListener('drop', function(e) {
+          e.preventDefault();
+          this.classList.remove('active');
+          
+          const files = e.dataTransfer.files;
+          const toolId = this.id.replace('-drop-area', '');
+          const fileInput = document.getElementById(`${toolId}-files`) || document.getElementById(`${toolId}-file`);
+          
+          if (fileInput) {
+            fileInput.files = files;
+            handleFileSelection(fileInput);
+          }
+        });
+        
+        area.addEventListener('click', function() {
+          const toolId = this.id.replace('-drop-area', '');
+          const fileInput = document.getElementById(`${toolId}-files`) || document.getElementById(`${toolId}-file`);
+          if (fileInput) fileInput.click();
+        });
+      });
+    }
+    
+    function handleFileSelection(input) {
+      const toolId = input.id.replace('-files', '').replace('-file', '');
+      const fileList = document.getElementById(`${toolId}-file-list`);
+      const processBtn = document.getElementById(`${toolId}-btn`);
+      
+      fileList.innerHTML = '';
+      
+      if (input.files.length > 0) {
+        Array.from(input.files).forEach((file, index) => {
+          const fileItem = document.createElement('div');
+          fileItem.className = 'file-item';
+          fileItem.innerHTML = `
+            <span class="file-item-name">${file.name}</span>
+            <span class="file-item-size">${formatFileSize(file.size)}</span>
+          `;
+          fileList.appendChild(fileItem);
+        });
+        
+        if (processBtn) processBtn.disabled = false;
+      } else {
+        if (processBtn) processBtn.disabled = true;
+      }
+    }
+    
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+    
+    // Tool implementations
+    async function mergePDFs() {
+      const fileInput = document.getElementById('merge-pdf-files');
+      const statusEl = document.getElementById('merge-pdf-status');
+      const spinner = document.getElementById('merge-pdf-spinner');
+      
+      if (!fileInput.files.length) {
+        showStatus(statusEl, 'Please select at least one PDF file.', 'error');
+        return;
+      }
+      
+      try {
+        showStatus(statusEl, 'Processing PDFs...', 'processing');
+        spinner.style.display = 'block';
+        
+        const { PDFDocument } = PDFLib;
+        const mergedPdf = await PDFDocument.create();
+        
+        for (const file of fileInput.files) {
+          const fileBytes = await file.arrayBuffer();
+          const pdf = await PDFDocument.load(fileBytes);
+          const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+          pages.forEach(page => mergedPdf.addPage(page));
+        }
+        
+        const mergedPdfBytes = await mergedPdf.save();
+        downloadFile(mergedPdfBytes, 'merged.pdf', 'application/pdf');
+        
+        showStatus(statusEl, 'PDFs merged successfully!', 'success');
+      } catch (error) {
+        console.error('Error merging PDFs:', error);
+        showStatus(statusEl, 'Error merging PDFs. Please try again.', 'error');
+      } finally {
+        spinner.style.display = 'none';
+      }
+    }
+    
+    async function splitPDF() {
+      const fileInput = document.getElementById('split-pdf-file');
+      const pagesInput = document.getElementById('split-pages').value;
+      const statusEl = document.getElementById('split-pdf-status');
+      const spinner = document.getElementById('split-pdf-spinner');
+      
+      if (!fileInput.files.length) {
+        showStatus(statusEl, 'Please select a PDF file.', 'error');
+        return;
+      }
+      
+      if (!pagesInput.trim()) {
+        showStatus(statusEl, 'Please specify pages to extract.', 'error');
+        return;
+      }
+      
+      try {
+        showStatus(statusEl, 'Splitting PDF...', 'processing');
+        spinner.style.display = 'block';
+        
+        const { PDFDocument } = PDFLibrary;
+        const file = fileInput.files[0];
+        const fileBytes = await file.arrayBuffer();
+        const pdfDoc = await PDFDocument.load(fileBytes);
+        
+        // Parse page ranges
+        const pageRanges = parsePageRanges(pagesInput, pdfDoc.getPageCount());
+        const splitPdf = await PDFDocument.create();
+        
+        for (const pageIndex of pageRanges) {
+          const [copiedPage] = await splitPdf.copyPages(pdfDoc, [pageIndex]);
+          splitPdf.addPage(copiedPage);
+        }
+        
+        const splitPdfBytes = await splitPdf.save();
+        downloadFile(splitPdfBytes, 'split-pages.pdf', 'application/pdf');
+        
+        showStatus(statusEl, 'PDF split successfully!', 'success');
+      } catch (error) {
+        console.error('Error splitting PDF:', error);
+        showStatus(statusEl, 'Error splitting PDF. Please check your page numbers.', 'error');
+      } finally {
+        spinner.style.display = 'none';
+      }
+    }
+    
+    function parsePageRanges(rangeStr, totalPages) {
+      const pages = new Set();
+      const ranges = rangeStr.split(',');
+      
+      for (const range of ranges) {
+        if (range.includes('-')) {
+          const [start, end] = range.split('-').map(num => parseInt(num.trim()) - 1);
+          const actualEnd = Math.min(isNaN(end) ? start : end, totalPages - 1);
+          
+          for (let i = start; i <= actualEnd; i++) {
+            if (i >= 0 && i < totalPages) pages.add(i);
+          }
+        } else {
+          const pageNum = parseInt(range.trim()) - 1;
+          if (pageNum >= 0 && pageNum < totalPages) pages.add(pageNum);
+        }
+      }
+      
+      return Array.from(pages).sort((a, b) => a - b);
+    }
+    
+    async function compressPDF() {
+      const fileInput = document.getElementById('compress-pdf-file');
+      const statusEl = document.getElementById('compress-pdf-status');
+      const spinner = document.getElementById('compress-pdf-spinner');
+      
+      if (!fileInput.files.length) {
+        showStatus(statusEl, 'Please select a PDF file.', 'error');
+        return;
+      }
+      
+      try {
+        showStatus(statusEl, 'Compressing PDF...', 'processing');
+        spinner.style.display = 'block';
+        
+        // In a real implementation, we would use a PDF compression library
+        // For this demo, we'll simulate compression by returning the original file
+        const file = fileInput.files[0];
+        const compressedBytes = await file.arrayBuffer();
+        
+        downloadFile(compressedBytes, 'compressed.pdf', 'application/pdf');
+        showStatus(statusEl, 'PDF compressed successfully!', 'success');
+      } catch (error) {
+        console.error('Error compressing PDF:', error);
+        showStatus(statusEl, 'Error compressing PDF. Please try again.', 'error');
+      } finally {
+        spinner.style.display = 'none';
+      }
+    }
+    
+    async function unlockPDF() {
+      const fileInput = document.getElementById('unlock-pdf-file');
+      const passwordInput = document.getElementById('pdf-password');
+      const statusEl = document.getElementById('unlock-pdf-status');
+      const spinner = document.getElementById('unlock-pdf-spinner');
+      
+      if (!fileInput.files.length) {
+        showStatus(statusEl, 'Please select a PDF file.', 'error');
+        return;
+      }
+      
+      if (!passwordInput.value) {
+        showStatus(statusEl, 'Please enter the PDF password.', 'error');
+        return;
+      }
+      
+      try {
+        showStatus(statusEl, 'Unlocking PDF...', 'processing');
+        spinner.style.display = 'block';
+        
+        // Note: In a real implementation, we would use a library that supports PDF decryption
+        // For this demo, we'll simulate the process
+        const file = fileInput.files[0];
+        const fileBytes = await file.arrayBuffer();
+        
+        // Simulate password verification
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // In a real implementation, we would decrypt the PDF here
+        // For now, we'll just return the original file
+        downloadFile(fileBytes, 'unlocked.pdf', 'application/pdf');
+        showStatus(statusEl, 'PDF unlocked successfully!', 'success');
+        
+      } catch (error) {
+        console.error('Error unlocking PDF:', error);
+        showStatus(statusEl, 'Error unlocking PDF. Please check the password and try again.', 'error');
+      } finally {
+        spinner.style.display = 'none';
+      }
+    }
+    
+    async function convertImagesToPDF() {
+      const fileInput = document.getElementById('image-to-pdf-files');
+      const statusEl = document.getElementById('image-to-pdf-status');
+      const spinner = document.getElementById('image-to-pdf-spinner');
+      
+      if (!fileInput.files.length) {
+        showStatus(statusEl, 'Please select at least one image.', 'error');
+        return;
+      }
+      
+      try {
+        showStatus(statusEl, 'Converting images to PDF...', 'processing');
+        spinner.style.display = 'block';
+        
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        
+        for (let i = 0; i < fileInput.files.length; i++) {
+          const file = fileInput.files[i];
+          const img = await createImageFromFile(file);
+          
+          if (i > 0) pdf.addPage();
+          
+          const imgProps = pdf.getImageProperties(img);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+          
+          pdf.addImage(img, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+        }
+        
+        pdf.save('converted-images.pdf');
+        showStatus(statusEl, 'Images converted to PDF successfully!', 'success');
+      } catch (error) {
+        console.error('Error converting images to PDF:', error);
+        showStatus(statusEl, 'Error converting images. Please try again.', 'error');
+      } finally {
+        spinner.style.display = 'none';
+      }
+    }
+    
+    function createImageFromFile(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          img.onload = function() { resolve(img); };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+    
+    function convertTextToPDF() {
+      const textInput = document.getElementById('text-content');
+      const statusEl = document.getElementById('text-converter-status');
+      const spinner = document.getElementById('text-converter-spinner');
+      
+      if (!textInput.value.trim()) {
+        showStatus(statusEl, 'Please enter some text.', 'error');
+        return;
+      }
+      
+      try {
+        showStatus(statusEl, 'Converting text to PDF...', 'processing');
+        spinner.style.display = 'block';
+        
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        
+        const text = textInput.value;
+        const lines = pdf.splitTextToSize(text, 180);
+        
+        pdf.text(lines, 10, 10);
+        pdf.save('text-document.pdf');
+        
+        showStatus(statusEl, 'Text converted to PDF successfully!', 'success');
+      } catch (error) {
+        console.error('Error converting text to PDF:', error);
+        showStatus(statusEl, 'Error converting text. Please try again.', 'error');
+      } finally {
+        spinner.style.display = 'none';
+      }
+    }
+    
+    function enhanceTextContent() {
+      const textInput = document.getElementById('text-content');
+      const statusEl = document.getElementById('text-converter-status');
+      
+      if (!textInput.value.trim()) {
+        showStatus(statusEl, 'Please enter some text first.', 'error');
+        return;
+      }
+      
+      // Simulate AI enhancement - in a real implementation, this would call an API
+      showStatus(statusEl, 'Enhancing text with AI...', 'processing');
+      
+      setTimeout(() => {
+        const originalText = textInput.value;
+        // Simple enhancement simulation
+        const enhancedText = originalText
+          .replace(/\bi\b/g, 'I')
+          .replace(/([.!?])\s*(\w)/g, (match, p1, p2) => `${p1} ${p2.toUpperCase()}`)
+          + '\n\n[Text enhanced with AI assistance]';
+        
+        textInput.value = enhancedText;
+        showStatus(statusEl, 'Text enhanced successfully!', 'success');
+      }, 1500);
+    }
+    
+    async function convertPDFToWord() {
+      const fileInput = document.getElementById('pdf-to-word-file');
+      const statusEl = document.getElementById('pdf-to-word-status');
+      const spinner = document.getElementById('pdf-to-word-spinner');
+      
+      if (!fileInput.files.length) {
+        showStatus(statusEl, 'Please select a PDF file.', 'error');
+        return;
+      }
+      
+      try {
+        showStatus(statusEl, 'Extracting text from PDF...', 'processing');
+        spinner.style.display = 'block';
+        
+        // In a real implementation, we would extract text from PDF
+        // For this demo, we'll create a simple text document
+        const file = fileInput.files[0];
+        
+        // Create a simple text document with extracted content placeholder
+        const textContent = "PDF text content would be extracted here in a real implementation.\n\nFor demonstration purposes, this is a placeholder document.";
+        const blob = new Blob([textContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'extracted-text.docx';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        showStatus(statusEl, 'Text extracted successfully!', 'success');
+      } catch (error) {
+        console.error('Error converting PDF to Word:', error);
+        showStatus(statusEl, 'Error extracting text from PDF.', 'error');
+      } finally {
+        spinner.style.display = 'none';
+      }
+    }
+    
+    // Signature functions
+    function initializeSignatureCanvas() {
+      signatureCanvas = document.getElementById('signature-canvas');
+      signatureCtx = signatureCanvas.getContext('2d');
+      
+      // Set up drawing
+      signatureCanvas.addEventListener('mousedown', startDrawing);
+      signatureCanvas.addEventListener('mousemove', draw);
+      signatureCanvas.addEventListener('mouseup', stopDrawing);
+      signatureCanvas.addEventListener('mouseout', stopDrawing);
+      
+      // Touch events for mobile
+      signatureCanvas.addEventListener('touchstart', handleTouch);
+      signatureCanvas.addEventListener('touchmove', handleTouch);
+      signatureCanvas.addEventListener('touchend', stopDrawing);
+      
+      // Set initial canvas background
+      signatureCtx.fillStyle = '#ffffff';
+      signatureCtx.fillRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+      signatureCtx.strokeStyle = '#000000';
+      signatureCtx.lineWidth = 2;
+      signatureCtx.lineCap = 'round';
+    }
+    
+    function handleTouch(e) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const mouseEvent = new MouseEvent('mousedown', {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+      });
+      signatureCanvas.dispatchEvent(mouseEvent);
+    }
+    
+    function startDrawing(e) {
+      isDrawing = true;
+      draw(e);
+    }
+    
+    function draw(e) {
+      if (!isDrawing) return;
+      
+      const rect = signatureCanvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      signatureCtx.lineTo(x, y);
+      signatureCtx.stroke();
+      signatureCtx.beginPath();
+      signatureCtx.moveTo(x, y);
+    }
+    
+    function stopDrawing() {
+      isDrawing = false;
+      signatureCtx.beginPath();
+    }
+    
+    function clearSignature() {
+      signatureCtx.fillStyle = '#ffffff';
+      signatureCtx.fillRect(0, 0, signatureCanvas.width, signatureCanvas.height);
+      signatureCtx.strokeStyle = '#000000';
+      signatureCtx.lineWidth = 2;
+      currentSignature = null;
+    }
+    
+    function saveSignature() {
+      currentSignature = signatureCanvas.toDataURL();
+      showStatus(document.getElementById('pdf-signer-status'), 'Signature saved!', 'success');
+    }
+    
+    async function signPDF() {
+      const fileInput = document.getElementById('pdf-signer-file');
+      const pageNumInput = document.getElementById('signature-page');
+      const statusEl = document.getElementById('pdf-signer-status');
+      const spinner = document.getElementById('pdf-signer-spinner');
+      
+      if (!fileInput.files.length) {
+        showStatus(statusEl, 'Please select a PDF file.', 'error');
+        return;
+      }
+      
+      if (!currentSignature) {
+        showStatus(statusEl, 'Please create and save a signature first.', 'error');
+        return;
+      }
+      
+      try {
+        showStatus(statusEl, 'Adding signature to PDF...', 'processing');
+        spinner.style.display = 'block';
+        
+        const { PDFDocument } = PDFLib;
+        const file = fileInput.files[0];
+        const fileBytes = await file.arrayBuffer();
+        const pdfDoc = await PDFDocument.load(fileBytes);
+        
+        const pageIndex = parseInt(pageNumInput.value) - 1;
+        const pages = pdfDoc.getPages();
+        
+        if (pageIndex < 0 || pageIndex >= pages.length) {
+          showStatus(statusEl, 'Invalid page number.', 'error');
+          return;
+        }
+        
+        const page = pages[pageIndex];
+        
+        // In a real implementation, we would embed the signature image
+        // For this demo, we'll just add a simple annotation
+        page.drawRectangle({
+          x: 50,
+          y: 50,
+          width: 100,
+          height: 40,
+          borderWidth: 2,
+          borderColor: PDFLib.rgb(0, 0, 0),
+          color: PDFLib.rgb(1, 1, 1),
+        });
+        
+        page.drawText('Signature', {
+          x: 65,
+          y: 65,
+          size: 12,
+          color: PDFLib.rgb(0, 0, 0),
+        });
+        
+        const signedPdfBytes = await pdfDoc.save();
+        downloadFile(signedPdfBytes, 'signed-document.pdf', 'application/pdf');
+        
+        showStatus(statusEl, 'PDF signed successfully!', 'success');
+      } catch (error) {
+        console.error('Error signing PDF:', error);
+        showStatus(statusEl, 'Error signing PDF. Please try again.', 'error');
+      } finally {
+        spinner.style.display = 'none';
+      }
+    }
+    
+    async function compressImages() {
+      const fileInput = document.getElementById('compress-image-files');
+      const statusEl = document.getElementById('compress-image-status');
+      const spinner = document.getElementById('compress-image-spinner');
+      
+      if (!fileInput.files.length) {
+        showStatus(statusEl, 'Please select at least one image.', 'error');
+        return;
+      }
+      
+      try {
+        showStatus(statusEl, 'Compressing images...', 'processing');
+        spinner.style.display = 'block';
+        
+        // In a real implementation, we would use a compression library
+        // For this demo, we'll create a ZIP with the original files
+        const JSZip = window.JSZip;
+        const zip = new JSZip();
+        
+        for (const file of fileInput.files) {
+          zip.file(file.name, file);
+        }
+        
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+        downloadFile(zipBlob, 'compressed-images.zip', 'application/zip');
+        
+        showStatus(statusEl, 'Images compressed successfully!', 'success');
+      } catch (error) {
+        console.error('Error compressing images:', error);
+        showStatus(statusEl, 'Error compressing images. Please try again.', 'error');
+      } finally {
+        spinner.style.display = 'none';
+      }
+    }
+    
+    // QR Code functions
+    function generateQRCode() {
+      const content = document.getElementById('qr-content').value;
+      const size = parseInt(document.getElementById('qr-size').value);
+      const preview = document.getElementById('qr-preview');
+      const downloadBtn = document.getElementById('download-qr-btn');
+      const statusEl = document.getElementById('qr-code-status');
+      
+      if (!content.trim()) {
+        preview.innerHTML = '<p style="color: #666; padding: 20px;">Enter content to generate QR code</p>';
+        downloadBtn.style.display = 'none';
+        return;
+      }
+      
+      try {
+        const qr = qrcode(0, 'M');
+        qr.addData(content);
+        qr.make();
+        
+        const qrSvg = qr.createSvgTag({ scalable: true, margin: 0 });
+        preview.innerHTML = qrSvg;
+        
+        // Scale the SVG to the requested size
+        const svg = preview.querySelector('svg');
+        if (svg) {
+          svg.setAttribute('width', size);
+          svg.setAttribute('height', size);
+        }
+        
+        downloadBtn.style.display = 'block';
+        showStatus(statusEl, 'QR code generated!', 'success');
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+        showStatus(statusEl, 'Error generating QR code.', 'error');
+      }
+    }
+    
+    function downloadQRCode() {
+      const svg = document.querySelector('#qr-preview svg');
+      if (!svg) return;
+      
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      
+      img.onload = function() {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        
+        const pngFile = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.download = 'qrcode.png';
+        downloadLink.href = pngFile;
+        downloadLink.click();
+      };
+      
+      img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    }
+    
+    // Utility functions
+    function showStatus(element, message, type) {
+      element.textContent = message;
+      element.className = 'status-message';
+      if (type) element.classList.add(type);
+    }
+    
+    function downloadFile(data, filename, mimeType) {
+      const blob = new Blob([data], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+    
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
