@@ -1726,6 +1726,47 @@
         }
     }
     
+    // --- PDF Compression ---
+    async function compressPDF() {
+        const fileInput = document.getElementById('compress-pdf-file');
+        const statusEl = document.getElementById('compress-pdf-status');
+        const spinner = document.getElementById('compress-pdf-spinner');
+        
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select a PDF file.', 'error');
+
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Compressing PDF...', 'processing');
+        
+        try {
+            const { PDFDocument } = PDFLib;
+            const fileBytes = await fileInput.files[0].arrayBuffer();
+            const originalSize = fileBytes.byteLength;
+            
+            // Load the PDF document
+            const pdfDoc = await PDFDocument.load(fileBytes);
+            
+            // Apply compression by re-saving with optimized settings
+            // PDF-lib automatically applies some compression when saving
+            const compressedPdfBytes = await pdfDoc.save({
+                useObjectStreams: true,
+                addDefaultPage: false,
+                objectsPerTick: 100
+            });
+            
+            const compressedSize = compressedPdfBytes.byteLength;
+            const reductionPercent = ((originalSize - compressedSize) / originalSize * 100).toFixed(1);
+            
+            // Download the compressed PDF
+            downloadFile(compressedPdfBytes, 'compressed.pdf', 'application/pdf');
+            showStatus(statusEl, `PDF compressed successfully! Size reduced by ${reductionPercent}% (${formatFileSize(originalSize)} → ${formatFileSize(compressedSize)})`, 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error compressing PDF. Please try another file.', 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
     // --- Image Tools ---
     async function convertImagesToPDF() {
         const fileInput = document.getElementById('image-to-pdf-files');
@@ -2364,27 +2405,6 @@
         });
     }
     
-    // Placeholder functions for tools not fully implemented
-    async function compressPDF() {
-        const fileInput = document.getElementById('compress-pdf-file');
-        const statusEl = document.getElementById('compress-pdf-status');
-        const spinner = document.getElementById('compress-pdf-spinner');
-        
-        if (!fileInput.files.length) return showStatus(statusEl, 'Please select a PDF file.', 'error');
-
-        toggleSpinner(spinner, true);
-        showStatus(statusEl, 'Compressing PDF...', 'processing');
-        
-        // Simulate compression (in a real implementation, this would use a PDF compression library)
-        setTimeout(() => {
-            toggleSpinner(spinner, false);
-            showStatus(statusEl, 'PDF compressed successfully! File size reduced by 35%.', 'success');
-            
-            // In a real implementation, this would trigger a download
-            // For demo purposes, we'll just show a success message
-        }, 2000);
-    }
-
     // --- Animation Observer ---
     function setupIntersectionObserver() {
         const observer = new IntersectionObserver(entries => {
