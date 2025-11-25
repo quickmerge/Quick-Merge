@@ -715,30 +715,30 @@
 
   <header>
     <div class="nav">
-      <h1><a href="#home"><i class="fas fa-object-group"></i> Quick Merge</a></h1>
+      <h1><a href="#home" class="nav-link" data-section="home"><i class="fas fa-object-group"></i> Quick Merge</a></h1>
       <div class="nav-links">
-        <a href="#home" class="nav-link active-link">Home</a>
-        <a href="#tools" class="nav-link">Tools</a>
-        <a href="#features" class="nav-link">Features</a>
-        <a href="#about" class="nav-link">About</a>
-        <a href="#privacy" class="nav-link">Privacy</a>
-        <a href="#terms" class="nav-link">Terms</a>
-        <a href="#cookies" class="nav-link">Cookies</a>
-        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#home" class="nav-link active-link" data-section="home">Home</a>
+        <a href="#tools" class="nav-link" data-section="tools">Tools</a>
+        <a href="#features" class="nav-link" data-section="features">Features</a>
+        <a href="#about" class="nav-link" data-section="about">About</a>
+        <a href="#privacy" class="nav-link" data-section="privacy">Privacy</a>
+        <a href="#terms" class="nav-link" data-section="terms">Terms</a>
+        <a href="#cookies" class="nav-link" data-section="cookies">Cookies</a>
+        <a href="#contact" class="nav-link" data-section="contact">Contact</a>
       </div>
       <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
         <i class="fas fa-bars"></i>
       </button>
     </div>
     <div class="mobile-menu" id="mobileMenu">
-      <a href="#home" class="nav-link">Home</a>
-      <a href="#tools" class="nav-link">Tools</a>
-      <a href="#features" class="nav-link">Features</a>
-      <a href="#about" class="nav-link">About</a>
-      <a href="#privacy" class="nav-link">Privacy</a>
-      <a href="#terms" class="nav-link">Terms</a>
-      <a href="#cookies" class="nav-link">Cookies</a>
-      <a href="#contact" class="nav-link">Contact</a>
+      <a href="#home" class="nav-link" data-section="home">Home</a>
+      <a href="#tools" class="nav-link" data-section="tools">Tools</a>
+      <a href="#features" class="nav-link" data-section="features">Features</a>
+      <a href="#about" class="nav-link" data-section="about">About</a>
+      <a href="#privacy" class="nav-link" data-section="privacy">Privacy</a>
+      <a href="#terms" class="nav-link" data-section="terms">Terms</a>
+      <a href="#cookies" class="nav-link" data-section="cookies">Cookies</a>
+      <a href="#contact" class="nav-link" data-section="contact">Contact</a>
     </div>
   </header>
 
@@ -1189,7 +1189,7 @@
           <ul>
             <li><strong>Usage Data:</strong> We may collect anonymous usage statistics to understand how our tools are used and identify areas for improvement.</li>
             <li><strong>Technical Information:</strong> We may collect browser type, version, and other technical details to ensure compatibility.</li>
-            <li><strong>Cookies:</strong> We use cookies to enhance your experience and analyze site traffic. See our <a href="#cookies">Cookie Policy</a> for more details.</li>
+            <li><strong>Cookies:</strong> We use cookies to enhance your experience and analyze site traffic. See our <a href="#cookies" class="nav-link" data-section="cookies">Cookie Policy</a> for more details.</li>
           </ul>
           <p><strong>Important:</strong> We do not collect, store, or have access to any files you process using our tools. All file processing happens locally in your browser.</p>
         </div>
@@ -1436,32 +1436,32 @@
         <div class="footer-links">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#tools">Tools</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#home" class="nav-link" data-section="home">Home</a></li>
+            <li><a href="#tools" class="nav-link" data-section="tools">Tools</a></li>
+            <li><a href="#features" class="nav-link" data-section="features">Features</a></li>
+            <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+            <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
           </ul>
         </div>
         
         <div class="footer-contact">
           <h4>Legal</h4>
           <ul>
-            <li><a href="#privacy">Privacy Policy</a></li>
-            <li><a href="#terms">Terms of Service</a></li>
-            <li><a href="#cookies">Cookie Policy</a></li>
+            <li><a href="#privacy" class="nav-link" data-section="privacy">Privacy Policy</a></li>
+            <li><a href="#terms" class="nav-link" data-section="terms">Terms of Service</a></li>
+            <li><a href="#cookies" class="nav-link" data-section="cookies">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
       
       <div class="footer-bottom">
         <div class="footer-links-bottom">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#privacy">Privacy</a>
-          <a href="#terms">Terms</a>
-          <a href="#cookies">Cookies</a>
-          <a href="#contact">Contact</a>
+          <a href="#home" class="nav-link" data-section="home">Home</a>
+          <a href="#about" class="nav-link" data-section="about">About</a>
+          <a href="#privacy" class="nav-link" data-section="privacy">Privacy</a>
+          <a href="#terms" class="nav-link" data-section="terms">Terms</a>
+          <a href="#cookies" class="nav-link" data-section="cookies">Cookies</a>
+          <a href="#contact" class="nav-link" data-section="contact">Contact</a>
         </div>
         <p>&copy; 2024 Quick Merge. All rights reserved.</p>
       </div>
@@ -1509,14 +1509,33 @@
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                showSection(targetId);
+                const targetSection = this.getAttribute('data-section');
+                showSection(targetSection);
                 
                 navLinks.forEach(l => l.classList.remove('active-link'));
                 this.classList.add('active-link');
+                
+                // Update URL hash
+                window.location.hash = targetSection;
             });
         });
-        showSection('home');
+        
+        // Check for hash on page load
+        if (window.location.hash) {
+            const targetSection = window.location.hash.substring(1);
+            showSection(targetSection);
+            
+            // Update active link
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-section') === targetSection) {
+                    link.classList.add('active-link');
+                } else {
+                    link.classList.remove('active-link');
+                }
+            });
+        } else {
+            showSection('home');
+        }
     }
 
     function showSection(sectionId) {
@@ -2344,16 +2363,17 @@
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 const data = imageData.data;
                 
-                // Simple color extraction algorithm
+                // Improved color extraction algorithm
                 const colors = extractDominantColors(data);
                 
                 // Display color palette
                 palette.innerHTML = '<h4 style="margin-bottom: 1rem;">Extracted Color Palette</h4><div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">';
                 
                 colors.forEach(color => {
+                    const hexColor = rgbToHex(color.r, color.g, color.b);
                     palette.innerHTML += `
-                        <div style="width: 60px; height: 60px; background: ${color}; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="copyColor('${color}')">
-                            <span style="color: white; font-size: 0.7rem; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">${color}</span>
+                        <div style="width: 60px; height: 60px; background: ${hexColor}; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="copyColor('${hexColor}')">
+                            <span style="color: ${getContrastColor(color.r, color.g, color.b)}; font-size: 0.7rem; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">${hexColor}</span>
                         </div>
                     `;
                 });
@@ -2369,8 +2389,9 @@
     }
     
     function extractDominantColors(data) {
-        // Simple algorithm to extract dominant colors
-        const colorMap = {};
+        // Improved algorithm to extract dominant colors
+        const colorBuckets = {};
+        const bucketSize = 32; // Group similar colors together
         
         // Sample pixels at regular intervals
         for (let i = 0; i < data.length; i += 16) {
@@ -2382,14 +2403,50 @@
             // Skip transparent pixels
             if (a < 128) continue;
             
-            const color = `rgb(${r}, ${g}, ${b})`;
-            colorMap[color] = (colorMap[color] || 0) + 1;
+            // Group similar colors
+            const bucketR = Math.floor(r / bucketSize) * bucketSize;
+            const bucketG = Math.floor(g / bucketSize) * bucketSize;
+            const bucketB = Math.floor(b / bucketSize) * bucketSize;
+            const bucketKey = `${bucketR},${bucketG},${bucketB}`;
+            
+            if (!colorBuckets[bucketKey]) {
+                colorBuckets[bucketKey] = {
+                    r: 0, g: 0, b: 0, count: 0
+                };
+            }
+            
+            colorBuckets[bucketKey].r += r;
+            colorBuckets[bucketKey].g += g;
+            colorBuckets[bucketKey].b += b;
+            colorBuckets[bucketKey].count++;
         }
         
-        // Sort colors by frequency and return top 10
-        return Object.keys(colorMap)
-            .sort((a, b) => colorMap[b] - colorMap[a])
-            .slice(0, 10);
+        // Calculate average colors for each bucket
+        const colors = [];
+        for (const key in colorBuckets) {
+            const bucket = colorBuckets[key];
+            colors.push({
+                r: Math.floor(bucket.r / bucket.count),
+                g: Math.floor(bucket.g / bucket.count),
+                b: Math.floor(bucket.b / bucket.count),
+                count: bucket.count
+            });
+        }
+        
+        // Sort by frequency and return top 8
+        return colors
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 8);
+    }
+    
+    function rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+    
+    function getContrastColor(r, g, b) {
+        // Calculate relative luminance
+        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        return luminance > 0.5 ? '#000000' : '#FFFFFF';
     }
     
     function copyColor(color) {
