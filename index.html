@@ -709,6 +709,52 @@
     @media (min-width: 769px) {
       .mobile-menu { display: none !important; }
     }
+
+    /* --- PDF Form Preview --- */
+    .pdf-preview {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin: 1rem 0;
+      background: rgba(255, 255, 255, 0.03);
+      min-height: 400px;
+    }
+    .form-field {
+      margin-bottom: 1rem;
+      padding: 0.8rem;
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .form-field label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-medium);
+    }
+    .form-field input, .form-field textarea {
+      width: 100%;
+      padding: 0.6rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-light);
+    }
+
+    /* --- Stamp Preview --- */
+    .stamp-preview {
+      width: 300px;
+      height: 300px;
+      margin: 1rem auto;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stamp-canvas {
+      border-radius: 50%;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
   </style>
 </head>
 <body>
@@ -743,6 +789,7 @@
   </header>
 
   <main>
+    <!-- Home Section -->
     <section id="home" class="content-section active-section">
       <div class="hero">
         <div class="container">
@@ -754,7 +801,7 @@
             <div class="hero-feature"><i class="fas fa-cloud-download-alt"></i> No Uploads Required</div>
           </div>
           <div class="cta">
-            <button onclick="scrollToSection('tools')">Explore All Tools <i class="fas fa-arrow-down"></i></button>
+            <button onclick="showSection('tools')">Explore All Tools <i class="fas fa-arrow-right"></i></button>
           </div>
         </div>
       </div>
@@ -795,9 +842,107 @@
         </div>
       </section>
 
-      <section id="tools" class="tools-section">
+      <section id="tools-preview" class="tools-section">
         <div class="container">
           <h2 class="section-title">Our Powerful Tools</h2>
+          <div class="tools">
+            
+            <!-- PDF Tools -->
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-file-pdf"></i> Merge PDF</h3>
+              <p>Combine multiple PDF files into one seamless document.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('merge-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-cut"></i> Split PDF</h3>
+              <p>Extract pages or split a PDF into multiple parts.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('split-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-compress-arrows-alt"></i> Compress PDF</h3>
+              <p>Reduce PDF file size without losing quality.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('compress-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-unlock"></i> Unlock PDF</h3>
+              <p>Remove password protection from PDF files.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('unlock-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <!-- New PDF to Word Converter Tool -->
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-file-word"></i> PDF to Word</h3>
+              <p>Convert PDF documents to editable Word format.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('pdf-to-word'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <!-- New PDF Form Filler Tool -->
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-file-signature"></i> PDF Form Filler</h3>
+              <p>Fill out PDF forms online with our easy-to-use tool.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('pdf-form-filler'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <!-- Image Tools -->
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-file-image"></i> Image to PDF</h3>
+              <p>Convert JPG, PNG, and other images to PDF format.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('image-to-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-compress-alt"></i> Compress Images</h3>
+              <p>Reduce image file size while maintaining quality.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('compress-image'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <!-- New Stamp Generator Tool -->
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-stamp"></i> Stamp Generator</h3>
+              <p>Create authentic-looking corporate stamps for documents.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('stamp-generator'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <!-- Text Tools -->
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-volume-up"></i> Text to Speech</h3>
+              <p>Convert text to natural-sounding speech with downloadable MP3.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('text-to-speech'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <!-- Generator Tools -->
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-qrcode"></i> QR Code Generator</h3>
+              <p>Create custom QR codes for URLs, text, contact info, and more.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('qr-generator'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-key"></i> Password Generator</h3>
+              <p>Create strong, secure passwords with customizable options.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('password-generator'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <!-- Utility Tools -->
+            <div class="tool-card fade-in">
+              <h3><i class="fas fa-exchange-alt"></i> Unit Converter</h3>
+              <p>Convert between different units of length, weight, temperature, and more.</p>
+              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('unit-converter'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="content-section">
+      <div class="tools-section">
+        <div class="container">
+          <h2 class="section-title">All Tools</h2>
           <div class="tools">
             
             <!-- PDF Tools -->
@@ -939,7 +1084,36 @@
                   <input type="file" id="pdf-form-filler-file" accept=".pdf" style="display:none;">
                   <div class="file-list" id="pdf-form-filler-file-list"></div>
                 </div>
-                <div id="pdf-form-filler-fields" style="margin-top: 1rem;"></div>
+                <div id="pdf-form-filler-fields" style="margin-top: 1rem;">
+                  <div class="pdf-preview">
+                    <h4>Form Preview</h4>
+                    <p>Upload a PDF form to see and fill the fields here.</p>
+                    <div class="form-field">
+                      <label for="field-full-name">Full Name</label>
+                      <input type="text" id="field-full-name" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-field">
+                      <label for="field-email">Email Address</label>
+                      <input type="email" id="field-email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-field">
+                      <label for="field-phone">Phone Number</label>
+                      <input type="tel" id="field-phone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-field">
+                      <label for="field-address">Address</label>
+                      <textarea id="field-address" rows="3" placeholder="Enter your address"></textarea>
+                    </div>
+                    <div class="form-field">
+                      <label for="field-date">Date</label>
+                      <input type="date" id="field-date">
+                    </div>
+                    <div class="form-field">
+                      <label for="field-signature">Signature</label>
+                      <input type="text" id="field-signature" placeholder="Type your name as signature">
+                    </div>
+                  </div>
+                </div>
                 <button class="tool-btn" id="pdf-form-filler-btn" onclick="fillPDFForm()" disabled>
                   <i class="fas fa-file-signature"></i> Fill Form & Download
                 </button>
@@ -1193,7 +1367,7 @@
             
           </div>
         </div>
-      </section>
+      </div>
     </section>
 
     <!-- About Page -->
@@ -1260,7 +1434,7 @@
           <ul>
             <li><strong>Usage Data:</strong> We may collect anonymous usage statistics to understand how our tools are used and identify areas for improvement.</li>
             <li><strong>Technical Information:</strong> We may collect browser type, version, and other technical details to ensure compatibility.</li>
-            <li><strong>Cookies:</strong> We use cookies to enhance your experience and analyze site traffic. See our <a href="#cookies" class="nav-link" data-section="cookies">Cookie Policy</a> for more details.</li>
+            <li><strong>Cookies:</strong> We use cookies to enhance your experience and analyze site traffic. See our <a href="#cookies" onclick="showSection('cookies')">Cookie Policy</a> for more details.</li>
           </ul>
           <p><strong>Important:</strong> We do not collect, store, or have access to any files you process using our tools. All file processing happens locally in your browser.</p>
         </div>
@@ -1507,32 +1681,32 @@
         <div class="footer-links">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="#home" class="nav-link" data-section="home">Home</a></li>
-            <li><a href="#tools" class="nav-link" data-section="tools">Tools</a></li>
-            <li><a href="#features" class="nav-link" data-section="features">Features</a></li>
-            <li><a href="#about" class="nav-link" data-section="about">About</a></li>
-            <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+            <li><a href="#home" onclick="showSection('home')">Home</a></li>
+            <li><a href="#tools" onclick="showSection('tools')">Tools</a></li>
+            <li><a href="#features" onclick="showSection('features')">Features</a></li>
+            <li><a href="#about" onclick="showSection('about')">About</a></li>
+            <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
           </ul>
         </div>
         
         <div class="footer-contact">
           <h4>Legal</h4>
           <ul>
-            <li><a href="#privacy" class="nav-link" data-section="privacy">Privacy Policy</a></li>
-            <li><a href="#terms" class="nav-link" data-section="terms">Terms of Service</a></li>
-            <li><a href="#cookies" class="nav-link" data-section="cookies">Cookie Policy</a></li>
+            <li><a href="#privacy" onclick="showSection('privacy')">Privacy Policy</a></li>
+            <li><a href="#terms" onclick="showSection('terms')">Terms of Service</a></li>
+            <li><a href="#cookies" onclick="showSection('cookies')">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
       
       <div class="footer-bottom">
         <div class="footer-links-bottom">
-          <a href="#home" class="nav-link" data-section="home">Home</a>
-          <a href="#about" class="nav-link" data-section="about">About</a>
-          <a href="#privacy" class="nav-link" data-section="privacy">Privacy</a>
-          <a href="#terms" class="nav-link" data-section="terms">Terms</a>
-          <a href="#cookies" class="nav-link" data-section="cookies">Cookies</a>
-          <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+          <a href="#home" onclick="showSection('home')">Home</a>
+          <a href="#about" onclick="showSection('about')">About</a>
+          <a href="#privacy" onclick="showSection('privacy')">Privacy</a>
+          <a href="#terms" onclick="showSection('terms')">Terms</a>
+          <a href="#cookies" onclick="showSection('cookies')">Cookies</a>
+          <a href="#contact" onclick="showSection('contact')">Contact</a>
         </div>
         <p>&copy; 2024 Quick Merge. All rights reserved.</p>
       </div>
@@ -1560,7 +1734,8 @@
             audioChunks: [],
             audioBlob: null
         },
-        pdfFormFields: []
+        pdfFormFields: [],
+        stampCanvas: null
     };
 
     // --- Initialization ---
@@ -1937,7 +2112,6 @@
             
             // Reset form fields
             AppState.pdfFormFields = [];
-            fieldsContainer.innerHTML = '';
             
             // Simple form field detection (in a real implementation, you'd use a more sophisticated approach)
             for (let i = 1; i <= pdfDoc.numPages; i++) {
@@ -1973,38 +2147,6 @@
                 ];
             }
             
-            // Render form fields
-            AppState.pdfFormFields.forEach(field => {
-                const fieldGroup = document.createElement('div');
-                fieldGroup.className = 'option-group';
-                
-                const label = document.createElement('label');
-                label.textContent = field.name;
-                label.setAttribute('for', `field-${field.name.replace(/\s+/g, '-')}`);
-                
-                let input;
-                if (field.type === 'date') {
-                    input = document.createElement('input');
-                    input.type = 'date';
-                    input.id = `field-${field.name.replace(/\s+/g, '-')}`;
-                    input.value = field.value;
-                } else {
-                    input = document.createElement('input');
-                    input.type = 'text';
-                    input.id = `field-${field.name.replace(/\s+/g, '-')}`;
-                    input.placeholder = `Enter ${field.name}`;
-                    input.value = field.value;
-                }
-                
-                input.addEventListener('input', (e) => {
-                    field.value = e.target.value;
-                });
-                
-                fieldGroup.appendChild(label);
-                fieldGroup.appendChild(input);
-                fieldsContainer.appendChild(fieldGroup);
-            });
-            
             showStatus(statusEl, 'Form analyzed. Fill in the fields below.', 'success');
         } catch (e) {
             showStatus(statusEl, 'Error analyzing PDF form. Please try another file.', 'error');
@@ -2034,17 +2176,73 @@
             // Add form fields as text annotations
             let yPosition = height - 100; // Start from top of page
             
-            AppState.pdfFormFields.forEach(field => {
-                if (field.value.trim()) {
-                    firstPage.drawText(`${field.name}: ${field.value}`, {
-                        x: 50,
-                        y: yPosition,
-                        size: 12,
-                        color: rgb(0, 0, 0),
-                    });
-                    yPosition -= 25; // Move down for next field
-                }
-            });
+            // Get values from form fields
+            const fullName = document.getElementById('field-full-name').value;
+            const email = document.getElementById('field-email').value;
+            const phone = document.getElementById('field-phone').value;
+            const address = document.getElementById('field-address').value;
+            const date = document.getElementById('field-date').value;
+            const signature = document.getElementById('field-signature').value;
+            
+            // Add filled fields to PDF
+            if (fullName) {
+                firstPage.drawText(`Full Name: ${fullName}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= 25;
+            }
+            
+            if (email) {
+                firstPage.drawText(`Email: ${email}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= 25;
+            }
+            
+            if (phone) {
+                firstPage.drawText(`Phone: ${phone}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= 25;
+            }
+            
+            if (address) {
+                firstPage.drawText(`Address: ${address}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= 25;
+            }
+            
+            if (date) {
+                firstPage.drawText(`Date: ${date}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= 25;
+            }
+            
+            if (signature) {
+                firstPage.drawText(`Signature: ${signature}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+            }
             
             const filledPdfBytes = await pdfDoc.save();
             downloadFile(filledPdfBytes, 'filled-form.pdf', 'application/pdf');
@@ -2079,32 +2277,12 @@
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
-            // Set canvas size based on style
-            let width, height;
-            switch(style) {
-                case 'round':
-                    width = height = 200;
-                    break;
-                case 'square':
-                    width = height = 180;
-                    break;
-                case 'rectangle':
-                    width = 240;
-                    height = 120;
-                    break;
-                case 'oval':
-                    width = 220;
-                    height = 140;
-                    break;
-                default:
-                    width = height = 200;
-            }
-            
-            canvas.width = width;
-            canvas.height = height;
+            // Set canvas size
+            canvas.width = 400;
+            canvas.height = 400;
             
             // Clear canvas
-            ctx.clearRect(0, 0, width, height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             // Set stamp color
             let stampColor;
@@ -2126,85 +2304,95 @@
                     stampColor = '#212121';
             }
             
-            // Draw stamp shape
+            // Draw stamp base (circle)
             ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
             ctx.strokeStyle = stampColor;
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 8;
             
-            switch(style) {
-                case 'round':
-                    ctx.beginPath();
-                    ctx.arc(width/2, height/2, width/2 - 5, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.stroke();
-                    break;
-                case 'square':
-                    ctx.fillRect(5, 5, width-10, height-10);
-                    ctx.strokeRect(5, 5, width-10, height-10);
-                    break;
-                case 'rectangle':
-                    ctx.fillRect(5, 5, width-10, height-10);
-                    ctx.strokeRect(5, 5, width-10, height-10);
-                    break;
-                case 'oval':
-                    ctx.beginPath();
-                    ctx.ellipse(width/2, height/2, width/2 - 10, height/2 - 10, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.stroke();
-                    break;
+            // Create rubber stamp effect with irregular edges
+            ctx.beginPath();
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 180;
+            
+            // Draw irregular circle for rubber stamp effect
+            for (let angle = 0; angle < Math.PI * 2; angle += 0.1) {
+                const irregularRadius = radius + (Math.random() * 10 - 5);
+                const x = centerX + Math.cos(angle) * irregularRadius;
+                const y = centerY + Math.sin(angle) * irregularRadius;
+                
+                if (angle === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
             }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
             
-            // Add text
+            // Add text with rubber stamp effect
             ctx.fillStyle = stampColor;
             ctx.textAlign = 'center';
-            ctx.font = 'bold 16px Arial';
             
-            // Main text
-            ctx.fillText(text.toUpperCase(), width/2, height/2 - (company ? 10 : 0));
+            // Main text (curved)
+            ctx.font = 'bold 28px Arial';
+            const mainText = text.toUpperCase();
+            const mainTextRadius = 120;
             
-            // Company name (if provided)
-            if (company) {
-                ctx.font = '12px Arial';
-                ctx.fillText(company, width/2, height/2 + 15);
+            // Curve text around the stamp
+            for (let i = 0; i < mainText.length; i++) {
+                const angle = (i - mainText.length / 2) * 0.15;
+                const x = centerX + Math.sin(angle) * mainTextRadius;
+                const y = centerY - Math.cos(angle) * mainTextRadius;
+                
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(angle);
+                ctx.fillText(mainText[i], 0, 0);
+                ctx.restore();
             }
             
-            // Date (if provided)
+            // Company name (if provided) - straight text in middle
+            if (company) {
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText(company.toUpperCase(), centerX, centerY + 10);
+            }
+            
+            // Date (if provided) - bottom text
             if (date) {
                 const formattedDate = new Date(date).toLocaleDateString();
-                ctx.font = '10px Arial';
-                ctx.fillText(formattedDate, width/2, height - 20);
+                ctx.font = '14px Arial';
+                ctx.fillText(formattedDate, centerX, centerY + 60);
             }
             
-            // Add some "ink bleed" effect for realism
+            // Add ink bleed effect for realism
             ctx.globalCompositeOperation = 'multiply';
             ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
             
-            switch(style) {
-                case 'round':
-                    ctx.beginPath();
-                    ctx.arc(width/2 + 2, height/2 + 2, width/2 - 8, 0, Math.PI * 2);
-                    ctx.fill();
-                    break;
-                case 'square':
-                    ctx.fillRect(8, 8, width-16, height-16);
-                    break;
-                case 'rectangle':
-                    ctx.fillRect(8, 8, width-16, height-16);
-                    break;
-                case 'oval':
-                    ctx.beginPath();
-                    ctx.ellipse(width/2 + 2, height/2 + 2, width/2 - 12, height/2 - 12, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                    break;
+            // Create irregular inner shape for ink bleed
+            ctx.beginPath();
+            for (let angle = 0; angle < Math.PI * 2; angle += 0.1) {
+                const irregularRadius = radius - 20 + (Math.random() * 8 - 4);
+                const x = centerX + Math.cos(angle) * irregularRadius;
+                const y = centerY + Math.sin(angle) * irregularRadius;
+                
+                if (angle === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
             }
+            ctx.closePath();
+            ctx.fill();
             
             // Reset composite operation
             ctx.globalCompositeOperation = 'source-over';
             
             // Display result
             result.innerHTML = `
-                <div style="margin-bottom: 1rem;">
-                    <img src="${canvas.toDataURL('image/png')}" style="max-width: 100%; border-radius: 8px;">
+                <div class="stamp-preview">
+                    <img src="${canvas.toDataURL('image/png')}" class="stamp-canvas">
                 </div>
                 <button class="tool-btn secondary" onclick="downloadStamp()">
                     <i class="fas fa-download"></i> Download Stamp
