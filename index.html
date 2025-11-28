@@ -901,6 +901,53 @@
               </div>
             </div>
             
+            <!-- New PDF to Word Converter Tool -->
+            <div class="tool-card fade-in" id="pdf-to-word-card">
+              <h3><i class="fas fa-file-word"></i> PDF to Word</h3>
+              <p>Convert PDF documents to editable Word format.</p>
+              <button class="tool-btn" onclick="toggleTool('pdf-to-word')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="pdf-to-word">
+                <div class="file-input">
+                  <label for="pdf-to-word-file">Select a PDF file to convert:</label>
+                  <div class="drag-drop-area" id="pdf-to-word-drop-area">
+                    <p><i class="fas fa-cloud-upload-alt"></i> Drag & drop a PDF file</p>
+                    <p class="small">or click to browse</p>
+                  </div>
+                  <input type="file" id="pdf-to-word-file" accept=".pdf" style="display:none;">
+                  <div class="file-list" id="pdf-to-word-file-list"></div>
+                </div>
+                <button class="tool-btn" id="pdf-to-word-btn" onclick="convertPDFToWord()" disabled>
+                  <i class="fas fa-file-word"></i> Convert to Word
+                </button>
+                <div class="spinner" id="pdf-to-word-spinner"></div>
+                <div class="status-message" id="pdf-to-word-status"></div>
+              </div>
+            </div>
+            
+            <!-- New PDF Form Filler Tool -->
+            <div class="tool-card fade-in" id="pdf-form-filler-card">
+              <h3><i class="fas fa-file-signature"></i> PDF Form Filler</h3>
+              <p>Fill out PDF forms online with our easy-to-use tool.</p>
+              <button class="tool-btn" onclick="toggleTool('pdf-form-filler')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="pdf-form-filler">
+                <div class="file-input">
+                  <label for="pdf-form-filler-file">Select a PDF form to fill:</label>
+                  <div class="drag-drop-area" id="pdf-form-filler-drop-area">
+                    <p><i class="fas fa-cloud-upload-alt"></i> Drag & drop a PDF form</p>
+                    <p class="small">or click to browse</p>
+                  </div>
+                  <input type="file" id="pdf-form-filler-file" accept=".pdf" style="display:none;">
+                  <div class="file-list" id="pdf-form-filler-file-list"></div>
+                </div>
+                <div id="pdf-form-filler-fields" style="margin-top: 1rem;"></div>
+                <button class="tool-btn" id="pdf-form-filler-btn" onclick="fillPDFForm()" disabled>
+                  <i class="fas fa-file-signature"></i> Fill Form & Download
+                </button>
+                <div class="spinner" id="pdf-form-filler-spinner"></div>
+                <div class="status-message" id="pdf-form-filler-status"></div>
+              </div>
+            </div>
+            
             <!-- Image Tools -->
             <div class="tool-card fade-in" id="image-to-pdf-card">
               <h3><i class="fas fa-file-image"></i> Image to PDF</h3>
@@ -949,6 +996,53 @@
                 </button>
                 <div class="spinner" id="compress-image-spinner"></div>
                 <div class="status-message" id="compress-image-status"></div>
+              </div>
+            </div>
+            
+            <!-- New Stamp Generator Tool -->
+            <div class="tool-card fade-in" id="stamp-generator-card">
+              <h3><i class="fas fa-stamp"></i> Stamp Generator</h3>
+              <p>Create authentic-looking corporate stamps for documents.</p>
+              <button class="tool-btn" onclick="toggleTool('stamp-generator')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="stamp-generator">
+                <div class="options">
+                  <div class="option-group">
+                    <label for="stamp-text">Stamp Text:</label>
+                    <input type="text" id="stamp-text" placeholder="e.g., APPROVED, CONFIDENTIAL, PAID" value="APPROVED">
+                  </div>
+                  <div class="option-group">
+                    <label for="stamp-company">Company Name (Optional):</label>
+                    <input type="text" id="stamp-company" placeholder="Your Company Name">
+                  </div>
+                  <div class="option-group">
+                    <label for="stamp-date">Date (Optional):</label>
+                    <input type="date" id="stamp-date">
+                  </div>
+                  <div class="option-group">
+                    <label for="stamp-color">Stamp Color:</label>
+                    <select id="stamp-color">
+                      <option value="red">Red</option>
+                      <option value="blue">Blue</option>
+                      <option value="green">Green</option>
+                      <option value="purple">Purple</option>
+                      <option value="black">Black</option>
+                    </select>
+                  </div>
+                  <div class="option-group">
+                    <label for="stamp-style">Stamp Style:</label>
+                    <select id="stamp-style">
+                      <option value="round">Round</option>
+                      <option value="square">Square</option>
+                      <option value="rectangle">Rectangle</option>
+                      <option value="oval">Oval</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="tool-btn" id="stamp-btn" onclick="generateStamp()">
+                  <i class="fas fa-stamp"></i> Generate Stamp
+                </button>
+                <div id="stamp-result" style="margin-top: 1rem; text-align: center;"></div>
+                <div class="status-message" id="stamp-status"></div>
               </div>
             </div>
             
@@ -1094,29 +1188,6 @@
                   <i class="fas fa-exchange-alt"></i> Convert
                 </button>
                 <div class="status-message" id="converter-result"></div>
-              </div>
-            </div>
-            
-            <div class="tool-card fade-in" id="color-picker-card">
-              <h3><i class="fas fa-eye-dropper"></i> Color Picker</h3>
-              <p>Extract colors from images and generate color palettes.</p>
-              <button class="tool-btn" onclick="toggleTool('color-picker')">Use Tool <i class="fas fa-arrow-right"></i></button>
-              <div class="tool-content" id="color-picker">
-                <div class="file-input">
-                  <label for="color-picker-image">Upload an image:</label>
-                  <div class="drag-drop-area" id="color-picker-drop-area">
-                    <p><i class="fas fa-cloud-upload-alt"></i> Drag & drop an image</p>
-                    <p class="small">or click to browse</p>
-                  </div>
-                  <input type="file" id="color-picker-image" accept="image/*" style="display:none;">
-                  <div class="file-list" id="color-picker-file-list"></div>
-                </div>
-                <div id="color-picker-preview" style="margin: 1rem 0; text-align: center;"></div>
-                <button class="tool-btn" id="color-picker-btn" onclick="extractColors()" disabled>
-                  <i class="fas fa-palette"></i> Extract Colors
-                </button>
-                <div id="color-palette" style="margin-top: 1rem;"></div>
-                <div class="status-message" id="color-picker-status"></div>
               </div>
             </div>
             
@@ -1489,6 +1560,7 @@
             audioChunks: [],
             audioBlob: null
         },
+        pdfFormFields: []
     };
 
     // --- Initialization ---
@@ -1618,6 +1690,11 @@
                 fileListEl.appendChild(fileItem);
             });
             if (processBtn) processBtn.disabled = false;
+            
+            // Special handling for PDF form filler
+            if (toolId === 'pdf-form-filler') {
+                analyzePDFForm(input.files[0]);
+            }
         } else {
             if (processBtn) processBtn.disabled = true;
         }
@@ -1784,6 +1861,373 @@
         } finally {
             toggleSpinner(spinner, false);
         }
+    }
+    
+    // --- New PDF to Word Converter ---
+    async function convertPDFToWord() {
+        const fileInput = document.getElementById('pdf-to-word-file');
+        const statusEl = document.getElementById('pdf-to-word-status');
+        const spinner = document.getElementById('pdf-to-word-spinner');
+        
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select a PDF file.', 'error');
+
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Converting PDF to Word...', 'processing');
+        
+        try {
+            const fileBytes = await fileInput.files[0].arrayBuffer();
+            const pdfDoc = await pdfjsLib.getDocument({ data: fileBytes }).promise;
+            
+            let textContent = '';
+            for (let i = 1; i <= pdfDoc.numPages; i++) {
+                const page = await pdfDoc.getPage(i);
+                const text = await page.getTextContent();
+                textContent += text.items.map(item => item.str).join(' ') + '\n\n';
+            }
+            
+            // Create a simple Word document (HTML format)
+            const wordContent = `
+                <html xmlns:o="urn:schemas-microsoft-com:office:office" 
+                      xmlns:w="urn:schemas-microsoft-com:office:word" 
+                      xmlns="http://www.w3.org/TR/REC-html40">
+                <head>
+                    <meta charset="utf-8">
+                    <title>Converted Document</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.5; }
+                        p { margin-bottom: 1em; }
+                    </style>
+                </head>
+                <body>
+                    <div>${textContent.replace(/\n/g, '</p><p>')}</div>
+                </body>
+                </html>
+            `;
+            
+            // Create a blob and download
+            const blob = new Blob([wordContent], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'converted-document.doc';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showStatus(statusEl, 'PDF converted to Word successfully!', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error converting PDF to Word. Please try another file.', 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
+    // --- New PDF Form Filler ---
+    async function analyzePDFForm(file) {
+        const fieldsContainer = document.getElementById('pdf-form-filler-fields');
+        const statusEl = document.getElementById('pdf-form-filler-status');
+        
+        showStatus(statusEl, 'Analyzing PDF form...', 'processing');
+        
+        try {
+            const fileBytes = await file.arrayBuffer();
+            const pdfDoc = await pdfjsLib.getDocument({ data: fileBytes }).promise;
+            
+            // Reset form fields
+            AppState.pdfFormFields = [];
+            fieldsContainer.innerHTML = '';
+            
+            // Simple form field detection (in a real implementation, you'd use a more sophisticated approach)
+            for (let i = 1; i <= pdfDoc.numPages; i++) {
+                const page = await pdfDoc.getPage(i);
+                const textContent = await page.getTextContent();
+                
+                // Look for common form field indicators
+                const formIndicators = ['name:', 'date:', 'signature:', 'address:', 'email:', 'phone:'];
+                textContent.items.forEach(item => {
+                    const text = item.str.toLowerCase();
+                    formIndicators.forEach(indicator => {
+                        if (text.includes(indicator)) {
+                            const fieldName = item.str.trim().replace(':', '');
+                            if (!AppState.pdfFormFields.some(field => field.name === fieldName)) {
+                                AppState.pdfFormFields.push({
+                                    name: fieldName,
+                                    value: '',
+                                    type: 'text'
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+            
+            // If no fields detected, add some common ones
+            if (AppState.pdfFormFields.length === 0) {
+                AppState.pdfFormFields = [
+                    { name: 'Full Name', value: '', type: 'text' },
+                    { name: 'Date', value: '', type: 'date' },
+                    { name: 'Signature', value: '', type: 'text' },
+                    { name: 'Address', value: '', type: 'text' }
+                ];
+            }
+            
+            // Render form fields
+            AppState.pdfFormFields.forEach(field => {
+                const fieldGroup = document.createElement('div');
+                fieldGroup.className = 'option-group';
+                
+                const label = document.createElement('label');
+                label.textContent = field.name;
+                label.setAttribute('for', `field-${field.name.replace(/\s+/g, '-')}`);
+                
+                let input;
+                if (field.type === 'date') {
+                    input = document.createElement('input');
+                    input.type = 'date';
+                    input.id = `field-${field.name.replace(/\s+/g, '-')}`;
+                    input.value = field.value;
+                } else {
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = `field-${field.name.replace(/\s+/g, '-')}`;
+                    input.placeholder = `Enter ${field.name}`;
+                    input.value = field.value;
+                }
+                
+                input.addEventListener('input', (e) => {
+                    field.value = e.target.value;
+                });
+                
+                fieldGroup.appendChild(label);
+                fieldGroup.appendChild(input);
+                fieldsContainer.appendChild(fieldGroup);
+            });
+            
+            showStatus(statusEl, 'Form analyzed. Fill in the fields below.', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error analyzing PDF form. Please try another file.', 'error');
+            console.error(e);
+        }
+    }
+    
+    async function fillPDFForm() {
+        const fileInput = document.getElementById('pdf-form-filler-file');
+        const statusEl = document.getElementById('pdf-form-filler-status');
+        const spinner = document.getElementById('pdf-form-filler-spinner');
+        
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select a PDF file.', 'error');
+        
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Filling PDF form...', 'processing');
+        
+        try {
+            const { PDFDocument, rgb } = PDFLib;
+            const fileBytes = await fileInput.files[0].arrayBuffer();
+            const pdfDoc = await PDFDocument.load(fileBytes);
+            
+            const pages = pdfDoc.getPages();
+            const firstPage = pages[0];
+            const { width, height } = firstPage.getSize();
+            
+            // Add form fields as text annotations
+            let yPosition = height - 100; // Start from top of page
+            
+            AppState.pdfFormFields.forEach(field => {
+                if (field.value.trim()) {
+                    firstPage.drawText(`${field.name}: ${field.value}`, {
+                        x: 50,
+                        y: yPosition,
+                        size: 12,
+                        color: rgb(0, 0, 0),
+                    });
+                    yPosition -= 25; // Move down for next field
+                }
+            });
+            
+            const filledPdfBytes = await pdfDoc.save();
+            downloadFile(filledPdfBytes, 'filled-form.pdf', 'application/pdf');
+            showStatus(statusEl, 'PDF form filled successfully!', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error filling PDF form. Please try again.', 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
+    // --- New Stamp Generator ---
+    function generateStamp() {
+        const text = document.getElementById('stamp-text').value;
+        const company = document.getElementById('stamp-company').value;
+        const date = document.getElementById('stamp-date').value;
+        const color = document.getElementById('stamp-color').value;
+        const style = document.getElementById('stamp-style').value;
+        const result = document.getElementById('stamp-result');
+        const statusEl = document.getElementById('stamp-status');
+        
+        if (!text.trim()) {
+            showStatus(statusEl, 'Please enter stamp text.', 'error');
+            return;
+        }
+        
+        showStatus(statusEl, 'Generating stamp...', 'processing');
+        
+        try {
+            // Create canvas for stamp
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size based on style
+            let width, height;
+            switch(style) {
+                case 'round':
+                    width = height = 200;
+                    break;
+                case 'square':
+                    width = height = 180;
+                    break;
+                case 'rectangle':
+                    width = 240;
+                    height = 120;
+                    break;
+                case 'oval':
+                    width = 220;
+                    height = 140;
+                    break;
+                default:
+                    width = height = 200;
+            }
+            
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Set stamp color
+            let stampColor;
+            switch(color) {
+                case 'red':
+                    stampColor = '#d32f2f';
+                    break;
+                case 'blue':
+                    stampColor = '#1976d2';
+                    break;
+                case 'green':
+                    stampColor = '#388e3c';
+                    break;
+                case 'purple':
+                    stampColor = '#7b1fa2';
+                    break;
+                case 'black':
+                default:
+                    stampColor = '#212121';
+            }
+            
+            // Draw stamp shape
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.strokeStyle = stampColor;
+            ctx.lineWidth = 3;
+            
+            switch(style) {
+                case 'round':
+                    ctx.beginPath();
+                    ctx.arc(width/2, height/2, width/2 - 5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    break;
+                case 'square':
+                    ctx.fillRect(5, 5, width-10, height-10);
+                    ctx.strokeRect(5, 5, width-10, height-10);
+                    break;
+                case 'rectangle':
+                    ctx.fillRect(5, 5, width-10, height-10);
+                    ctx.strokeRect(5, 5, width-10, height-10);
+                    break;
+                case 'oval':
+                    ctx.beginPath();
+                    ctx.ellipse(width/2, height/2, width/2 - 10, height/2 - 10, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    break;
+            }
+            
+            // Add text
+            ctx.fillStyle = stampColor;
+            ctx.textAlign = 'center';
+            ctx.font = 'bold 16px Arial';
+            
+            // Main text
+            ctx.fillText(text.toUpperCase(), width/2, height/2 - (company ? 10 : 0));
+            
+            // Company name (if provided)
+            if (company) {
+                ctx.font = '12px Arial';
+                ctx.fillText(company, width/2, height/2 + 15);
+            }
+            
+            // Date (if provided)
+            if (date) {
+                const formattedDate = new Date(date).toLocaleDateString();
+                ctx.font = '10px Arial';
+                ctx.fillText(formattedDate, width/2, height - 20);
+            }
+            
+            // Add some "ink bleed" effect for realism
+            ctx.globalCompositeOperation = 'multiply';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            
+            switch(style) {
+                case 'round':
+                    ctx.beginPath();
+                    ctx.arc(width/2 + 2, height/2 + 2, width/2 - 8, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                case 'square':
+                    ctx.fillRect(8, 8, width-16, height-16);
+                    break;
+                case 'rectangle':
+                    ctx.fillRect(8, 8, width-16, height-16);
+                    break;
+                case 'oval':
+                    ctx.beginPath();
+                    ctx.ellipse(width/2 + 2, height/2 + 2, width/2 - 12, height/2 - 12, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+            }
+            
+            // Reset composite operation
+            ctx.globalCompositeOperation = 'source-over';
+            
+            // Display result
+            result.innerHTML = `
+                <div style="margin-bottom: 1rem;">
+                    <img src="${canvas.toDataURL('image/png')}" style="max-width: 100%; border-radius: 8px;">
+                </div>
+                <button class="tool-btn secondary" onclick="downloadStamp()">
+                    <i class="fas fa-download"></i> Download Stamp
+                </button>
+            `;
+            
+            // Store canvas for download
+            AppState.stampCanvas = canvas;
+            
+            showStatus(statusEl, 'Stamp generated successfully!', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error generating stamp.', 'error');
+            console.error(e);
+        }
+    }
+    
+    function downloadStamp() {
+        if (!AppState.stampCanvas) return;
+        
+        const link = document.createElement('a');
+        link.download = 'custom-stamp.png';
+        link.href = AppState.stampCanvas.toDataURL('image/png');
+        link.click();
     }
     
     // --- Image Tools ---
@@ -2327,139 +2771,6 @@
         const toText = document.getElementById('converter-to').options[document.getElementById('converter-to').selectedIndex].text;
         
         showStatus(result, `${value} ${fromText} = ${convertedValue.toFixed(6)} ${toText}`, 'success');
-    }
-    
-    // --- Color Picker ---
-    function extractColors() {
-        const fileInput = document.getElementById('color-picker-image');
-        const preview = document.getElementById('color-picker-preview');
-        const palette = document.getElementById('color-palette');
-        const status = document.getElementById('color-picker-status');
-        
-        if (!fileInput.files || fileInput.files.length === 0) {
-            showStatus(status, 'Please select an image first.', 'error');
-            return;
-        }
-        
-        showStatus(status, 'Extracting colors...', 'processing');
-        
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        
-        reader.onload = function(e) {
-            // Display image preview
-            preview.innerHTML = `<img src="${e.target.result}" style="max-width: 300px; max-height: 200px; border-radius: 8px;">`;
-            
-            // Create a canvas to extract colors
-            const img = new Image();
-            img.onload = function() {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-                
-                // Extract color data
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const data = imageData.data;
-                
-                // Improved color extraction algorithm
-                const colors = extractDominantColors(data);
-                
-                // Display color palette
-                palette.innerHTML = '<h4 style="margin-bottom: 1rem;">Extracted Color Palette</h4><div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">';
-                
-                colors.forEach(color => {
-                    const hexColor = rgbToHex(color.r, color.g, color.b);
-                    palette.innerHTML += `
-                        <div style="width: 60px; height: 60px; background: ${hexColor}; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="copyColor('${hexColor}')">
-                            <span style="color: ${getContrastColor(color.r, color.g, color.b)}; font-size: 0.7rem; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">${hexColor}</span>
-                        </div>
-                    `;
-                });
-                
-                palette.innerHTML += '</div>';
-                
-                showStatus(status, 'Colors extracted successfully! Click on a color to copy its value.', 'success');
-            };
-            img.src = e.target.result;
-        };
-        
-        reader.readAsDataURL(file);
-    }
-    
-    function extractDominantColors(data) {
-        // Improved algorithm to extract dominant colors
-        const colorBuckets = {};
-        const bucketSize = 32; // Group similar colors together
-        
-        // Sample pixels at regular intervals
-        for (let i = 0; i < data.length; i += 16) {
-            const r = data[i];
-            const g = data[i + 1];
-            const b = data[i + 2];
-            const a = data[i + 3];
-            
-            // Skip transparent pixels
-            if (a < 128) continue;
-            
-            // Group similar colors
-            const bucketR = Math.floor(r / bucketSize) * bucketSize;
-            const bucketG = Math.floor(g / bucketSize) * bucketSize;
-            const bucketB = Math.floor(b / bucketSize) * bucketSize;
-            const bucketKey = `${bucketR},${bucketG},${bucketB}`;
-            
-            if (!colorBuckets[bucketKey]) {
-                colorBuckets[bucketKey] = {
-                    r: 0, g: 0, b: 0, count: 0
-                };
-            }
-            
-            colorBuckets[bucketKey].r += r;
-            colorBuckets[bucketKey].g += g;
-            colorBuckets[bucketKey].b += b;
-            colorBuckets[bucketKey].count++;
-        }
-        
-        // Calculate average colors for each bucket
-        const colors = [];
-        for (const key in colorBuckets) {
-            const bucket = colorBuckets[key];
-            colors.push({
-                r: Math.floor(bucket.r / bucket.count),
-                g: Math.floor(bucket.g / bucket.count),
-                b: Math.floor(bucket.b / bucket.count),
-                count: bucket.count
-            });
-        }
-        
-        // Sort by frequency and return top 8
-        return colors
-            .sort((a, b) => b.count - a.count)
-            .slice(0, 8);
-    }
-    
-    function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-    }
-    
-    function getContrastColor(r, g, b) {
-        // Calculate relative luminance
-        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-        return luminance > 0.5 ? '#000000' : '#FFFFFF';
-    }
-    
-    function copyColor(color) {
-        // Copy color to clipboard
-        navigator.clipboard.writeText(color).then(() => {
-            const status = document.getElementById('color-picker-status');
-            showStatus(status, `Color ${color} copied to clipboard!`, 'success');
-            
-            // Reset message after 2 seconds
-            setTimeout(() => {
-                showStatus(status, 'Colors extracted successfully! Click on a color to copy its value.', 'success');
-            }, 2000);
-        });
     }
     
     // --- Animation Observer ---
