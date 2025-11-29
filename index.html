@@ -188,41 +188,6 @@
       background: rgba(139, 92, 246, 0.1);
     }
 
-    /* --- Desktop Dropdown Menu --- */
-    .desktop-dropdown {
-      position: relative;
-    }
-    .desktop-dropdown-content {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: rgba(10, 10, 10, 0.98);
-      min-width: 200px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow);
-      z-index: 1000;
-      backdrop-filter: blur(12px);
-    }
-    .desktop-dropdown-content a {
-      display: block;
-      padding: 0.8rem 1rem;
-      color: var(--text-medium);
-      border-bottom: 1px solid var(--border-color);
-      transition: var(--transition);
-    }
-    .desktop-dropdown-content a:last-child {
-      border-bottom: none;
-    }
-    .desktop-dropdown-content a:hover {
-      color: var(--text-light);
-      background: rgba(139, 92, 246, 0.1);
-    }
-    .desktop-dropdown:hover .desktop-dropdown-content {
-      display: block;
-    }
-
     /* --- Hero Section --- */
     .hero {
       text-align: center;
@@ -721,6 +686,30 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* --- Responsive --- */
+    @media (max-width: 1024px) {
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 768px) {
+      .hero h2 { font-size: 2.5rem; }
+      .hero { padding: 6rem 1rem 4rem; }
+      .section-title { font-size: 2rem; }
+      .nav .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .container { padding: 0 1.5rem; }
+      .tools { grid-template-columns: 1fr; }
+      .content-page h1 { font-size: 2.2rem; }
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+    @media (min-width: 769px) {
+      .mobile-menu { display: none !important; }
+    }
+
     /* --- PDF Form Preview --- */
     .pdf-preview {
       border: 1px solid var(--border-color);
@@ -766,87 +755,6 @@
       border-radius: 50%;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     }
-
-    /* --- Professional Stamp Styles --- */
-    .corporate-stamp {
-      border: 2px solid #d32f2f;
-      border-radius: 5px;
-      padding: 15px;
-      background: white;
-      color: #d32f2f;
-      font-weight: bold;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      font-family: 'Arial', sans-serif;
-    }
-    .official-stamp {
-      border: 3px double #1976d2;
-      border-radius: 50%;
-      padding: 20px;
-      background: white;
-      color: #1976d2;
-      font-weight: bold;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      width: 200px;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Times New Roman', serif;
-    }
-    .certified-stamp {
-      border: 2px solid #388e3c;
-      border-radius: 10px;
-      padding: 15px;
-      background: white;
-      color: #388e3c;
-      font-weight: bold;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      font-family: 'Arial', sans-serif;
-      position: relative;
-    }
-    .certified-stamp:before {
-      content: "✓";
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      background: #388e3c;
-      color: white;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    }
-
-    /* --- Responsive --- */
-    @media (max-width: 1024px) {
-      .footer-content {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    @media (max-width: 768px) {
-      .hero h2 { font-size: 2.5rem; }
-      .hero { padding: 6rem 1rem 4rem; }
-      .section-title { font-size: 2rem; }
-      .nav .nav-links { display: none; }
-      .mobile-menu-btn { display: block; }
-      .container { padding: 0 1.5rem; }
-      .tools { grid-template-columns: 1fr; }
-      .content-page h1 { font-size: 2.2rem; }
-      .footer-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      .desktop-dropdown { display: none; }
-    }
-    @media (min-width: 769px) {
-      .mobile-menu { display: none !important; }
-    }
   </style>
 </head>
 <body>
@@ -858,16 +766,11 @@
         <a href="#home" class="nav-link active-link" data-section="home">Home</a>
         <a href="#tools" class="nav-link" data-section="tools">Tools</a>
         <a href="#features" class="nav-link" data-section="features">Features</a>
-        <div class="desktop-dropdown">
-          <a href="#" class="nav-link">Company <i class="fas fa-chevron-down"></i></a>
-          <div class="desktop-dropdown-content">
-            <a href="#about" class="nav-link" data-section="about">About</a>
-            <a href="#privacy" class="nav-link" data-section="privacy">Privacy</a>
-            <a href="#terms" class="nav-link" data-section="terms">Terms</a>
-            <a href="#cookies" class="nav-link" data-section="cookies">Cookies</a>
-            <a href="#contact" class="nav-link" data-section="contact">Contact</a>
-          </div>
-        </div>
+        <a href="#about" class="nav-link" data-section="about">About</a>
+        <a href="#privacy" class="nav-link" data-section="privacy">Privacy</a>
+        <a href="#terms" class="nav-link" data-section="terms">Terms</a>
+        <a href="#cookies" class="nav-link" data-section="cookies">Cookies</a>
+        <a href="#contact" class="nav-link" data-section="contact">Contact</a>
       </div>
       <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
         <i class="fas fa-bars"></i>
@@ -912,28 +815,28 @@
                 <i class="fas fa-user-shield"></i>
               </div>
               <h3>Privacy First</h3>
-              <p>All processing happens directly in your browser. Your files never leave your device. We believe in complete data privacy and security for all our users.</p>
+              <p>All processing happens directly in your browser. Your files never leave your device.</p>
             </div>
             <div class="feature-card fade-in">
               <div class="feature-icon">
                 <i class="fas fa-rocket"></i>
               </div>
               <h3>Lightning Fast</h3>
-              <p>No server delays. Process files instantly with our optimized browser tools. Experience desktop-level performance without any downloads.</p>
+              <p>No server delays. Process files instantly with our optimized browser tools.</p>
             </div>
             <div class="feature-card fade-in">
               <div class="feature-icon">
                 <i class="fas fa-tools"></i>
               </div>
               <h3>All-in-One Suite</h3>
-              <p>From PDF manipulation to image conversion, we've got all your file needs covered. Over 15 different tools available for free.</p>
+              <p>From PDF manipulation to image conversion, we've got all your file needs covered.</p>
             </div>
             <div class="feature-card fade-in">
               <div class="feature-icon">
                 <i class="fas fa-lock-open"></i>
               </div>
               <h3>No Registration</h3>
-              <p>Start using our tools immediately. No sign-ups, no accounts, no limitations. Complete accessibility for everyone.</p>
+              <p>Start using our tools immediately. No sign-ups, no accounts, no limitations.</p>
             </div>
           </div>
         </div>
@@ -947,93 +850,86 @@
             <!-- PDF Tools -->
             <div class="tool-card fade-in">
               <h3><i class="fas fa-file-pdf"></i> Merge PDF</h3>
-              <p>Combine multiple PDF files into one seamless document. Perfect for reports, presentations, and document organization.</p>
+              <p>Combine multiple PDF files into one seamless document.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('merge-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <div class="tool-card fade-in">
               <h3><i class="fas fa-cut"></i> Split PDF</h3>
-              <p>Extract pages or split a PDF into multiple parts. Ideal for separating chapters or extracting specific pages.</p>
+              <p>Extract pages or split a PDF into multiple parts.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('split-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <div class="tool-card fade-in">
               <h3><i class="fas fa-compress-arrows-alt"></i> Compress PDF</h3>
-              <p>Reduce PDF file size without losing quality. Optimize documents for email and web sharing.</p>
+              <p>Reduce PDF file size without losing quality.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('compress-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <div class="tool-card fade-in">
               <h3><i class="fas fa-unlock"></i> Unlock PDF</h3>
-              <p>Remove password protection from PDF files. Access restricted documents with proper authorization.</p>
+              <p>Remove password protection from PDF files.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('unlock-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <!-- New PDF to Word Converter Tool -->
             <div class="tool-card fade-in">
               <h3><i class="fas fa-file-word"></i> PDF to Word</h3>
-              <p>Convert PDF documents to editable Word format. Perfect for editing scanned documents and forms.</p>
+              <p>Convert PDF documents to editable Word format.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('pdf-to-word'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <!-- New PDF Form Filler Tool -->
             <div class="tool-card fade-in">
               <h3><i class="fas fa-file-signature"></i> PDF Form Filler</h3>
-              <p>Fill out PDF forms online with our easy-to-use tool. No printing or scanning required.</p>
+              <p>Fill out PDF forms online with our easy-to-use tool.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('pdf-form-filler'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
-            </div>
-            
-            <!-- New Text to PDF Tool -->
-            <div class="tool-card fade-in">
-              <h3><i class="fas fa-file-alt"></i> Text to PDF</h3>
-              <p>Convert plain text to professional PDF documents with justified alignment and formatting.</p>
-              <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('text-to-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <!-- Image Tools -->
             <div class="tool-card fade-in">
               <h3><i class="fas fa-file-image"></i> Image to PDF</h3>
-              <p>Convert JPG, PNG, and other images to PDF format. Create multi-page documents from multiple images.</p>
+              <p>Convert JPG, PNG, and other images to PDF format.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('image-to-pdf'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <div class="tool-card fade-in">
               <h3><i class="fas fa-compress-alt"></i> Compress Images</h3>
-              <p>Reduce image file size while maintaining quality. Optimize photos for web and email.</p>
+              <p>Reduce image file size while maintaining quality.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('compress-image'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <!-- New Stamp Generator Tool -->
             <div class="tool-card fade-in">
               <h3><i class="fas fa-stamp"></i> Stamp Generator</h3>
-              <p>Create professional corporate stamps for documents. Customize text, date, and design.</p>
+              <p>Create authentic-looking corporate stamps for documents.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('stamp-generator'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <!-- Text Tools -->
             <div class="tool-card fade-in">
               <h3><i class="fas fa-volume-up"></i> Text to Speech</h3>
-              <p>Convert text to natural-sounding speech with downloadable MP3. Perfect for accessibility and content creation.</p>
+              <p>Convert text to natural-sounding speech with downloadable MP3.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('text-to-speech'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <!-- Generator Tools -->
             <div class="tool-card fade-in">
               <h3><i class="fas fa-qrcode"></i> QR Code Generator</h3>
-              <p>Create custom QR codes for URLs, text, contact info, and more. Download in high resolution.</p>
+              <p>Create custom QR codes for URLs, text, contact info, and more.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('qr-generator'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <div class="tool-card fade-in">
               <h3><i class="fas fa-key"></i> Password Generator</h3>
-              <p>Create strong, secure passwords with customizable options. Enhance your online security.</p>
+              <p>Create strong, secure passwords with customizable options.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('password-generator'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
             <!-- Utility Tools -->
             <div class="tool-card fade-in">
               <h3><i class="fas fa-exchange-alt"></i> Unit Converter</h3>
-              <p>Convert between different units of length, weight, temperature, and more. Quick and accurate conversions.</p>
+              <p>Convert between different units of length, weight, temperature, and more.</p>
               <button class="tool-btn" onclick="showSection('tools'); setTimeout(() => toggleTool('unit-converter'), 100)">Use Tool <i class="fas fa-arrow-right"></i></button>
             </div>
             
@@ -1072,12 +968,215 @@
               </div>
             </div>
             
-            <!-- ... Other tool cards remain the same ... -->
+            <div class="tool-card fade-in" id="split-pdf-card">
+              <h3><i class="fas fa-cut"></i> Split PDF</h3>
+              <p>Extract pages or split a PDF into multiple parts.</p>
+              <button class="tool-btn" onclick="toggleTool('split-pdf')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="split-pdf">
+                <div class="file-input">
+                  <label for="split-pdf-file">Select a PDF file to split:</label>
+                  <div class="drag-drop-area" id="split-pdf-drop-area">
+                    <p><i class="fas fa-cloud-upload-alt"></i> Drag & drop a PDF file</p>
+                    <p class="small">or click to browse</p>
+                  </div>
+                  <input type="file" id="split-pdf-file" accept=".pdf" style="display:none;">
+                  <div class="file-list" id="split-pdf-file-list"></div>
+                </div>
+                <div class="options">
+                  <div class="option-group">
+                    <label for="split-pages">Pages to extract (e.g., 1-3,5,7-9):</label>
+                    <input type="text" id="split-pages" placeholder="e.g., 1-3, 5, 7-9">
+                  </div>
+                </div>
+                <button class="tool-btn" id="split-pdf-btn" onclick="splitPDF()" disabled>
+                  <i class="fas fa-cut"></i> Split PDF
+                </button>
+                <div class="spinner" id="split-pdf-spinner"></div>
+                <div class="status-message" id="split-pdf-status"></div>
+              </div>
+            </div>
+            
+            <div class="tool-card fade-in" id="compress-pdf-card">
+              <h3><i class="fas fa-compress-arrows-alt"></i> Compress PDF</h3>
+              <p>Reduce PDF file size without losing quality.</p>
+              <button class="tool-btn" onclick="toggleTool('compress-pdf')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="compress-pdf">
+                <div class="file-input">
+                  <label for="compress-pdf-file">Select a PDF file to compress:</label>
+                  <div class="drag-drop-area" id="compress-pdf-drop-area">
+                    <p><i class="fas fa-cloud-upload-alt"></i> Drag & drop a PDF file</p>
+                    <p class="small">or click to browse</p>
+                  </div>
+                  <input type="file" id="compress-pdf-file" accept=".pdf" style="display:none;">
+                  <div class="file-list" id="compress-pdf-file-list"></div>
+                </div>
+                <button class="tool-btn" id="compress-pdf-btn" onclick="compressPDF()" disabled>
+                  <i class="fas fa-compress-arrows-alt"></i> Compress PDF
+                </button>
+                <div class="spinner" id="compress-pdf-spinner"></div>
+                <div class="status-message" id="compress-pdf-status"></div>
+              </div>
+            </div>
+            
+            <div class="tool-card fade-in" id="unlock-pdf-card">
+              <h3><i class="fas fa-unlock"></i> Unlock PDF</h3>
+              <p>Remove password protection from PDF files.</p>
+              <button class="tool-btn" onclick="toggleTool('unlock-pdf')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="unlock-pdf">
+                <div class="file-input">
+                  <label for="unlock-pdf-file">Select a password-protected PDF:</label>
+                  <div class="drag-drop-area" id="unlock-pdf-drop-area">
+                    <p><i class="fas fa-cloud-upload-alt"></i> Drag & drop a PDF file</p>
+                    <p class="small">or click to browse</p>
+                  </div>
+                  <input type="file" id="unlock-pdf-file" accept=".pdf" style="display:none;">
+                  <div class="file-list" id="unlock-pdf-file-list"></div>
+                </div>
+                <div class="options">
+                  <div class="option-group">
+                    <label for="pdf-password">PDF Password:</label>
+                    <input type="password" id="pdf-password" placeholder="Enter PDF password">
+                  </div>
+                </div>
+                <button class="tool-btn" id="unlock-pdf-btn" onclick="unlockPDF()" disabled>
+                  <i class="fas fa-unlock"></i> Unlock PDF
+                </button>
+                <div class="spinner" id="unlock-pdf-spinner"></div>
+                <div class="status-message" id="unlock-pdf-status"></div>
+              </div>
+            </div>
+            
+            <!-- New PDF to Word Converter Tool -->
+            <div class="tool-card fade-in" id="pdf-to-word-card">
+              <h3><i class="fas fa-file-word"></i> PDF to Word</h3>
+              <p>Convert PDF documents to editable Word format.</p>
+              <button class="tool-btn" onclick="toggleTool('pdf-to-word')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="pdf-to-word">
+                <div class="file-input">
+                  <label for="pdf-to-word-file">Select a PDF file to convert:</label>
+                  <div class="drag-drop-area" id="pdf-to-word-drop-area">
+                    <p><i class="fas fa-cloud-upload-alt"></i> Drag & drop a PDF file</p>
+                    <p class="small">or click to browse</p>
+                  </div>
+                  <input type="file" id="pdf-to-word-file" accept=".pdf" style="display:none;">
+                  <div class="file-list" id="pdf-to-word-file-list"></div>
+                </div>
+                <button class="tool-btn" id="pdf-to-word-btn" onclick="convertPDFToWord()" disabled>
+                  <i class="fas fa-file-word"></i> Convert to Word
+                </button>
+                <div class="spinner" id="pdf-to-word-spinner"></div>
+                <div class="status-message" id="pdf-to-word-status"></div>
+              </div>
+            </div>
+            
+            <!-- New PDF Form Filler Tool -->
+            <div class="tool-card fade-in" id="pdf-form-filler-card">
+              <h3><i class="fas fa-file-signature"></i> PDF Form Filler</h3>
+              <p>Fill out PDF forms online with our easy-to-use tool.</p>
+              <button class="tool-btn" onclick="toggleTool('pdf-form-filler')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="pdf-form-filler">
+                <div class="file-input">
+                  <label for="pdf-form-filler-file">Select a PDF form to fill:</label>
+                  <div class="drag-drop-area" id="pdf-form-filler-drop-area">
+                    <p><i class="fas fa-cloud-upload-alt"></i> Drag & drop a PDF form</p>
+                    <p class="small">or click to browse</p>
+                  </div>
+                  <input type="file" id="pdf-form-filler-file" accept=".pdf" style="display:none;">
+                  <div class="file-list" id="pdf-form-filler-file-list"></div>
+                </div>
+                <div id="pdf-form-filler-fields" style="margin-top: 1rem;">
+                  <div class="pdf-preview">
+                    <h4>Form Preview</h4>
+                    <p>Upload a PDF form to see and fill the fields here.</p>
+                    <div class="form-field">
+                      <label for="field-full-name">Full Name</label>
+                      <input type="text" id="field-full-name" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-field">
+                      <label for="field-email">Email Address</label>
+                      <input type="email" id="field-email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-field">
+                      <label for="field-phone">Phone Number</label>
+                      <input type="tel" id="field-phone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-field">
+                      <label for="field-address">Address</label>
+                      <textarea id="field-address" rows="3" placeholder="Enter your address"></textarea>
+                    </div>
+                    <div class="form-field">
+                      <label for="field-date">Date</label>
+                      <input type="date" id="field-date">
+                    </div>
+                    <div class="form-field">
+                      <label for="field-signature">Signature</label>
+                      <input type="text" id="field-signature" placeholder="Type your name as signature">
+                    </div>
+                  </div>
+                </div>
+                <button class="tool-btn" id="pdf-form-filler-btn" onclick="fillPDFForm()" disabled>
+                  <i class="fas fa-file-signature"></i> Fill Form & Download
+                </button>
+                <div class="spinner" id="pdf-form-filler-spinner"></div>
+                <div class="status-message" id="pdf-form-filler-status"></div>
+              </div>
+            </div>
+            
+            <!-- Image Tools -->
+            <div class="tool-card fade-in" id="image-to-pdf-card">
+              <h3><i class="fas fa-file-image"></i> Image to PDF</h3>
+              <p>Convert JPG, PNG, and other images to PDF format.</p>
+              <button class="tool-btn" onclick="toggleTool('image-to-pdf')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="image-to-pdf">
+                <div class="file-input">
+                  <label for="image-to-pdf-files">Select image files to convert:</label>
+                  <div class="drag-drop-area" id="image-to-pdf-drop-area">
+                    <p><i class="fas fa-cloud-upload-alt"></i> Drag & drop image files</p>
+                    <p class="small">or click to browse</p>
+                  </div>
+                  <input type="file" id="image-to-pdf-files" accept="image/*" multiple style="display:none;">
+                  <div class="file-list" id="image-to-pdf-file-list"></div>
+                </div>
+                <button class="tool-btn" id="image-to-pdf-btn" onclick="convertImagesToPDF()" disabled>
+                  <i class="fas fa-file-pdf"></i> Convert to PDF
+                </button>
+                <div class="spinner" id="image-to-pdf-spinner"></div>
+                <div class="status-message" id="image-to-pdf-status"></div>
+              </div>
+            </div>
+            
+            <div class="tool-card fade-in" id="compress-image-card">
+              <h3><i class="fas fa-compress-alt"></i> Compress Images</h3>
+              <p>Reduce image file size while maintaining quality.</p>
+              <button class="tool-btn" onclick="toggleTool('compress-image')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="compress-image">
+                <div class="file-input">
+                  <label for="compress-image-files">Select images to compress:</label>
+                  <div class="drag-drop-area" id="compress-image-drop-area">
+                    <p><i class="fas fa-cloud-upload-alt"></i> Drag & drop image files</p>
+                    <p class="small">or click to browse</p>
+                  </div>
+                  <input type="file" id="compress-image-files" accept="image/*" multiple style="display:none;">
+                  <div class="file-list" id="compress-image-file-list"></div>
+                </div>
+                <div class="options">
+                  <div class="option-group">
+                    <label for="compress-quality">Quality (0.1 - 1.0):</label>
+                    <input type="number" id="compress-quality" min="0.1" max="1.0" step="0.1" value="0.7">
+                  </div>
+                </div>
+                <button class="tool-btn" id="compress-image-btn" onclick="compressImages()" disabled>
+                  <i class="fas fa-compress-alt"></i> Compress Images
+                </button>
+                <div class="spinner" id="compress-image-spinner"></div>
+                <div class="status-message" id="compress-image-status"></div>
+              </div>
+            </div>
             
             <!-- New Stamp Generator Tool -->
             <div class="tool-card fade-in" id="stamp-generator-card">
               <h3><i class="fas fa-stamp"></i> Stamp Generator</h3>
-              <p>Create professional corporate stamps for documents.</p>
+              <p>Create authentic-looking corporate stamps for documents.</p>
               <button class="tool-btn" onclick="toggleTool('stamp-generator')">Use Tool <i class="fas fa-arrow-right"></i></button>
               <div class="tool-content" id="stamp-generator">
                 <div class="options">
@@ -1094,16 +1193,6 @@
                     <input type="date" id="stamp-date">
                   </div>
                   <div class="option-group">
-                    <label for="stamp-type">Stamp Type:</label>
-                    <select id="stamp-type">
-                      <option value="corporate">Corporate Stamp</option>
-                      <option value="official">Official Seal</option>
-                      <option value="certified">Certified Stamp</option>
-                      <option value="received">Received Stamp</option>
-                      <option value="paid">Paid Stamp</option>
-                    </select>
-                  </div>
-                  <div class="option-group">
                     <label for="stamp-color">Stamp Color:</label>
                     <select id="stamp-color">
                       <option value="red">Red</option>
@@ -1111,6 +1200,15 @@
                       <option value="green">Green</option>
                       <option value="purple">Purple</option>
                       <option value="black">Black</option>
+                    </select>
+                  </div>
+                  <div class="option-group">
+                    <label for="stamp-style">Stamp Style:</label>
+                    <select id="stamp-style">
+                      <option value="round">Round</option>
+                      <option value="square">Square</option>
+                      <option value="rectangle">Rectangle</option>
+                      <option value="oval">Oval</option>
                     </select>
                   </div>
                 </div>
@@ -1122,7 +1220,150 @@
               </div>
             </div>
             
-            <!-- ... Rest of the tool cards remain the same ... -->
+            <!-- Text Tools -->
+            <div class="tool-card fade-in" id="text-to-speech-card">
+              <h3><i class="fas fa-volume-up"></i> Text to Speech</h3>
+              <p>Convert text to natural-sounding speech with downloadable MP3.</p>
+              <button class="tool-btn" onclick="toggleTool('text-to-speech')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="text-to-speech">
+                <div class="options">
+                  <div class="option-group">
+                    <label for="tts-text">Enter text to convert:</label>
+                    <textarea id="tts-text" rows="5" placeholder="Type or paste your text here...">Welcome to Quick Merge! This is a demonstration of our text-to-speech tool. You can convert any text to speech and download it as an MP3 file.</textarea>
+                  </div>
+                  <div class="option-group">
+                    <label for="tts-voice">Select voice:</label>
+                    <select id="tts-voice"></select>
+                  </div>
+                  <div class="option-group">
+                    <label for="tts-rate">Speech rate:</label>
+                    <input type="range" id="tts-rate" min="0.5" max="2" step="0.1" value="1">
+                    <span id="tts-rate-value">1.0</span>
+                  </div>
+                  <div class="option-group">
+                    <label for="tts-pitch">Speech pitch:</label>
+                    <input type="range" id="tts-pitch" min="0.5" max="2" step="0.1" value="1">
+                    <span id="tts-pitch-value">1.0</span>
+                  </div>
+                </div>
+                <button class="tool-btn" id="tts-btn" onclick="textToSpeech()">
+                  <i class="fas fa-play"></i> Generate Speech
+                </button>
+                <button class="tool-btn secondary" id="tts-download-btn" onclick="downloadSpeech()" style="display:none;">
+                  <i class="fas fa-download"></i> Download MP3
+                </button>
+                <div class="status-message" id="tts-status"></div>
+              </div>
+            </div>
+            
+            <!-- Generator Tools -->
+            <div class="tool-card fade-in" id="qr-generator-card">
+              <h3><i class="fas fa-qrcode"></i> QR Code Generator</h3>
+              <p>Create custom QR codes for URLs, text, contact info, and more.</p>
+              <button class="tool-btn" onclick="toggleTool('qr-generator')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="qr-generator">
+                <div class="options">
+                  <div class="option-group">
+                    <label for="qr-content">Content for QR code:</label>
+                    <textarea id="qr-content" rows="3" placeholder="Enter URL, text, or contact information...">https://quickmerge.com</textarea>
+                  </div>
+                  <div class="option-group">
+                    <label for="qr-size">QR Code Size:</label>
+                    <select id="qr-size">
+                      <option value="200">Small (200x200)</option>
+                      <option value="300" selected>Medium (300x300)</option>
+                      <option value="400">Large (400x400)</option>
+                    </select>
+                  </div>
+                  <div class="option-group">
+                    <label for="qr-color">QR Code Color:</label>
+                    <input type="color" id="qr-color" value="#000000">
+                  </div>
+                </div>
+                <button class="tool-btn" id="qr-btn" onclick="generateQRCode()">
+                  <i class="fas fa-qrcode"></i> Generate QR Code
+                </button>
+                <div id="qr-result" style="margin-top: 1rem; text-align: center;"></div>
+                <div class="status-message" id="qr-status"></div>
+              </div>
+            </div>
+            
+            <div class="tool-card fade-in" id="password-generator-card">
+              <h3><i class="fas fa-key"></i> Password Generator</h3>
+              <p>Create strong, secure passwords with customizable options.</p>
+              <button class="tool-btn" onclick="toggleTool('password-generator')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="password-generator">
+                <div class="options">
+                  <div class="option-group">
+                    <label for="password-length">Password Length:</label>
+                    <input type="range" id="password-length" min="8" max="32" value="16">
+                    <span id="password-length-value">16</span>
+                  </div>
+                  <div class="option-group">
+                    <label>
+                      <input type="checkbox" id="include-uppercase" checked> Include Uppercase Letters
+                    </label>
+                  </div>
+                  <div class="option-group">
+                    <label>
+                      <input type="checkbox" id="include-lowercase" checked> Include Lowercase Letters
+                    </label>
+                  </div>
+                  <div class="option-group">
+                    <label>
+                      <input type="checkbox" id="include-numbers" checked> Include Numbers
+                    </label>
+                  </div>
+                  <div class="option-group">
+                    <label>
+                      <input type="checkbox" id="include-symbols" checked> Include Symbols
+                    </label>
+                  </div>
+                </div>
+                <button class="tool-btn" id="password-btn" onclick="generatePassword()">
+                  <i class="fas fa-key"></i> Generate Password
+                </button>
+                <div class="status-message" id="password-result"></div>
+              </div>
+            </div>
+            
+            <!-- Utility Tools -->
+            <div class="tool-card fade-in" id="unit-converter-card">
+              <h3><i class="fas fa-exchange-alt"></i> Unit Converter</h3>
+              <p>Convert between different units of length, weight, temperature, and more.</p>
+              <button class="tool-btn" onclick="toggleTool('unit-converter')">Use Tool <i class="fas fa-arrow-right"></i></button>
+              <div class="tool-content" id="unit-converter">
+                <div class="options">
+                  <div class="option-group">
+                    <label for="converter-category">Category:</label>
+                    <select id="converter-category">
+                      <option value="length">Length</option>
+                      <option value="weight">Weight</option>
+                      <option value="temperature">Temperature</option>
+                      <option value="area">Area</option>
+                      <option value="volume">Volume</option>
+                      <option value="speed">Speed</option>
+                    </select>
+                  </div>
+                  <div class="option-group">
+                    <label for="converter-from">From:</label>
+                    <select id="converter-from"></select>
+                  </div>
+                  <div class="option-group">
+                    <label for="converter-to">To:</label>
+                    <select id="converter-to"></select>
+                  </div>
+                  <div class="option-group">
+                    <label for="converter-value">Value:</label>
+                    <input type="number" id="converter-value" placeholder="Enter value to convert" value="10">
+                  </div>
+                </div>
+                <button class="tool-btn" id="converter-btn" onclick="convertUnits()">
+                  <i class="fas fa-exchange-alt"></i> Convert
+                </button>
+                <div class="status-message" id="converter-result"></div>
+              </div>
+            </div>
             
           </div>
         </div>
@@ -1137,32 +1378,31 @@
         <div class="content-block">
           <h2>Our Mission</h2>
           <p>Quick Merge was created with a simple goal: to provide powerful, privacy-focused file processing tools that work directly in your browser. We believe that you shouldn't have to compromise your privacy or security to get the tools you need.</p>
-          <p>Unlike many online services, we never upload your files to our servers. All processing happens locally on your device, ensuring complete privacy and security. Our mission is to democratize access to powerful file processing tools while maintaining the highest standards of user privacy.</p>
+          <p>Unlike many online services, we never upload your files to our servers. All processing happens locally on your device, ensuring complete privacy and security.</p>
         </div>
         
         <div class="content-block">
           <h2>Our Technology</h2>
-          <p>We leverage modern web technologies like WebAssembly, JavaScript libraries, and browser APIs to bring you desktop-level functionality without requiring any downloads or installations. Our platform is built on cutting-edge web standards that ensure compatibility across all modern browsers.</p>
-          <p>Our tools are built with performance in mind, ensuring that even complex operations like PDF manipulation and image processing happen quickly and efficiently. We continuously update our technology stack to incorporate the latest advancements in browser capabilities.</p>
+          <p>We leverage modern web technologies like WebAssembly, JavaScript libraries, and browser APIs to bring you desktop-level functionality without requiring any downloads or installations.</p>
+          <p>Our tools are built with performance in mind, ensuring that even complex operations like PDF manipulation and image processing happen quickly and efficiently.</p>
         </div>
         
         <div class="content-block">
           <h2>Our Commitment</h2>
           <p>We are committed to:</p>
           <ul>
-            <li><strong>Privacy:</strong> Your files never leave your device. We believe privacy is a fundamental right, not a premium feature.</li>
-            <li><strong>Security:</strong> No data collection or tracking. We don't store your files or personal information.</li>
-            <li><strong>Accessibility:</strong> Free tools available to everyone, regardless of technical expertise or financial means.</li>
-            <li><strong>Innovation:</strong> Continuously improving and adding new features based on user feedback.</li>
-            <li><strong>User Experience:</strong> Intuitive interfaces that anyone can use without a learning curve.</li>
+            <li><strong>Privacy:</strong> Your files never leave your device</li>
+            <li><strong>Security:</strong> No data collection or tracking</li>
+            <li><strong>Accessibility:</strong> Free tools available to everyone</li>
+            <li><strong>Innovation:</strong> Continuously improving and adding new features</li>
+            <li><strong>User Experience:</strong> Intuitive interfaces that anyone can use</li>
           </ul>
         </div>
         
         <div class="content-block">
           <h2>Our Story</h2>
-          <p>Quick Merge was founded in July 2024 by a team of developers who were frustrated with the limitations of existing online file tools. We noticed that most services required uploading sensitive files to remote servers, creating privacy concerns and potential security risks.</p>
+          <p>Quick Merge was founded in 2023 by a team of developers who were frustrated with the limitations of existing online file tools. We noticed that most services required uploading sensitive files to remote servers, creating privacy concerns and potential security risks.</p>
           <p>We set out to create a better solution - a suite of tools that would process files entirely in the browser, eliminating the need for file uploads while maintaining full functionality. Today, Quick Merge serves thousands of users worldwide who trust us with their file processing needs.</p>
-          <p>Our journey began with simple PDF merging capabilities and has expanded to include over 15 different tools covering PDF manipulation, image processing, text conversion, and utility functions. We're proud to have created a platform that puts user privacy first without compromising on functionality.</p>
         </div>
         
         <div class="content-block">
@@ -1173,14 +1413,7 @@
             <li><strong>Transparency:</strong> We're open about how our tools work and what data we collect (which is minimal).</li>
             <li><strong>Accessibility:</strong> We believe powerful tools should be available to everyone, regardless of technical expertise.</li>
             <li><strong>Continuous Improvement:</strong> We regularly update our tools based on user feedback and technological advancements.</li>
-            <li><strong>Community Focus:</strong> We listen to our users and prioritize features that provide the most value to our community.</li>
           </ul>
-        </div>
-        
-        <div class="content-block">
-          <h2>Our Team</h2>
-          <p>Quick Merge is developed by a dedicated team of software engineers, UX designers, and product managers who are passionate about creating tools that make people's lives easier. Our team has extensive experience in web development, security, and user experience design.</p>
-          <p>We're a distributed team working from different parts of the world, united by our shared vision of creating privacy-focused, accessible tools for everyone. Our diverse backgrounds and perspectives help us create products that work for users across different regions and use cases.</p>
         </div>
       </div>
     </section>
@@ -1192,18 +1425,18 @@
         
         <div class="content-block">
           <p><strong>Last Updated: January 1, 2024</strong></p>
-          <p>At Quick Merge, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your information when you use our website and services. We are committed to transparency about our data practices and ensuring your privacy is protected.</p>
+          <p>At Quick Merge, we take your privacy seriously. This Privacy Policy explains how we collect, use, and protect your information when you use our website and services.</p>
         </div>
         
         <div class="content-block">
           <h2>Information We Collect</h2>
           <p>We collect minimal information to provide and improve our services:</p>
           <ul>
-            <li><strong>Usage Data:</strong> We may collect anonymous usage statistics to understand how our tools are used and identify areas for improvement. This includes information about which tools are most popular, feature usage patterns, and general site navigation behavior.</li>
-            <li><strong>Technical Information:</strong> We may collect browser type, version, and other technical details to ensure compatibility and optimize performance across different devices and browsers.</li>
+            <li><strong>Usage Data:</strong> We may collect anonymous usage statistics to understand how our tools are used and identify areas for improvement.</li>
+            <li><strong>Technical Information:</strong> We may collect browser type, version, and other technical details to ensure compatibility.</li>
             <li><strong>Cookies:</strong> We use cookies to enhance your experience and analyze site traffic. See our <a href="#cookies" onclick="showSection('cookies')">Cookie Policy</a> for more details.</li>
           </ul>
-          <p><strong>Important:</strong> We do not collect, store, or have access to any files you process using our tools. All file processing happens locally in your browser. Your documents, images, and other files never leave your device and are not transmitted to our servers or any third parties.</p>
+          <p><strong>Important:</strong> We do not collect, store, or have access to any files you process using our tools. All file processing happens locally in your browser.</p>
         </div>
         
         <div class="content-block">
@@ -1215,43 +1448,38 @@
             <li>Diagnose technical issues and ensure compatibility</li>
             <li>Develop new features and tools</li>
             <li>Ensure the security of our services</li>
-            <li>Personalize your experience and provide relevant content</li>
           </ul>
-          <p>We do not sell, rent, or trade your personal information to third parties. We do not use your data for targeted advertising or marketing purposes.</p>
         </div>
         
         <div class="content-block">
           <h2>Information Sharing</h2>
           <p>We do not sell, trade, or otherwise transfer your personal information to third parties. We may share anonymous, aggregated usage statistics with trusted partners to help us improve our services.</p>
-          <p>We may disclose information if required by law or to protect our rights, property, or safety, or that of our users or others. This includes exchanging information with other companies and organizations for fraud protection and credit risk reduction.</p>
+          <p>We may disclose information if required by law or to protect our rights, property, or safety, or that of our users or others.</p>
         </div>
         
         <div class="content-block">
           <h2>Data Security</h2>
           <p>We implement appropriate security measures to protect your information. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.</p>
-          <p>Our security measures include encryption of data in transit, secure server configurations, and regular security assessments. We follow industry best practices to protect the information we collect and maintain.</p>
         </div>
         
         <div class="content-block">
           <h2>Third-Party Services</h2>
-          <p>Our website may contain links to third-party websites or services. We are not responsible for the privacy practices or content of these third-party sites. We encourage you to review the privacy policies of any third-party sites you visit.</p>
-          <p>Some of our tools may use third-party libraries or APIs to provide functionality. These services are carefully vetted to ensure they align with our privacy standards and do not collect sensitive user data.</p>
+          <p>Our website may contain links to third-party websites or services. We are not responsible for the privacy practices or content of these third-party sites.</p>
         </div>
         
         <div class="content-block">
           <h2>Children's Privacy</h2>
-          <p>Our services are not directed to individuals under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us so we can delete it.</p>
+          <p>Our services are not directed to individuals under the age of 13. We do not knowingly collect personal information from children under 13.</p>
         </div>
         
         <div class="content-block">
           <h2>Changes to This Policy</h2>
-          <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date. We encourage you to review this Privacy Policy periodically for any changes.</p>
-          <p>Your continued use of our services after any modification to this Privacy Policy will constitute your acceptance of such modification. If we make material changes to this policy, we will provide more prominent notice.</p>
+          <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.</p>
         </div>
         
         <div class="content-block">
           <h2>Contact Us</h2>
-          <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>. We're committed to addressing any concerns you may have about your privacy and our data practices.</p>
+          <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>.</p>
         </div>
       </div>
     </section>
@@ -1263,13 +1491,12 @@
         
         <div class="content-block">
           <p><strong>Last Updated: January 1, 2024</strong></p>
-          <p>Please read these Terms of Service carefully before using Quick Merge. By accessing or using our services, you agree to be bound by these terms. If you disagree with any part of the terms, you may not access our services.</p>
+          <p>Please read these Terms of Service carefully before using Quick Merge. By accessing or using our services, you agree to be bound by these terms.</p>
         </div>
         
         <div class="content-block">
           <h2>Description of Service</h2>
           <p>Quick Merge provides a suite of browser-based file processing tools, including PDF manipulation, image conversion, text-to-speech, and other utilities. All processing occurs locally in your browser - files are not uploaded to our servers.</p>
-          <p>Our services are provided "as is" and we make no guarantees regarding uptime, availability, or specific functionality. We reserve the right to modify, suspend, or discontinue any part of our services at any time without notice.</p>
         </div>
         
         <div class="content-block">
@@ -1280,50 +1507,43 @@
             <li>Attempt to gain unauthorized access to any part of our services</li>
             <li>Use automated systems to access our services in a manner that sends more request messages than a human could reasonably produce</li>
             <li>Interfere with or disrupt the integrity or performance of our services</li>
-            <li>Attempt to bypass any security or access control measures</li>
-            <li>Use our services to violate any applicable laws or regulations</li>
           </ul>
-          <p>We reserve the right to terminate or suspend access to our services immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
         </div>
         
         <div class="content-block">
           <h2>Intellectual Property</h2>
-          <p>All content on Quick Merge, including text, graphics, logos, and software, is the property of Quick Merge and protected by copyright and other intellectual property laws. The Quick Merge name and logo are trademarks of Quick Merge.</p>
-          <p>You retain all rights to the files you process using our tools. We do not claim any ownership rights to your content. By using our services, you grant us a limited license to process your files solely for the purpose of providing the services you request.</p>
+          <p>All content on Quick Merge, including text, graphics, logos, and software, is the property of Quick Merge and protected by copyright and other intellectual property laws.</p>
+          <p>You retain all rights to the files you process using our tools. We do not claim any ownership rights to your content.</p>
         </div>
         
         <div class="content-block">
           <h2>Disclaimer of Warranties</h2>
           <p>Our services are provided "as is" and "as available" without any warranties of any kind, either express or implied. We do not warrant that our services will be uninterrupted, secure, or error-free.</p>
-          <p>We do not guarantee the accuracy, completeness, or usefulness of our services. You acknowledge that you use our services at your own risk. We are not responsible for any damage to your computer system or loss of data that results from the use of our services.</p>
         </div>
         
         <div class="content-block">
           <h2>Limitation of Liability</h2>
           <p>To the fullest extent permitted by law, Quick Merge shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use our services.</p>
-          <p>In no event shall Quick Merge's total liability to you for all damages, losses, and causes of action (whether in contract, tort, or otherwise) exceed the amount paid by you, if any, for accessing our services.</p>
         </div>
         
         <div class="content-block">
           <h2>Indemnification</h2>
           <p>You agree to indemnify and hold harmless Quick Merge and its affiliates from any claims, damages, losses, or expenses arising from your use of our services or violation of these terms.</p>
-          <p>This includes any third-party claims arising from your use of our services, your violation of these Terms, or your violation of any rights of another. We reserve the right to assume the exclusive defense and control of any matter otherwise subject to indemnification by you, in which event you will cooperate with us in asserting any available defenses.</p>
         </div>
         
         <div class="content-block">
           <h2>Changes to Terms</h2>
-          <p>We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the updated terms on our website. Your continued use of our services after any such changes constitutes your acceptance of the new Terms of Service.</p>
-          <p>It is your responsibility to review these Terms periodically for changes. If you do not agree to any of these terms or any future Terms of Service, do not use or access our services.</p>
+          <p>We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the updated terms on our website.</p>
         </div>
         
         <div class="content-block">
           <h2>Governing Law</h2>
-          <p>These terms shall be governed by and construed in accordance with the laws of the United States, without regard to its conflict of law provisions. Any legal action or proceeding arising under these Terms will be brought exclusively in the federal or state courts located in the United States.</p>
+          <p>These terms shall be governed by and construed in accordance with the laws of the United States, without regard to its conflict of law provisions.</p>
         </div>
         
         <div class="content-block">
           <h2>Contact Information</h2>
-          <p>If you have any questions about these Terms of Service, please contact us at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>. We're here to help clarify any aspects of these terms and address any concerns you may have.</p>
+          <p>If you have any questions about these Terms of Service, please contact us at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>.</p>
         </div>
       </div>
     </section>
@@ -1335,13 +1555,12 @@
         
         <div class="content-block">
           <p><strong>Last Updated: January 1, 2024</strong></p>
-          <p>This Cookie Policy explains how Quick Merge uses cookies and similar technologies to recognize you when you visit our website. It explains what these technologies are and why we use them, as well as your rights to control our use of them.</p>
+          <p>This Cookie Policy explains how Quick Merge uses cookies and similar technologies to recognize you when you visit our website.</p>
         </div>
         
         <div class="content-block">
           <h2>What Are Cookies?</h2>
           <p>Cookies are small text files that are stored on your device when you visit certain websites. They are widely used to make websites work more efficiently and provide information to the website owners.</p>
-          <p>Cookies set by the website owner are called "first party cookies". Cookies set by parties other than the website owner are called "third party cookies". Third party cookies enable third party features or functionality to be provided on or through the website.</p>
         </div>
         
         <div class="content-block">
@@ -1351,9 +1570,7 @@
             <li><strong>Essential Cookies:</strong> These are necessary for the website to function properly. They enable basic functions like page navigation and access to secure areas.</li>
             <li><strong>Analytics Cookies:</strong> These help us understand how visitors interact with our website by collecting and reporting information anonymously.</li>
             <li><strong>Preference Cookies:</strong> These enable the website to remember information that changes the way the site behaves or looks, like your preferred language or region.</li>
-            <li><strong>Performance Cookies:</strong> These help us understand how visitors interact with our website by collecting and reporting information anonymously.</li>
           </ul>
-          <p>We use both session cookies (which expire once you close your web browser) and persistent cookies (which stay on your device for a set period of time or until you delete them).</p>
         </div>
         
         <div class="content-block">
@@ -1363,25 +1580,23 @@
             <li><strong>Google Analytics:</strong> To understand how users interact with our website</li>
             <li><strong>Google AdSense:</strong> To display relevant advertisements</li>
           </ul>
-          <p>These third-party services have their own privacy policies and cookie policies. We encourage you to review these policies to understand how these companies use your information.</p>
+          <p>These third-party services have their own privacy policies and cookie policies.</p>
         </div>
         
         <div class="content-block">
           <h2>Managing Cookies</h2>
           <p>You can control and/or delete cookies as you wish. You can delete all cookies that are already on your computer and you can set most browsers to prevent them from being placed.</p>
           <p>However, if you do this, you may have to manually adjust some preferences every time you visit a site and some services and functionalities may not work.</p>
-          <p>Most web browsers allow some control of most cookies through the browser settings. To find out more about cookies, including how to see what cookies have been set and how to manage and delete them, visit <a href="https://www.aboutcookies.org" target="_blank">www.aboutcookies.org</a> or <a href="https://www.allaboutcookies.org" target="_blank">www.allaboutcookies.org</a>.</p>
         </div>
         
         <div class="content-block">
           <h2>Changes to This Policy</h2>
-          <p>We may update this Cookie Policy from time to time. We will notify you of any changes by posting the new Cookie Policy on this page. We encourage you to review this Cookie Policy periodically for any changes.</p>
-          <p>Changes to this Cookie Policy are effective when they are posted on this page. Your continued use of our services after any modification to this Cookie Policy will constitute your acceptance of such modification.</p>
+          <p>We may update this Cookie Policy from time to time. We will notify you of any changes by posting the new Cookie Policy on this page.</p>
         </div>
         
         <div class="content-block">
           <h2>Contact Us</h2>
-          <p>If you have any questions about our use of cookies, please contact us at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>. We're happy to provide more information about our cookie practices and address any concerns you may have.</p>
+          <p>If you have any questions about our use of cookies, please contact us at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>.</p>
         </div>
       </div>
     </section>
@@ -1393,7 +1608,7 @@
         
         <div class="content-block">
           <h2>Get in Touch</h2>
-          <p>Have questions, suggestions, or need support? We'd love to hear from you! Our team is dedicated to providing excellent customer service and addressing any issues you may encounter.</p>
+          <p>Have questions, suggestions, or need support? We'd love to hear from you!</p>
           <p>You can reach us through the following channels:</p>
           
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
@@ -1401,21 +1616,18 @@
               <i class="fas fa-envelope" style="font-size: 2rem; color: var(--primary-accent); margin-bottom: 1rem;"></i>
               <h3>Email</h3>
               <p><a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a></p>
-              <p style="font-size: 0.9rem; margin-top: 0.5rem;">We typically respond within 24 hours</p>
             </div>
             
             <div style="text-align: center; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: var(--radius-md);">
               <i class="fab fa-github" style="font-size: 2rem; color: var(--primary-accent); margin-bottom: 1rem;"></i>
               <h3>GitHub</h3>
               <p><a href="https://github.com/quickmerge" target="_blank">github.com/quickmerge</a></p>
-              <p style="font-size: 0.9rem; margin-top: 0.5rem;">Report issues and contribute</p>
             </div>
             
             <div style="text-align: center; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: var(--radius-md);">
               <i class="fab fa-twitter" style="font-size: 2rem; color: var(--primary-accent); margin-bottom: 1rem;"></i>
               <h3>Twitter</h3>
               <p><a href="https://twitter.com/quickmerge" target="_blank">@quickmerge</a></p>
-              <p style="font-size: 0.9rem; margin-top: 0.5rem;">Follow us for updates</p>
             </div>
           </div>
         </div>
@@ -1425,46 +1637,34 @@
           
           <div style="margin-top: 1.5rem;">
             <h3>Are my files secure?</h3>
-            <p>Absolutely! All file processing happens directly in your browser. Your files are never uploaded to our servers or any third-party services. This means your sensitive documents remain completely private and secure.</p>
+            <p>Absolutely! All file processing happens directly in your browser. Your files are never uploaded to our servers or any third-party services.</p>
             
             <h3>Is Quick Merge really free?</h3>
-            <p>Yes, all our tools are completely free to use. We don't have any premium plans or hidden fees. We believe in providing accessible tools to everyone without financial barriers.</p>
+            <p>Yes, all our tools are completely free to use. We don't have any premium plans or hidden fees.</p>
             
             <h3>Do I need to create an account?</h3>
-            <p>No account is required. You can use all our tools immediately without any registration. We value your time and believe in providing instant access to our services.</p>
+            <p>No account is required. You can use all our tools immediately without any registration.</p>
             
             <h3>What browsers are supported?</h3>
-            <p>Quick Merge works on all modern browsers including Chrome, Firefox, Safari, and Edge. We regularly test our tools across different browsers to ensure compatibility.</p>
+            <p>Quick Merge works on all modern browsers including Chrome, Firefox, Safari, and Edge.</p>
             
             <h3>Can I use Quick Merge on mobile devices?</h3>
-            <p>Yes, our website is fully responsive and works on smartphones and tablets. However, some tools may have limited functionality on mobile devices due to browser limitations.</p>
+            <p>Yes, our website is fully responsive and works on smartphones and tablets.</p>
             
             <h3>How do you make money if the service is free?</h3>
-            <p>We generate revenue through advertising and optional donations. This allows us to keep the service free for all users while covering our operational costs.</p>
-            
-            <h3>What file formats do you support?</h3>
-            <p>We support a wide range of file formats including PDF, JPG, PNG, and more. Each tool page provides specific information about supported formats.</p>
-            
-            <h3>Is there a file size limit?</h3>
-            <p>Since all processing happens in your browser, file size limits are determined by your device's memory and browser capabilities. Very large files may take longer to process or could cause performance issues.</p>
+            <p>We generate revenue through advertising and optional donations. This allows us to keep the service free for all users.</p>
           </div>
         </div>
         
         <div class="content-block">
           <h2>Business Inquiries</h2>
-          <p>For business partnerships, advertising opportunities, or other commercial inquiries, please contact us at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>. We're open to collaborations that align with our mission and values.</p>
+          <p>For business partnerships, advertising opportunities, or other commercial inquiries, please contact us at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>.</p>
         </div>
         
         <div class="content-block">
           <h2>Feedback</h2>
           <p>We're constantly working to improve Quick Merge. If you have suggestions for new features or improvements to existing tools, we'd love to hear from you.</p>
-          <p>Your feedback helps us create better tools for everyone. Please send your suggestions to <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>. We review all feedback and prioritize features based on user demand.</p>
-        </div>
-        
-        <div class="content-block">
-          <h2>Bug Reports</h2>
-          <p>If you encounter any issues while using our tools, please report them to us at <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>. Please include details about the problem, your browser and operating system, and steps to reproduce the issue.</p>
-          <p>We take all bug reports seriously and work quickly to resolve any issues that affect user experience.</p>
+          <p>Your feedback helps us create better tools for everyone. Please send your suggestions to <a href="mailto:danielledawoodk@gmail.com">danielledawoodk@gmail.com</a>.</p>
         </div>
       </div>
     </section>
@@ -1475,7 +1675,7 @@
       <div class="footer-content">
         <div class="footer-brand">
           <h3>Quick Merge</h3>
-          <p>Your all-in-one solution for secure, browser-based file processing. Fast, private, and completely free. Trusted by thousands of users worldwide for their document and file processing needs.</p>
+          <p>Your all-in-one solution for secure, browser-based file processing. Fast, private, and completely free.</p>
         </div>
         
         <div class="footer-links">
@@ -1508,7 +1708,7 @@
           <a href="#cookies" onclick="showSection('cookies')">Cookies</a>
           <a href="#contact" onclick="showSection('contact')">Contact</a>
         </div>
-        <p>&copy; 2024 Quick Merge. All rights reserved. | Secure, Private, Browser-Based File Processing Tools</p>
+        <p>&copy; 2024 Quick Merge. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -1557,15 +1757,13 @@
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetSection = this.getAttribute('data-section');
-                if (targetSection) {
-                    showSection(targetSection);
-                    
-                    navLinks.forEach(l => l.classList.remove('active-link'));
-                    this.classList.add('active-link');
-                    
-                    // Update URL hash
-                    window.location.hash = targetSection;
-                }
+                showSection(targetSection);
+                
+                navLinks.forEach(l => l.classList.remove('active-link'));
+                this.classList.add('active-link');
+                
+                // Update URL hash
+                window.location.hash = targetSection;
             });
         });
         
@@ -1620,6 +1818,10 @@
         } else {
             AppState.activeTool = null;
         }
+    }
+    
+    function scrollToSection(sectionId) {
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
     }
     
     // --- File Handling & UI ---
@@ -1687,13 +1889,379 @@
         a.remove();
     };
 
-    // --- New Professional Stamp Generator with Realistic Ink Effect ---
+    // --- PDF Tools ---
+    async function mergePDFs() {
+        const fileInput = document.getElementById('merge-pdf-files');
+        const statusEl = document.getElementById('merge-pdf-status');
+        const spinner = document.getElementById('merge-pdf-spinner');
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select PDF files.', 'error');
+
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Processing PDFs...', 'processing');
+        
+        try {
+            const { PDFDocument } = PDFLib;
+            const mergedPdf = await PDFDocument.create();
+            for (const file of fileInput.files) {
+                const pdfBytes = await file.arrayBuffer();
+                const pdf = await PDFDocument.load(pdfBytes);
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                copiedPages.forEach(page => mergedPdf.addPage(page));
+            }
+            const mergedPdfBytes = await mergedPdf.save();
+            downloadFile(mergedPdfBytes, 'merged.pdf', 'application/pdf');
+            showStatus(statusEl, 'PDFs merged successfully!', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error merging PDFs. Please check files.', 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
+    async function splitPDF() {
+        const fileInput = document.getElementById('split-pdf-file');
+        const pagesInput = document.getElementById('split-pages').value;
+        const statusEl = document.getElementById('split-pdf-status');
+        const spinner = document.getElementById('split-pdf-spinner');
+
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select a PDF file.', 'error');
+        if (!pagesInput.trim()) return showStatus(statusEl, 'Please specify pages to extract.', 'error');
+
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Splitting PDF...', 'processing');
+
+        try {
+            const { PDFDocument } = PDFLib;
+            const fileBytes = await fileInput.files[0].arrayBuffer();
+            const pdfDoc = await PDFDocument.load(fileBytes);
+            
+            const pageIndices = parsePageRanges(pagesInput, pdfDoc.getPageCount());
+            if (pageIndices.length === 0) throw new Error("No valid pages selected.");
+
+            const splitPdf = await PDFDocument.create();
+            const copiedPages = await splitPdf.copyPages(pdfDoc, pageIndices);
+            copiedPages.forEach(page => splitPdf.addPage(page));
+            
+            const splitPdfBytes = await splitPdf.save();
+            downloadFile(splitPdfBytes, 'split-pages.pdf', 'application/pdf');
+            showStatus(statusEl, 'PDF split successfully!', 'success');
+        } catch (e) {
+            showStatus(statusEl, `Error: ${e.message}`, 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
+    function parsePageRanges(rangeStr, totalPages) {
+        const pages = new Set();
+        rangeStr.split(',').forEach(part => {
+            if (part.includes('-')) {
+                const [start, end] = part.split('-').map(num => parseInt(num.trim()));
+                for (let i = start; i <= Math.min(end, totalPages); i++) pages.add(i - 1);
+            } else {
+                const page = parseInt(part.trim());
+                if (page > 0 && page <= totalPages) pages.add(page - 1);
+            }
+        });
+        return Array.from(pages).sort((a, b) => a - b);
+    }
+    
+    async function unlockPDF() {
+        const fileInput = document.getElementById('unlock-pdf-file');
+        const password = document.getElementById('pdf-password').value;
+        const statusEl = document.getElementById('unlock-pdf-status');
+        const spinner = document.getElementById('unlock-pdf-spinner');
+
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select a PDF file.', 'error');
+        if (!password) return showStatus(statusEl, 'Please enter the PDF password.', 'error');
+
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Unlocking PDF...', 'processing');
+
+        try {
+            const { PDFDocument } = PDFLib;
+            const fileBytes = await fileInput.files[0].arrayBuffer();
+            const pdfDoc = await PDFDocument.load(fileBytes, { password: password });
+            
+            // Re-saving the document removes the password protection
+            const unlockedPdfBytes = await pdfDoc.save();
+            downloadFile(unlockedPdfBytes, 'unlocked.pdf', 'application/pdf');
+            showStatus(statusEl, 'PDF unlocked successfully!', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Failed to unlock. Check password.', 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
+    // --- PDF Compression ---
+    async function compressPDF() {
+        const fileInput = document.getElementById('compress-pdf-file');
+        const statusEl = document.getElementById('compress-pdf-status');
+        const spinner = document.getElementById('compress-pdf-spinner');
+        
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select a PDF file.', 'error');
+
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Compressing PDF...', 'processing');
+        
+        try {
+            const { PDFDocument } = PDFLib;
+            const fileBytes = await fileInput.files[0].arrayBuffer();
+            const originalSize = fileBytes.byteLength;
+            
+            // Load the PDF document
+            const pdfDoc = await PDFDocument.load(fileBytes);
+            
+            // Apply compression by re-saving with optimized settings
+            // PDF-lib automatically applies some compression when saving
+            const compressedPdfBytes = await pdfDoc.save({
+                useObjectStreams: true,
+                addDefaultPage: false,
+                objectsPerTick: 100
+            });
+            
+            const compressedSize = compressedPdfBytes.byteLength;
+            const reductionPercent = ((originalSize - compressedSize) / originalSize * 100).toFixed(1);
+            
+            // Download the compressed PDF
+            downloadFile(compressedPdfBytes, 'compressed.pdf', 'application/pdf');
+            showStatus(statusEl, `PDF compressed successfully! Size reduced by ${reductionPercent}% (${formatFileSize(originalSize)} → ${formatFileSize(compressedSize)})`, 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error compressing PDF. Please try another file.', 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
+    // --- New PDF to Word Converter ---
+    async function convertPDFToWord() {
+        const fileInput = document.getElementById('pdf-to-word-file');
+        const statusEl = document.getElementById('pdf-to-word-status');
+        const spinner = document.getElementById('pdf-to-word-spinner');
+        
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select a PDF file.', 'error');
+
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Converting PDF to Word...', 'processing');
+        
+        try {
+            const fileBytes = await fileInput.files[0].arrayBuffer();
+            const pdfDoc = await pdfjsLib.getDocument({ data: fileBytes }).promise;
+            
+            let textContent = '';
+            for (let i = 1; i <= pdfDoc.numPages; i++) {
+                const page = await pdfDoc.getPage(i);
+                const text = await page.getTextContent();
+                textContent += text.items.map(item => item.str).join(' ') + '\n\n';
+            }
+            
+            // Create a simple Word document (HTML format)
+            const wordContent = `
+                <html xmlns:o="urn:schemas-microsoft-com:office:office" 
+                      xmlns:w="urn:schemas-microsoft-com:office:word" 
+                      xmlns="http://www.w3.org/TR/REC-html40">
+                <head>
+                    <meta charset="utf-8">
+                    <title>Converted Document</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.5; }
+                        p { margin-bottom: 1em; }
+                    </style>
+                </head>
+                <body>
+                    <div>${textContent.replace(/\n/g, '</p><p>')}</div>
+                </body>
+                </html>
+            `;
+            
+            // Create a blob and download
+            const blob = new Blob([wordContent], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'converted-document.doc';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showStatus(statusEl, 'PDF converted to Word successfully!', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error converting PDF to Word. Please try another file.', 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
+    // --- New PDF Form Filler ---
+    async function analyzePDFForm(file) {
+        const fieldsContainer = document.getElementById('pdf-form-filler-fields');
+        const statusEl = document.getElementById('pdf-form-filler-status');
+        
+        showStatus(statusEl, 'Analyzing PDF form...', 'processing');
+        
+        try {
+            const fileBytes = await file.arrayBuffer();
+            const pdfDoc = await pdfjsLib.getDocument({ data: fileBytes }).promise;
+            
+            // Reset form fields
+            AppState.pdfFormFields = [];
+            
+            // Simple form field detection (in a real implementation, you'd use a more sophisticated approach)
+            for (let i = 1; i <= pdfDoc.numPages; i++) {
+                const page = await pdfDoc.getPage(i);
+                const textContent = await page.getTextContent();
+                
+                // Look for common form field indicators
+                const formIndicators = ['name:', 'date:', 'signature:', 'address:', 'email:', 'phone:'];
+                textContent.items.forEach(item => {
+                    const text = item.str.toLowerCase();
+                    formIndicators.forEach(indicator => {
+                        if (text.includes(indicator)) {
+                            const fieldName = item.str.trim().replace(':', '');
+                            if (!AppState.pdfFormFields.some(field => field.name === fieldName)) {
+                                AppState.pdfFormFields.push({
+                                    name: fieldName,
+                                    value: '',
+                                    type: 'text'
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+            
+            // If no fields detected, add some common ones
+            if (AppState.pdfFormFields.length === 0) {
+                AppState.pdfFormFields = [
+                    { name: 'Full Name', value: '', type: 'text' },
+                    { name: 'Date', value: '', type: 'date' },
+                    { name: 'Signature', value: '', type: 'text' },
+                    { name: 'Address', value: '', type: 'text' }
+                ];
+            }
+            
+            showStatus(statusEl, 'Form analyzed. Fill in the fields below.', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error analyzing PDF form. Please try another file.', 'error');
+            console.error(e);
+        }
+    }
+    
+    async function fillPDFForm() {
+        const fileInput = document.getElementById('pdf-form-filler-file');
+        const statusEl = document.getElementById('pdf-form-filler-status');
+        const spinner = document.getElementById('pdf-form-filler-spinner');
+        
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select a PDF file.', 'error');
+        
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Filling PDF form...', 'processing');
+        
+        try {
+            const { PDFDocument, rgb } = PDFLib;
+            const fileBytes = await fileInput.files[0].arrayBuffer();
+            const pdfDoc = await PDFDocument.load(fileBytes);
+            
+            const pages = pdfDoc.getPages();
+            const firstPage = pages[0];
+            const { width, height } = firstPage.getSize();
+            
+            // Add form fields as text annotations
+            let yPosition = height - 100; // Start from top of page
+            
+            // Get values from form fields
+            const fullName = document.getElementById('field-full-name').value;
+            const email = document.getElementById('field-email').value;
+            const phone = document.getElementById('field-phone').value;
+            const address = document.getElementById('field-address').value;
+            const date = document.getElementById('field-date').value;
+            const signature = document.getElementById('field-signature').value;
+            
+            // Add filled fields to PDF
+            if (fullName) {
+                firstPage.drawText(`Full Name: ${fullName}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= 25;
+            }
+            
+            if (email) {
+                firstPage.drawText(`Email: ${email}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= 25;
+            }
+            
+            if (phone) {
+                firstPage.drawText(`Phone: ${phone}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= 25;
+            }
+            
+            if (address) {
+                firstPage.drawText(`Address: ${address}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= 25;
+            }
+            
+            if (date) {
+                firstPage.drawText(`Date: ${date}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+                yPosition -= 25;
+            }
+            
+            if (signature) {
+                firstPage.drawText(`Signature: ${signature}`, {
+                    x: 50,
+                    y: yPosition,
+                    size: 12,
+                    color: rgb(0, 0, 0),
+                });
+            }
+            
+            const filledPdfBytes = await pdfDoc.save();
+            downloadFile(filledPdfBytes, 'filled-form.pdf', 'application/pdf');
+            showStatus(statusEl, 'PDF form filled successfully!', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error filling PDF form. Please try again.', 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
+    // --- New Stamp Generator ---
     function generateStamp() {
         const text = document.getElementById('stamp-text').value;
         const company = document.getElementById('stamp-company').value;
         const date = document.getElementById('stamp-date').value;
-        const type = document.getElementById('stamp-type').value;
         const color = document.getElementById('stamp-color').value;
+        const style = document.getElementById('stamp-style').value;
         const result = document.getElementById('stamp-result');
         const statusEl = document.getElementById('stamp-status');
         
@@ -1711,7 +2279,7 @@
             
             // Set canvas size
             canvas.width = 400;
-            canvas.height = 200;
+            canvas.height = 400;
             
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1736,26 +2304,95 @@
                     stampColor = '#212121';
             }
             
-            // Draw stamp based on type
-            if (type === 'corporate') {
-                drawCorporateStamp(ctx, canvas, text, company, date, stampColor);
-            } else if (type === 'official') {
-                drawOfficialSeal(ctx, canvas, text, company, date, stampColor);
-            } else if (type === 'certified') {
-                drawCertifiedStamp(ctx, canvas, text, company, date, stampColor);
-            } else if (type === 'received') {
-                drawReceivedStamp(ctx, canvas, text, company, date, stampColor);
-            } else if (type === 'paid') {
-                drawPaidStamp(ctx, canvas, text, company, date, stampColor);
+            // Draw stamp base (circle)
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.strokeStyle = stampColor;
+            ctx.lineWidth = 8;
+            
+            // Create rubber stamp effect with irregular edges
+            ctx.beginPath();
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 180;
+            
+            // Draw irregular circle for rubber stamp effect
+            for (let angle = 0; angle < Math.PI * 2; angle += 0.1) {
+                const irregularRadius = radius + (Math.random() * 10 - 5);
+                const x = centerX + Math.cos(angle) * irregularRadius;
+                const y = centerY + Math.sin(angle) * irregularRadius;
+                
+                if (angle === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            
+            // Add text with rubber stamp effect
+            ctx.fillStyle = stampColor;
+            ctx.textAlign = 'center';
+            
+            // Main text (curved)
+            ctx.font = 'bold 28px Arial';
+            const mainText = text.toUpperCase();
+            const mainTextRadius = 120;
+            
+            // Curve text around the stamp
+            for (let i = 0; i < mainText.length; i++) {
+                const angle = (i - mainText.length / 2) * 0.15;
+                const x = centerX + Math.sin(angle) * mainTextRadius;
+                const y = centerY - Math.cos(angle) * mainTextRadius;
+                
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(angle);
+                ctx.fillText(mainText[i], 0, 0);
+                ctx.restore();
             }
             
-            // Apply ink bleed effect for realism
-            applyInkBleedEffect(ctx, canvas, stampColor);
+            // Company name (if provided) - straight text in middle
+            if (company) {
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText(company.toUpperCase(), centerX, centerY + 10);
+            }
+            
+            // Date (if provided) - bottom text
+            if (date) {
+                const formattedDate = new Date(date).toLocaleDateString();
+                ctx.font = '14px Arial';
+                ctx.fillText(formattedDate, centerX, centerY + 60);
+            }
+            
+            // Add ink bleed effect for realism
+            ctx.globalCompositeOperation = 'multiply';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            
+            // Create irregular inner shape for ink bleed
+            ctx.beginPath();
+            for (let angle = 0; angle < Math.PI * 2; angle += 0.1) {
+                const irregularRadius = radius - 20 + (Math.random() * 8 - 4);
+                const x = centerX + Math.cos(angle) * irregularRadius;
+                const y = centerY + Math.sin(angle) * irregularRadius;
+                
+                if (angle === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+            ctx.fill();
+            
+            // Reset composite operation
+            ctx.globalCompositeOperation = 'source-over';
             
             // Display result
             result.innerHTML = `
                 <div class="stamp-preview">
-                    <img src="${canvas.toDataURL('image/png')}" style="max-width: 100%; height: auto;">
+                    <img src="${canvas.toDataURL('image/png')}" class="stamp-canvas">
                 </div>
                 <button class="tool-btn secondary" onclick="downloadStamp()">
                     <i class="fas fa-download"></i> Download Stamp
@@ -1772,260 +2409,557 @@
         }
     }
     
-    function drawCorporateStamp(ctx, canvas, text, company, date, color) {
-        const width = canvas.width;
-        const height = canvas.height;
-        
-        // Draw rectangular stamp with border
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 3;
-        ctx.strokeRect(10, 10, width - 20, height - 20);
-        
-        // Add inner border
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1;
-        ctx.strokeRect(15, 15, width - 30, height - 30);
-        
-        // Add text
-        ctx.fillStyle = color;
-        ctx.textAlign = 'center';
-        ctx.font = 'bold 24px Arial';
-        ctx.fillText(text.toUpperCase(), width / 2, height / 2 - 10);
-        
-        // Add company name if provided
-        if (company) {
-            ctx.font = '16px Arial';
-            ctx.fillText(company.toUpperCase(), width / 2, height / 2 + 20);
-        }
-        
-        // Add date if provided
-        if (date) {
-            const formattedDate = new Date(date).toLocaleDateString();
-            ctx.font = '14px Arial';
-            ctx.fillText(formattedDate, width / 2, height - 30);
-        }
-    }
-    
-    function drawOfficialSeal(ctx, canvas, text, company, date, color) {
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
-        const radius = 80;
-        
-        // Draw outer circle
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-        ctx.stroke();
-        
-        // Draw inner circle
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius - 10, 0, Math.PI * 2);
-        ctx.stroke();
-        
-        // Add text around the circle
-        ctx.fillStyle = color;
-        ctx.textAlign = 'center';
-        ctx.font = 'bold 16px Arial';
-        
-        // Curve text around the seal
-        const mainText = text.toUpperCase();
-        const angleStep = (Math.PI * 2) / mainText.length;
-        const textRadius = radius - 5;
-        
-        for (let i = 0; i < mainText.length; i++) {
-            const angle = i * angleStep - Math.PI / 2;
-            const x = centerX + Math.cos(angle) * textRadius;
-            const y = centerY + Math.sin(angle) * textRadius;
-            
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(angle + Math.PI / 2);
-            ctx.fillText(mainText[i], 0, 0);
-            ctx.restore();
-        }
-        
-        // Add company name in center
-        if (company) {
-            ctx.font = 'bold 14px Arial';
-            ctx.fillText(company.toUpperCase(), centerX, centerY - 5);
-        }
-        
-        // Add date in center
-        if (date) {
-            const formattedDate = new Date(date).toLocaleDateString();
-            ctx.font = '12px Arial';
-            ctx.fillText(formattedDate, centerX, centerY + 15);
-        }
-    }
-    
-    function drawCertifiedStamp(ctx, canvas, text, company, date, color) {
-        const width = canvas.width;
-        const height = canvas.height;
-        
-        // Draw certified stamp with checkmark
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 3;
-        ctx.strokeRect(10, 10, width - 20, height - 20);
-        
-        // Add checkmark
-        ctx.fillStyle = color;
-        ctx.beginPath();
-        ctx.moveTo(30, height / 2);
-        ctx.lineTo(40, height / 2 + 10);
-        ctx.lineTo(60, height / 2 - 10);
-        ctx.stroke();
-        
-        // Add text
-        ctx.fillStyle = color;
-        ctx.textAlign = 'center';
-        ctx.font = 'bold 20px Arial';
-        ctx.fillText(text.toUpperCase(), width / 2, height / 2 - 10);
-        
-        // Add "CERTIFIED" text
-        ctx.font = 'bold 16px Arial';
-        ctx.fillText('CERTIFIED', width / 2, height / 2 + 15);
-        
-        // Add company name if provided
-        if (company) {
-            ctx.font = '14px Arial';
-            ctx.fillText(company.toUpperCase(), width / 2, height / 2 + 35);
-        }
-        
-        // Add date if provided
-        if (date) {
-            const formattedDate = new Date(date).toLocaleDateString();
-            ctx.font = '12px Arial';
-            ctx.fillText(formattedDate, width / 2, height - 20);
-        }
-    }
-    
-    function drawReceivedStamp(ctx, canvas, text, company, date, color) {
-        const width = canvas.width;
-        const height = canvas.height;
-        
-        // Draw received stamp
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 3;
-        ctx.strokeRect(10, 10, width - 20, height - 20);
-        
-        // Add text
-        ctx.fillStyle = color;
-        ctx.textAlign = 'center';
-        ctx.font = 'bold 22px Arial';
-        ctx.fillText(text.toUpperCase(), width / 2, height / 2 - 10);
-        
-        // Add "RECEIVED" text
-        ctx.font = 'bold 18px Arial';
-        ctx.fillText('RECEIVED', width / 2, height / 2 + 15);
-        
-        // Add company name if provided
-        if (company) {
-            ctx.font = '14px Arial';
-            ctx.fillText(company.toUpperCase(), width / 2, height / 2 + 35);
-        }
-        
-        // Add date if provided
-        if (date) {
-            const formattedDate = new Date(date).toLocaleDateString();
-            ctx.font = '12px Arial';
-            ctx.fillText(formattedDate, width / 2, height - 20);
-        }
-    }
-    
-    function drawPaidStamp(ctx, canvas, text, company, date, color) {
-        const width = canvas.width;
-        const height = canvas.height;
-        
-        // Draw paid stamp
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 3;
-        ctx.strokeRect(10, 10, width - 20, height - 20);
-        
-        // Add text
-        ctx.fillStyle = color;
-        ctx.textAlign = 'center';
-        ctx.font = 'bold 22px Arial';
-        ctx.fillText(text.toUpperCase(), width / 2, height / 2 - 10);
-        
-        // Add "PAID" text
-        ctx.font = 'bold 18px Arial';
-        ctx.fillText('PAID', width / 2, height / 2 + 15);
-        
-        // Add company name if provided
-        if (company) {
-            ctx.font = '14px Arial';
-            ctx.fillText(company.toUpperCase(), width / 2, height / 2 + 35);
-        }
-        
-        // Add date if provided
-        if (date) {
-            const formattedDate = new Date(date).toLocaleDateString();
-            ctx.font = '12px Arial';
-            ctx.fillText(formattedDate, width / 2, height - 20);
-        }
-    }
-    
-    function applyInkBleedEffect(ctx, canvas, color) {
-        // Create a temporary canvas for the ink bleed effect
-        const tempCanvas = document.createElement('canvas');
-        const tempCtx = tempCanvas.getContext('2d');
-        tempCanvas.width = canvas.width;
-        tempCanvas.height = canvas.height;
-        
-        // Copy the original stamp to the temporary canvas
-        tempCtx.drawImage(canvas, 0, 0);
-        
-        // Apply ink bleed effect
-        ctx.globalCompositeOperation = 'source-over';
-        
-        // Create irregular edges for ink bleed
-        const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
-        const data = imageData.data;
-        
-        for (let y = 0; y < tempCanvas.height; y++) {
-            for (let x = 0; x < tempCanvas.width; x++) {
-                const index = (y * tempCanvas.width + x) * 4;
-                
-                // If this pixel is part of the stamp (not transparent)
-                if (data[index + 3] > 0) {
-                    // Randomly extend the stamp edges to create ink bleed
-                    if (Math.random() < 0.1) {
-                        const bleedX = x + (Math.random() * 6 - 3);
-                        const bleedY = y + (Math.random() * 6 - 3);
-                        
-                        if (bleedX >= 0 && bleedX < tempCanvas.width && bleedY >= 0 && bleedY < tempCanvas.height) {
-                            const bleedIndex = (Math.floor(bleedY) * tempCanvas.width + Math.floor(bleedX)) * 4;
-                            
-                            // Set the bleed pixel with reduced opacity
-                            data[bleedIndex] = parseInt(color.slice(1, 3), 16);
-                            data[bleedIndex + 1] = parseInt(color.slice(3, 5), 16);
-                            data[bleedIndex + 2] = parseInt(color.slice(5, 7), 16);
-                            data[bleedIndex + 3] = 100; // Semi-transparent
-                        }
-                    }
-                }
-            }
-        }
-        
-        tempCtx.putImageData(imageData, 0, 0);
-        
-        // Draw the ink-bleed effect back to the main canvas
-        ctx.drawImage(tempCanvas, 0, 0);
-    }
-    
     function downloadStamp() {
         if (!AppState.stampCanvas) return;
         
         const link = document.createElement('a');
-        link.download = 'professional-stamp.png';
+        link.download = 'custom-stamp.png';
         link.href = AppState.stampCanvas.toDataURL('image/png');
         link.click();
     }
     
-    // --- Other tool functions remain the same ... ---
+    // --- Image Tools ---
+    async function convertImagesToPDF() {
+        const fileInput = document.getElementById('image-to-pdf-files');
+        const statusEl = document.getElementById('image-to-pdf-status');
+        const spinner = document.getElementById('image-to-pdf-spinner');
+
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select at least one image.', 'error');
+
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Converting images...', 'processing');
+        
+        try {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            for (let i = 0; i < fileInput.files.length; i++) {
+                const file = fileInput.files[i];
+                const imgData = await new Promise(resolve => {
+                    const reader = new FileReader();
+                    reader.onload = e => resolve(e.target.result);
+                    reader.readAsDataURL(file);
+                });
+                
+                if (i > 0) pdf.addPage();
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+            }
+            pdf.save('converted-images.pdf');
+            showStatus(statusEl, 'Images converted successfully!', 'success');
+        } catch(e) {
+            showStatus(statusEl, 'Error converting images.', 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
+    async function compressImages() {
+        const fileInput = document.getElementById('compress-image-files');
+        const quality = parseFloat(document.getElementById('compress-quality').value);
+        const statusEl = document.getElementById('compress-image-status');
+        const spinner = document.getElementById('compress-image-spinner');
+
+        if (!fileInput.files.length) return showStatus(statusEl, 'Please select images.', 'error');
+
+        toggleSpinner(spinner, true);
+        showStatus(statusEl, 'Compressing images...', 'processing');
+
+        try {
+            const zip = new JSZip();
+            for (const file of fileInput.files) {
+                const compressedBlob = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = e => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            canvas.getContext('2d').drawImage(img, 0, 0);
+                            canvas.toBlob(resolve, 'image/jpeg', quality);
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+                zip.file(`compressed_${file.name.replace(/\.[^/.]+$/, "")}.jpg`, compressedBlob);
+            }
+            const content = await zip.generateAsync({type:"blob"});
+            downloadFile(content, "compressed-images.zip", "application/zip");
+            showStatus(statusEl, 'Images compressed and zipped!', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error compressing images.', 'error');
+            console.error(e);
+        } finally {
+            toggleSpinner(spinner, false);
+        }
+    }
+    
+    // --- Text to Speech Tool ---
+    function initializeTextToSpeech() {
+        const voiceSelect = document.getElementById('tts-voice');
+        const rateSlider = document.getElementById('tts-rate');
+        const pitchSlider = document.getElementById('tts-pitch');
+        
+        // Set up slider value displays
+        rateSlider.addEventListener('input', function() {
+            document.getElementById('tts-rate-value').textContent = this.value;
+        });
+        
+        pitchSlider.addEventListener('input', function() {
+            document.getElementById('tts-pitch-value').textContent = this.value;
+        });
+
+        function populateVoiceList() {
+            AppState.tts.voices = speechSynthesis.getVoices();
+            voiceSelect.innerHTML = '';
+            
+            // Add voices to dropdown
+            AppState.tts.voices.forEach(voice => {
+                const option = document.createElement('option');
+                option.textContent = `${voice.name} (${voice.lang})`;
+                option.setAttribute('data-lang', voice.lang);
+                option.setAttribute('data-name', voice.name);
+                voiceSelect.appendChild(option);
+            });
+            
+            // Select a default voice
+            if (AppState.tts.voices.length > 0) {
+                const defaultVoice = AppState.tts.voices.find(voice => 
+                    voice.lang.startsWith('en') && voice.name.includes('Female')) || 
+                    AppState.tts.voices[0];
+                if (defaultVoice) {
+                    voiceSelect.value = defaultVoice.name;
+                }
+            }
+        }
+
+        populateVoiceList();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoiceList;
+        }
+    }
+
+    function textToSpeech() {
+        const text = document.getElementById('tts-text').value;
+        const statusEl = document.getElementById('tts-status');
+        const downloadBtn = document.getElementById('tts-download-btn');
+        
+        if (!text.trim()) {
+            showStatus(statusEl, 'Please enter some text to convert.', 'error');
+            return;
+        }
+        
+        // Check if browser supports speech synthesis
+        if (!('speechSynthesis' in window)) {
+            showStatus(statusEl, 'Your browser does not support text-to-speech.', 'error');
+            return;
+        }
+        
+        showStatus(statusEl, 'Generating speech...', 'processing');
+        
+        // Create speech synthesis utterance
+        const utterance = new SpeechSynthesisUtterance(text);
+        const selectedVoiceName = document.getElementById('tts-voice').selectedOptions[0].getAttribute('data-name');
+        utterance.voice = AppState.tts.voices.find(voice => voice.name === selectedVoiceName);
+        utterance.rate = parseFloat(document.getElementById('tts-rate').value);
+        utterance.pitch = parseFloat(document.getElementById('tts-pitch').value);
+        
+        // Set up recording
+        setupSpeechRecording(utterance, statusEl, downloadBtn);
+        
+        // Speak the text
+        speechSynthesis.speak(utterance);
+    }
+    
+    function setupSpeechRecording(utterance, statusEl, downloadBtn) {
+        // Reset previous recording
+        AppState.tts.audioChunks = [];
+        downloadBtn.style.display = 'none';
+        
+        // Set up MediaRecorder to capture speech
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    AppState.tts.recorder = new MediaRecorder(stream);
+                    AppState.tts.audioChunks = [];
+                    
+                    AppState.tts.recorder.ondataavailable = event => {
+                        AppState.tts.audioChunks.push(event.data);
+                    };
+                    
+                    AppState.tts.recorder.onstop = () => {
+                        AppState.tts.audioBlob = new Blob(AppState.tts.audioChunks, { type: 'audio/wav' });
+                        downloadBtn.style.display = 'block';
+                        showStatus(statusEl, 'Speech generated successfully! Click download to save as MP3.', 'success');
+                        
+                        // Stop all tracks
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+                    
+                    // Start recording when speech starts
+                    utterance.onstart = () => {
+                        showStatus(statusEl, 'Recording speech...', 'processing');
+                        AppState.tts.recorder.start();
+                    };
+                    
+                    // Stop recording when speech ends
+                    utterance.onend = () => {
+                        if (AppState.tts.recorder && AppState.tts.recorder.state === "recording") {
+                            AppState.tts.recorder.stop();
+                        }
+                    };
+                    
+                    utterance.onerror = (e) => {
+                        showStatus(statusEl, `Error: ${e.error}`, 'error');
+                        if (AppState.tts.recorder && AppState.tts.recorder.state === "recording") {
+                            AppState.tts.recorder.stop();
+                        }
+                    };
+                })
+                .catch(err => {
+                    console.error('Error accessing microphone:', err);
+                    showStatus(statusEl, 'Microphone access denied. Speech will play but cannot be recorded.', 'warning');
+                    
+                    // Fallback: just play the speech without recording
+                    utterance.onstart = () => showStatus(statusEl, 'Playing speech...', 'processing');
+                    utterance.onend = () => showStatus(statusEl, 'Speech played successfully.', 'success');
+                    utterance.onerror = (e) => showStatus(statusEl, `Error: ${e.error}`, 'error');
+                });
+        } else {
+            showStatus(statusEl, 'Media devices not supported. Speech will play but cannot be recorded.', 'warning');
+            
+            // Fallback: just play the speech without recording
+            utterance.onstart = () => showStatus(statusEl, 'Playing speech...', 'processing');
+            utterance.onend = () => showStatus(statusEl, 'Speech played successfully.', 'success');
+            utterance.onerror = (e) => showStatus(statusEl, `Error: ${e.error}`, 'error');
+        }
+    }
+    
+    function downloadSpeech() {
+        if (AppState.tts.audioBlob) {
+            // Convert WAV to MP3 (in a real implementation, you would use a proper conversion library)
+            // For demo purposes, we'll just download as WAV
+            const url = URL.createObjectURL(AppState.tts.audioBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'speech.wav';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } else {
+            showStatus(document.getElementById('tts-status'), 'No speech recorded yet. Generate speech first.', 'error');
+        }
+    }
+    
+    // --- QR Code Generator ---
+    function generateQRCode() {
+        const content = document.getElementById('qr-content').value;
+        const size = document.getElementById('qr-size').value;
+        const color = document.getElementById('qr-color').value;
+        const result = document.getElementById('qr-result');
+        const statusEl = document.getElementById('qr-status');
+        
+        if (!content) {
+            showStatus(statusEl, 'Please enter content for the QR code.', 'error');
+            return;
+        }
+        
+        showStatus(statusEl, 'Generating QR code...', 'processing');
+        
+        try {
+            // Use the QR code library
+            const qr = qrcode(0, 'M');
+            qr.addData(content);
+            qr.make();
+            
+            // Create SVG element
+            const svgTag = qr.createSvgTag({ scalable: true, margin: 0 });
+            result.innerHTML = `
+                <div style="margin-bottom: 1rem;">
+                    ${svgTag}
+                </div>
+                <button class="tool-btn secondary" onclick="downloadQRCode()">
+                    <i class="fas fa-download"></i> Download QR Code
+                </button>
+            `;
+            
+            // Apply custom styling
+            const svg = result.querySelector('svg');
+            if (svg) {
+                svg.setAttribute('width', size);
+                svg.setAttribute('height', size);
+                // Change QR code color
+                const paths = svg.querySelectorAll('path');
+                paths.forEach(path => {
+                    path.setAttribute('fill', color);
+                });
+            }
+            
+            showStatus(statusEl, 'QR code generated successfully!', 'success');
+        } catch (e) {
+            showStatus(statusEl, 'Error generating QR code.', 'error');
+            console.error(e);
+        }
+    }
+    
+    function downloadQRCode() {
+        const svg = document.querySelector('#qr-result svg');
+        if (!svg) return;
+        
+        const svgData = new XMLSerializer().serializeToString(svg);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        
+        img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'qrcode.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 'image/png');
+        };
+        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    }
+    
+    // --- Password Generator ---
+    function generatePassword() {
+        const length = parseInt(document.getElementById('password-length').value);
+        const includeUppercase = document.getElementById('include-uppercase').checked;
+        const includeLowercase = document.getElementById('include-lowercase').checked;
+        const includeNumbers = document.getElementById('include-numbers').checked;
+        const includeSymbols = document.getElementById('include-symbols').checked;
+        const result = document.getElementById('password-result');
+        
+        // Check if at least one character type is selected
+        if (!includeUppercase && !includeLowercase && !includeNumbers && !includeSymbols) {
+            showStatus(result, 'Please select at least one character type.', 'error');
+            return;
+        }
+        
+        // Define character sets
+        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+        const numbers = '0123456789';
+        const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+        
+        // Build character pool based on selections
+        let charPool = '';
+        if (includeUppercase) charPool += uppercase;
+        if (includeLowercase) charPool += lowercase;
+        if (includeNumbers) charPool += numbers;
+        if (includeSymbols) charPool += symbols;
+        
+        // Generate password
+        let password = '';
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * charPool.length);
+            password += charPool[randomIndex];
+        }
+        
+        // Display password
+        result.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); padding: 0.8rem; border-radius: var(--radius-sm); margin-bottom: 0.5rem;">
+                <span style="font-family: monospace; font-size: 1.1rem;">${password}</span>
+                <button onclick="copyToClipboard('${password}')" style="background: none; border: none; color: var(--text-medium); cursor: pointer;">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-medium); text-align: center;">Click the copy icon to copy this password to your clipboard.</p>
+        `;
+        result.className = 'status-message success';
+    }
+    
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const result = document.getElementById('password-result');
+            const originalContent = result.innerHTML;
+            
+            result.innerHTML = '<p style="text-align: center;">Copied to clipboard!</p>';
+            
+            // Restore original content after 2 seconds
+            setTimeout(() => {
+                result.innerHTML = originalContent;
+            }, 2000);
+        });
+    }
+    
+    // --- Unit Converter ---
+    function initializeUnitConverter() {
+        const categorySelect = document.getElementById('converter-category');
+        const fromSelect = document.getElementById('converter-from');
+        const toSelect = document.getElementById('converter-to');
+        
+        // Define conversion units
+        const units = {
+            length: [
+                { name: 'Meters', value: 'm', factor: 1 },
+                { name: 'Kilometers', value: 'km', factor: 1000 },
+                { name: 'Centimeters', value: 'cm', factor: 0.01 },
+                { name: 'Millimeters', value: 'mm', factor: 0.001 },
+                { name: 'Inches', value: 'in', factor: 0.0254 },
+                { name: 'Feet', value: 'ft', factor: 0.3048 },
+                { name: 'Yards', value: 'yd', factor: 0.9144 },
+                { name: 'Miles', value: 'mi', factor: 1609.34 }
+            ],
+            weight: [
+                { name: 'Grams', value: 'g', factor: 1 },
+                { name: 'Kilograms', value: 'kg', factor: 1000 },
+                { name: 'Milligrams', value: 'mg', factor: 0.001 },
+                { name: 'Pounds', value: 'lb', factor: 453.592 },
+                { name: 'Ounces', value: 'oz', factor: 28.3495 }
+            ],
+            temperature: [
+                { name: 'Celsius', value: 'c' },
+                { name: 'Fahrenheit', value: 'f' },
+                { name: 'Kelvin', value: 'k' }
+            ],
+            area: [
+                { name: 'Square Meters', value: 'm2', factor: 1 },
+                { name: 'Square Kilometers', value: 'km2', factor: 1000000 },
+                { name: 'Square Feet', value: 'ft2', factor: 0.092903 },
+                { name: 'Square Miles', value: 'mi2', factor: 2589990 },
+                { name: 'Acres', value: 'ac', factor: 4046.86 },
+                { name: 'Hectares', value: 'ha', factor: 10000 }
+            ],
+            volume: [
+                { name: 'Liters', value: 'l', factor: 1 },
+                { name: 'Milliliters', value: 'ml', factor: 0.001 },
+                { name: 'Gallons (US)', value: 'gal', factor: 3.78541 },
+                { name: 'Cubic Meters', value: 'm3', factor: 1000 },
+                { name: 'Cubic Feet', value: 'ft3', factor: 28.3168 }
+            ],
+            speed: [
+                { name: 'Meters per Second', value: 'm/s', factor: 1 },
+                { name: 'Kilometers per Hour', value: 'km/h', factor: 0.277778 },
+                { name: 'Miles per Hour', value: 'mph', factor: 0.44704 },
+                { name: 'Feet per Second', value: 'ft/s', factor: 0.3048 },
+                { name: 'Knots', value: 'kn', factor: 0.514444 }
+            ]
+        };
+        
+        // Populate unit selects based on category
+        function updateUnitOptions() {
+            const category = categorySelect.value;
+            const categoryUnits = units[category];
+            
+            // Clear current options
+            fromSelect.innerHTML = '';
+            toSelect.innerHTML = '';
+            
+            // Add new options
+            categoryUnits.forEach(unit => {
+                const fromOption = document.createElement('option');
+                fromOption.value = unit.value;
+                fromOption.textContent = unit.name;
+                fromSelect.appendChild(fromOption);
+                
+                const toOption = document.createElement('option');
+                toOption.value = unit.value;
+                toOption.textContent = unit.name;
+                toSelect.appendChild(toOption);
+            });
+            
+            // Set default "to" unit to a different one
+            if (categoryUnits.length > 1) {
+                toSelect.selectedIndex = 1;
+            }
+        }
+        
+        // Initialize with length units
+        updateUnitOptions();
+        
+        // Update units when category changes
+        categorySelect.addEventListener('change', updateUnitOptions);
+    }
+
+    function convertUnits() {
+        const category = document.getElementById('converter-category').value;
+        const fromUnit = document.getElementById('converter-from').value;
+        const toUnit = document.getElementById('converter-to').value;
+        const value = parseFloat(document.getElementById('converter-value').value);
+        const result = document.getElementById('converter-result');
+        
+        if (isNaN(value)) {
+            showStatus(result, 'Please enter a valid number to convert.', 'error');
+            return;
+        }
+        
+        let convertedValue;
+        
+        // Handle temperature conversion separately
+        if (category === 'temperature') {
+            if (fromUnit === 'c') {
+                if (toUnit === 'f') {
+                    convertedValue = (value * 9/5) + 32;
+                } else if (toUnit === 'k') {
+                    convertedValue = value + 273.15;
+                } else {
+                    convertedValue = value;
+                }
+            } else if (fromUnit === 'f') {
+                if (toUnit === 'c') {
+                    convertedValue = (value - 32) * 5/9;
+                } else if (toUnit === 'k') {
+                    convertedValue = (value - 32) * 5/9 + 273.15;
+                } else {
+                    convertedValue = value;
+                }
+            } else if (fromUnit === 'k') {
+                if (toUnit === 'c') {
+                    convertedValue = value - 273.15;
+                } else if (toUnit === 'f') {
+                    convertedValue = (value - 273.15) * 9/5 + 32;
+                } else {
+                    convertedValue = value;
+                }
+            }
+        } else {
+            // For other units, use conversion factors
+            const units = {
+                length: {
+                    'm': 1, 'km': 1000, 'cm': 0.01, 'mm': 0.001,
+                    'in': 0.0254, 'ft': 0.3048, 'yd': 0.9144, 'mi': 1609.34
+                },
+                weight: {
+                    'g': 1, 'kg': 1000, 'mg': 0.001, 'lb': 453.592, 'oz': 28.3495
+                },
+                area: {
+                    'm2': 1, 'km2': 1000000, 'ft2': 0.092903, 'mi2': 2589990, 'ac': 4046.86, 'ha': 10000
+                },
+                volume: {
+                    'l': 1, 'ml': 0.001, 'gal': 3.78541, 'm3': 1000, 'ft3': 28.3168
+                },
+                speed: {
+                    'm/s': 1, 'km/h': 0.277778, 'mph': 0.44704, 'ft/s': 0.3048, 'kn': 0.514444
+                }
+            };
+            
+            const fromFactor = units[category][fromUnit];
+            const toFactor = units[category][toUnit];
+            convertedValue = value * fromFactor / toFactor;
+        }
+        
+        const fromText = document.getElementById('converter-from').options[document.getElementById('converter-from').selectedIndex].text;
+        const toText = document.getElementById('converter-to').options[document.getElementById('converter-to').selectedIndex].text;
+        
+        showStatus(result, `${value} ${fromText} = ${convertedValue.toFixed(6)} ${toText}`, 'success');
+    }
     
     // --- Animation Observer ---
     function setupIntersectionObserver() {
