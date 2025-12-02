@@ -752,8 +752,8 @@
 
     /* --- Stamp Preview --- */
     .stamp-preview {
-      width: 300px;
-      height: 300px;
+      width: 400px;
+      height: 400px;
       margin: 1rem auto;
       position: relative;
       display: flex;
@@ -1190,34 +1190,38 @@
               <div class="tool-content" id="stamp-generator">
                 <div class="options">
                   <div class="option-group">
-                    <label for="stamp-text">Stamp Text:</label>
-                    <input type="text" id="stamp-text" placeholder="e.g., APPROVED, CONFIDENTIAL, PAID" value="APPROVED">
+                    <label for="stamp-company-name">Company Name:</label>
+                    <input type="text" id="stamp-company-name" placeholder="e.g., BERKE HADDOCK PRIVATE LIMITED" value="BERKE HADDOCK PRIVATE LIMITED">
                   </div>
                   <div class="option-group">
-                    <label for="stamp-company">Company Name (Optional):</label>
-                    <input type="text" id="stamp-company" placeholder="Your Company Name">
+                    <label for="stamp-city">City:</label>
+                    <input type="text" id="stamp-city" placeholder="e.g., KARACHI" value="KARACHI">
                   </div>
                   <div class="option-group">
-                    <label for="stamp-date">Date (Optional):</label>
-                    <input type="date" id="stamp-date">
+                    <label for="stamp-status">Status Text:</label>
+                    <select id="stamp-status">
+                      <option value="APPROVED">APPROVED</option>
+                      <option value="PAID">PAID</option>
+                      <option value="RECEIVED">RECEIVED</option>
+                      <option value="CONFIRMED">CONFIRMED</option>
+                      <option value="VERIFIED">VERIFIED</option>
+                      <option value="CANCELLED">CANCELLED</option>
+                      <option value="PENDING">PENDING</option>
+                      <option value="COMPLETED">COMPLETED</option>
+                    </select>
+                  </div>
+                  <div class="option-group">
+                    <label for="stamp-date">Date:</label>
+                    <input type="date" id="stamp-date" value="<?php echo date('Y-m-d'); ?>">
                   </div>
                   <div class="option-group">
                     <label for="stamp-color">Stamp Color:</label>
                     <select id="stamp-color">
-                      <option value="red">Red</option>
-                      <option value="blue">Blue</option>
-                      <option value="green">Green</option>
-                      <option value="purple">Purple</option>
-                      <option value="black">Black</option>
-                    </select>
-                  </div>
-                  <div class="option-group">
-                    <label for="stamp-style">Stamp Style:</label>
-                    <select id="stamp-style">
-                      <option value="round">Round</option>
-                      <option value="square">Square</option>
-                      <option value="rectangle">Rectangle</option>
-                      <option value="oval">Oval</option>
+                      <option value="#c62828">Red</option>
+                      <option value="#1565c0">Blue</option>
+                      <option value="#2e7d32">Green</option>
+                      <option value="#6a1b9a">Purple</option>
+                      <option value="#212121">Black</option>
                     </select>
                   </div>
                 </div>
@@ -1225,7 +1229,7 @@
                   <i class="fas fa-stamp"></i> Generate Stamp
                 </button>
                 <div id="stamp-result" style="margin-top: 1rem; text-align: center;"></div>
-                <div class="status-message" id="stamp-status"></div>
+                <div class="status-message" id="stamp-status-message"></div>
               </div>
             </div>
             
@@ -1757,6 +1761,16 @@
         // Tool-specific initializations
         initializeUnitConverter();
         initializeTextToSpeech();
+        
+        // Set today's date as default for stamp
+        document.getElementById('stamp-date').value = new Date().toISOString().split('T')[0];
+        
+        // Generate a default stamp on load
+        setTimeout(() => {
+            if (document.getElementById('stamp-generator-card')) {
+                generateStamp();
+            }
+        }, 500);
     });
 
     // --- Core UI & Navigation ---
@@ -2264,18 +2278,18 @@
         }
     }
     
-    // --- New Stamp Generator ---
+    // --- Enhanced Stamp Generator (Realistic Ink Stamp) ---
     function generateStamp() {
-        const text = document.getElementById('stamp-text').value;
-        const company = document.getElementById('stamp-company').value;
+        const companyName = document.getElementById('stamp-company-name').value;
+        const city = document.getElementById('stamp-city').value;
+        const statusText = document.getElementById('stamp-status').value;
         const date = document.getElementById('stamp-date').value;
         const color = document.getElementById('stamp-color').value;
-        const style = document.getElementById('stamp-style').value;
         const result = document.getElementById('stamp-result');
-        const statusEl = document.getElementById('stamp-status');
+        const statusEl = document.getElementById('stamp-status-message');
         
-        if (!text.trim()) {
-            showStatus(statusEl, 'Please enter stamp text.', 'error');
+        if (!companyName.trim() || !city.trim()) {
+            showStatus(statusEl, 'Please enter company name and city.', 'error');
             return;
         }
         
@@ -2287,121 +2301,56 @@
             const ctx = canvas.getContext('2d');
             
             // Set canvas size
-            canvas.width = 400;
-            canvas.height = 400;
+            const size = 400;
+            canvas.width = size;
+            canvas.height = size;
             
-            // Clear canvas
+            // Clear canvas with transparent background
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Set stamp color
-            let stampColor;
-            switch(color) {
-                case 'red':
-                    stampColor = '#d32f2f';
-                    break;
-                case 'blue':
-                    stampColor = '#1976d2';
-                    break;
-                case 'green':
-                    stampColor = '#388e3c';
-                    break;
-                case 'purple':
-                    stampColor = '#7b1fa2';
-                    break;
-                case 'black':
-                default:
-                    stampColor = '#212121';
-            }
-            
-            // Draw stamp base (circle)
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-            ctx.strokeStyle = stampColor;
-            ctx.lineWidth = 8;
-            
-            // Create rubber stamp effect with irregular edges
-            ctx.beginPath();
+            // Center coordinates
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
-            const radius = 180;
+            const outerRadius = 180;
+            const middleRadius = 155;
+            const innerRadius = 130;
             
-            // Draw irregular circle for rubber stamp effect
-            for (let angle = 0; angle < Math.PI * 2; angle += 0.1) {
-                const irregularRadius = radius + (Math.random() * 10 - 5);
-                const x = centerX + Math.cos(angle) * irregularRadius;
-                const y = centerY + Math.sin(angle) * irregularRadius;
-                
-                if (angle === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            }
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
+            // Create ink effect by drawing multiple circles with slight variations
+            createInkEffect(ctx, centerX, centerY, outerRadius, color);
             
-            // Add text with rubber stamp effect
-            ctx.fillStyle = stampColor;
+            // Draw inner circle (broken/dashed effect for authentic stamp look)
+            drawBrokenCircle(ctx, centerX, centerY, innerRadius, 6, color);
+            
+            // Draw decorative elements (small stars or dots)
+            drawDecorativeElements(ctx, centerX, centerY, outerRadius, innerRadius, color);
+            
+            // Draw company name (top arc) with ink bleed effect
+            drawCircularText(ctx, companyName.toUpperCase(), centerX, centerY, middleRadius + 15, Math.PI * 0.2, Math.PI * 0.8, color, 'bold 16px Arial');
+            
+            // Draw city name (bottom arc) with ink bleed effect
+            drawCircularText(ctx, city.toUpperCase(), centerX, centerY, middleRadius + 15, Math.PI * 1.2, Math.PI * 1.8, color, 'bold 16px Arial');
+            
+            // Draw status text (large in center) with ink bleed
+            drawTextWithInkEffect(ctx, statusText, centerX, centerY, color, 'bold 38px Arial');
+            
+            // Draw date below status
+            const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+            ctx.font = 'bold 14px Arial';
+            ctx.fillStyle = color;
             ctx.textAlign = 'center';
+            ctx.fillText(formattedDate, centerX, centerY + 70);
             
-            // Main text (curved)
-            ctx.font = 'bold 28px Arial';
-            const mainText = text.toUpperCase();
-            const mainTextRadius = 120;
-            
-            // Curve text around the stamp
-            for (let i = 0; i < mainText.length; i++) {
-                const angle = (i - mainText.length / 2) * 0.15;
-                const x = centerX + Math.sin(angle) * mainTextRadius;
-                const y = centerY - Math.cos(angle) * mainTextRadius;
-                
-                ctx.save();
-                ctx.translate(x, y);
-                ctx.rotate(angle);
-                ctx.fillText(mainText[i], 0, 0);
-                ctx.restore();
-            }
-            
-            // Company name (if provided) - straight text in middle
-            if (company) {
-                ctx.font = 'bold 18px Arial';
-                ctx.fillText(company.toUpperCase(), centerX, centerY + 10);
-            }
-            
-            // Date (if provided) - bottom text
-            if (date) {
-                const formattedDate = new Date(date).toLocaleDateString();
-                ctx.font = '14px Arial';
-                ctx.fillText(formattedDate, centerX, centerY + 60);
-            }
-            
-            // Add ink bleed effect for realism
-            ctx.globalCompositeOperation = 'multiply';
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-            
-            // Create irregular inner shape for ink bleed
-            ctx.beginPath();
-            for (let angle = 0; angle < Math.PI * 2; angle += 0.1) {
-                const irregularRadius = radius - 20 + (Math.random() * 8 - 4);
-                const x = centerX + Math.cos(angle) * irregularRadius;
-                const y = centerY + Math.sin(angle) * irregularRadius;
-                
-                if (angle === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            }
-            ctx.closePath();
-            ctx.fill();
-            
-            // Reset composite operation
-            ctx.globalCompositeOperation = 'source-over';
+            // Apply overall ink bleed filter
+            applyInkBleedEffect(ctx, canvas.width, canvas.height);
             
             // Display result
             result.innerHTML = `
                 <div class="stamp-preview">
-                    <img src="${canvas.toDataURL('image/png')}" class="stamp-canvas">
+                    <img src="${canvas.toDataURL('image/png')}" class="stamp-canvas" style="width: 100%; height: 100%; object-fit: contain;">
                 </div>
                 <button class="tool-btn secondary" onclick="downloadStamp()">
                     <i class="fas fa-download"></i> Download Stamp
@@ -2418,11 +2367,172 @@
         }
     }
     
+    // Helper function to create ink effect
+    function createInkEffect(ctx, x, y, radius, color) {
+        // Create gradient for ink effect
+        const gradient = ctx.createRadialGradient(x, y, radius * 0.7, x, y, radius);
+        gradient.addColorStop(0, color + 'FF');
+        gradient.addColorStop(0.7, color + 'CC');
+        gradient.addColorStop(1, color + '00');
+        
+        // Draw multiple circles with slight variations for ink bleed
+        for (let i = 0; i < 3; i++) {
+            const offset = i * 2;
+            ctx.beginPath();
+            ctx.arc(x, y, radius - offset, 0, Math.PI * 2);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+        }
+        
+        // Draw outer border with ink imperfections
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 4;
+        
+        // Create dashed effect for authentic stamp border
+        ctx.setLineDash([3, 2]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+    }
+    
+    // Helper function to draw broken circle
+    function drawBrokenCircle(ctx, x, y, radius, segments, color) {
+        const segmentAngle = (Math.PI * 2) / segments;
+        
+        for (let i = 0; i < segments; i++) {
+            const startAngle = i * segmentAngle;
+            const endAngle = startAngle + segmentAngle * 0.7; // Leave gaps
+            
+            ctx.beginPath();
+            ctx.arc(x, y, radius, startAngle, endAngle);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+    }
+    
+    // Helper function to draw decorative elements
+    function drawDecorativeElements(ctx, x, y, outerRadius, innerRadius, color) {
+        const numElements = 12;
+        const elementRadius = 5;
+        
+        for (let i = 0; i < numElements; i++) {
+            const angle = (Math.PI * 2 * i) / numElements;
+            const posX = x + Math.cos(angle) * ((outerRadius + innerRadius) / 2);
+            const posY = y + Math.sin(angle) * ((outerRadius + innerRadius) / 2);
+            
+            // Create star-like elements
+            ctx.beginPath();
+            ctx.arc(posX, posY, elementRadius, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+            
+            // Add inner dot for detail
+            ctx.beginPath();
+            ctx.arc(posX, posY, elementRadius / 2, 0, Math.PI * 2);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fill();
+        }
+    }
+    
+    // Helper function to draw circular text
+    function drawCircularText(ctx, text, x, y, radius, startAngle, endAngle, color, font) {
+        ctx.font = font;
+        ctx.fillStyle = color;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        const chars = text.split('');
+        const angleStep = (endAngle - startAngle) / chars.length;
+        
+        chars.forEach((char, i) => {
+            const angle = startAngle + (i * angleStep) + (angleStep / 2);
+            const charX = x + Math.cos(angle) * radius;
+            const charY = y + Math.sin(angle) * radius;
+            
+            ctx.save();
+            ctx.translate(charX, charY);
+            ctx.rotate(angle + Math.PI / 2);
+            
+            // Add ink bleed effect by drawing multiple times with slight offsets
+            for (let j = 0; j < 3; j++) {
+                const offset = j * 0.3;
+                ctx.fillText(char, offset, offset);
+            }
+            
+            ctx.restore();
+        });
+    }
+    
+    // Helper function to draw text with ink effect
+    function drawTextWithInkEffect(ctx, text, x, y, color, font) {
+        ctx.font = font;
+        ctx.fillStyle = color;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        // Draw main text
+        ctx.fillText(text, x, y);
+        
+        // Draw subtle shadow for ink bleed effect
+        ctx.fillStyle = color + '80'; // 50% opacity
+        for (let i = 0; i < 4; i++) {
+            const offset = 0.5;
+            const angles = [0, Math.PI/2, Math.PI, Math.PI*1.5];
+            const offsetX = Math.cos(angles[i]) * offset;
+            const offsetY = Math.sin(angles[i]) * offset;
+            ctx.fillText(text, x + offsetX, y + offsetY);
+        }
+    }
+    
+    // Helper function to apply overall ink bleed effect
+    function applyInkBleedEffect(ctx, width, height) {
+        // Create a temporary canvas for the blur effect
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = width;
+        tempCanvas.height = height;
+        
+        // Draw the original image
+        tempCtx.drawImage(ctx.canvas, 0, 0);
+        
+        // Apply blur for ink bleed
+        tempCtx.filter = 'blur(0.5px)';
+        tempCtx.drawImage(tempCanvas, 0, 0);
+        
+        // Composite back to original with reduced opacity
+        ctx.globalAlpha = 0.3;
+        ctx.drawImage(tempCanvas, 0, 0);
+        ctx.globalAlpha = 1.0;
+        
+        // Add some noise for paper texture effect
+        addPaperNoise(ctx, width, height);
+    }
+    
+    // Helper function to add paper noise
+    function addPaperNoise(ctx, width, height) {
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const data = imageData.data;
+        
+        // Add subtle noise
+        for (let i = 0; i < data.length; i += 4) {
+            if (data[i + 3] > 0) { // If pixel is not transparent
+                const noise = Math.random() * 10 - 5; // -5 to 5
+                data[i] = Math.min(255, Math.max(0, data[i] + noise)); // R
+                data[i + 1] = Math.min(255, Math.max(0, data[i + 1] + noise)); // G
+                data[i + 2] = Math.min(255, Math.max(0, data[i + 2] + noise)); // B
+            }
+        }
+        
+        ctx.putImageData(imageData, 0, 0);
+    }
+    
     function downloadStamp() {
         if (!AppState.stampCanvas) return;
         
         const link = document.createElement('a');
-        link.download = 'custom-stamp.png';
+        link.download = 'corporate-stamp.png';
         link.href = AppState.stampCanvas.toDataURL('image/png');
         link.click();
     }
@@ -2983,5 +3093,4 @@
     
   </script>
 </body>
-
 </html>
